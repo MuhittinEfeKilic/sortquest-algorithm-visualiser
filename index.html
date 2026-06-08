@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortQuest - Tile Puzzle Algorithm Visualiser</title>
+
+    <!-- CSS file connection -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="hero-panel">
+            <div class="hero-eyebrow">Algorithm Academy / Cyber Puzzle Game</div>
+            <h1>SortQuest</h1>
+            <p>Master algorithms through interactive puzzle challenges</p>
+            <div class="hero-badges" aria-label="Game features">
+                <span>8 Modes</span>
+                <span>5 Levels</span>
+                <span>Daily Challenge</span>
+                <span>Leaderboard</span>
+            </div>
+        </header>
+
+        <section class="how-to-play-panel">
+            <h2>How to Play</h2>
+            <div class="how-to-content">
+                <div class="modes">
+                    <h3>Algorithm Modes</h3>
+                    <ul>
+                        <li><strong>Bubble Sort:</strong> Compare adjacent tiles and swap only when left > right.</li>
+                        <li><strong>Selection Sort:</strong> Place the minimum remaining tile into the current target position.</li>
+                        <li><strong>Insertion Sort:</strong> Move the current key left while previous tiles are larger.</li>
+                        <li><strong>Merge Sort:</strong> Follow the merge process: select the next smallest value from the active left/right halves.</li>
+                        <li><strong>Quick Sort:</strong> Select values based on the pivot: smaller values go before the pivot, larger ones after.</li>
+                        <li><strong>Heap Sort:</strong> Maintain max-heap property: select the largest value to move to the sorted end.</li>
+                        <li><strong>Binary Search:</strong> Check the middle tile of the active sorted range until the target is found.</li>
+                        <li><strong>BFS Graph:</strong> Visit graph nodes level by level in breadth-first order from A.</li>
+                    </ul>
+                </div>
+                <div class="controls">
+                    <h3>Controls</h3>
+                    <ul>
+                        <li><strong>Hint:</strong> Gives guidance but reduces score.</li>
+                        <li><strong>Reset:</strong> Restores the current puzzle.</li>
+                        <li><strong>New Puzzle:</strong> Creates a new puzzle based on selected level.</li>
+                        <li><strong>Level Editor:</strong> Lets users load a custom array and generate a share link.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="game-panel">
+
+            <div class="top-bar">
+                <div class="control-field">
+                    <label for="algorithmSelect">Algorithm Mode</label>
+                    <select id="algorithmSelect">
+                        <option value="bubble">Bubble Sort</option>
+                        <option value="selection">Selection Sort</option>
+                        <option value="insertion">Insertion Sort</option>
+                        <option value="merge">Merge Sort</option>
+                        <option value="quick">Quick Sort</option>
+                        <option value="heap">Heap Sort</option>
+                        <option value="binary">Binary Search</option>
+                        <option value="bfs">BFS Graph</option>
+                    </select>
+                </div>
+
+                <div class="control-field">
+                    <label for="levelSelect">Level</label>
+                    <select id="levelSelect">
+                        <option value="1">Level 1 - 4 tiles</option>
+                        <option value="2">Level 2 - 8 tiles</option>
+                        <option value="3">Level 3 - 16 tiles</option>
+                        <option value="4">Level 4 - 32 tiles</option>
+                        <option value="5">Level 5 - 64 tiles</option>
+                    </select>
+                </div>
+
+                <div class="level-box">
+                    <span>Active Level</span> <strong id="levelText">1</strong>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div><small>Moves</small><span id="moveCount">0</span></div>
+                <div><small>Time</small><span id="timer">00:00</span></div>
+                <div><small>Score</small><span id="score">100</span></div>
+                <div><small>Hints Used</small><span id="hintsUsed">0</span></div>
+            </div>
+
+            <div id="messageBox" class="message-box">
+                Select two adjacent tiles to make a Bubble Sort move.
+            </div>
+
+            <div id="passInfo" class="pass-info">
+                Compare adjacent tiles.
+            </div>
+
+            <div id="tileBoard" class="tile-board">
+                <!-- Tiles will be created with JavaScript -->
+            </div>
+
+            <div id="resultPanel" class="result-panel hidden">
+                <h2>Level Completed!</h2>
+                <p>Final Moves: <span id="finalMoves">0</span></p>
+                <p>Final Time: <span id="finalTime">00:00</span></p>
+                <p>Final Score: <span id="finalScore">100</span></p>
+                <p>Hints Used: <span id="finalHints">0</span></p>
+                <p class="stars" id="finalStars">★★★</p>
+            </div>
+
+            <div class="buttons">
+                <button id="hintBtn">Hint</button>
+                <button id="resetBtn">Reset</button>
+                <button id="newPuzzleBtn">New Puzzle</button>
+            </div>
+
+<div class="daily-challenge-panel">
+    <div class="daily-challenge-header">
+        <h2>Daily Challenge</h2>
+        <button id="dailyChallengeBtn">Daily Challenge</button>
+    </div>
+    <p id="dailyChallengeStatus">Daily Challenge inactive.</p>
+</div>
+
+<div class="level-editor-panel">
+    <h2>Level Editor</h2>
+    <div class="level-editor-row">
+        <input id="customArrayInput" type="text" placeholder="Example: 5,2,8,1,4" />
+        <button id="loadCustomBtn">Load Custom Puzzle</button>
+    </div>
+    <div class="level-editor-row">
+        <button id="generateShareBtn">Generate Share Link</button>
+        <input id="shareLinkInput" type="text" readonly placeholder="Share link will appear here" />
+    </div>
+</div>
+
+<div class="leaderboard-panel">
+    <div class="leaderboard-header">
+        <h2>Leaderboard</h2>
+        <button id="clearLeaderboardBtn" class="clear-button">Clear Leaderboard</button>
+    </div>
+    <div class="leaderboard-table-wrapper">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Algorithm</th>
+                    <th>Level</th>
+                    <th>Score</th>
+                    <th>Moves</th>
+                    <th>Time</th>
+                    <th>Stars</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <tr><td colspan="8">No leaderboard records yet.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="leaderboard-panel">
+    <div class="leaderboard-header">
+        <h2>Daily Leaderboard</h2>
+        <button id="clearDailyLeaderboardBtn" class="clear-button">Clear Daily Leaderboard</button>
+    </div>
+    <div class="leaderboard-table-wrapper">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Algorithm</th>
+                    <th>Level</th>
+                    <th>Moves</th>
+                    <th>Time</th>
+                    <th>Stars</th>
+                </tr>
+            </thead>
+            <tbody id="dailyLeaderboardBody">
+                <tr><td colspan="8">No daily records yet.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+        </section>
+
+    </div>
+
+    <!-- JavaScript file connection -->
+    <script src="script.js"></script>
+</body>
+</html>
