@@ -1,0 +1,2691 @@
+{
+  "gpaf_team_export": "0.5.0",
+  "proposalLink": {
+    "gpptVersion": "v51",
+    "successCriteria": [
+      {
+        "id": "C1",
+        "type": "learning_gain_min",
+        "target": 0.3
+      },
+      {
+        "id": "C2",
+        "type": "players_reached_min",
+        "target": 10
+      },
+      {
+        "id": "C3",
+        "type": "completion_rate_min",
+        "target": 0.5
+      }
+    ],
+    "proposalState": {
+      "step": 13,
+      "totalSteps": 13,
+      "domain": "academic",
+      "projectType": "Digital Puzzle Game",
+      "projectTitle": "SortQuest: Tile Puzzle Algorithm Visualiser (SEN4012)",
+      "teamName": "Eferay Squad",
+      "proposer": "Yusuf Altunel",
+      "organisation": "Istanbul Kültür University, Computer Engineering Dept.",
+      "targetPopulation": "SEN4012 Analysis of Algorithms students (3rd/4th year, n≈35)",
+      "sampleSize": "35",
+      "problemStatement": "Students understand sorting algorithm names but cannot trace execution on a given array. SortQuest makes sorting visual and tactile: drag tiles into correct positions following real algorithm rules. Wrong individual moves are rejected immediately with an algorithm-specific explanation — there is no path to a correct final state through random dragging.",
+      "startDate": "2026-09-01",
+      "proposalDate": "2026-03-24",
+      "courseCode": "SEN4012",
+      "deliverableArea": "Algorithm Design, Complexity Analysis, Problem-Solving Skills, Computational Thinking, Practical Coding Application",
+      "deliverableAreas": [
+        "Algorithm Design",
+        "Complexity Analysis",
+        "Problem-Solving Skills",
+        "Computational Thinking",
+        "Practical Coding Application"
+      ],
+      "inScope": [
+        "8 modes + validation",
+        "Star rating",
+        "Daily Challenge",
+        "Level Editor",
+        "4→64 tile scaling",
+        "Hint system"
+      ],
+      "outScope": [
+        "Mobile swipe (Phase 2)",
+        "Multiplayer puzzle race (Phase 2)"
+      ],
+      "frs": [
+        {
+          "id": "FR-SQ-01",
+          "desc": "CSS Grid tile drag-and-drop; colour-coded by relative value",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-02",
+          "desc": "Validation rejects every invalid drag move with algorithm-specific tooltip",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-03",
+          "desc": "8 puzzle modes each with distinct validation function and tile layout",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-04",
+          "desc": "Star rating (1–3): moves vs min, hints, time vs par",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-05",
+          "desc": "Daily Sort Challenge: global seed, no-hint, leaderboard by moves + time",
+          "priority": "Should"
+        },
+        {
+          "id": "FR-SQ-06",
+          "desc": "Level Editor: array input + mode + shareable URL",
+          "priority": "Should"
+        }
+      ],
+      "nfrs": [
+        {
+          "id": "NFR-SQ-01",
+          "attr": "Usability",
+          "desc": "Tile snap after release",
+          "target": "<50ms"
+        },
+        {
+          "id": "NFR-SQ-02",
+          "attr": "Usability",
+          "desc": "Validation rejects 100% of invalid moves all 8 modes",
+          "target": "200 invalid scenarios per mode, 0 false accepts (automated test suite)"
+        }
+      ],
+      "successCriteria": [],
+      "userStories": [
+        {
+          "role": "Student",
+          "want": "drag numbered tiles following algorithm rules",
+          "soThat": "I practise execution in a tactile visual way",
+          "acc": "Valid moves snap + animate; invalid = red flash + tooltip with violated rule; move counter updates"
+        },
+        {
+          "role": "Student",
+          "want": "see star rating after each puzzle",
+          "soThat": "I know how efficient my execution was",
+          "acc": "1–3 stars; breakdown: moves vs min, hints, time vs par; shown before leaderboard"
+        },
+        {
+          "role": "Student",
+          "want": "compete in a daily global puzzle with all classmates",
+          "soThat": "I can fairly compare execution skill",
+          "acc": "Daily tab; seed + expiry shown; no hints; leaderboard top 10; results after 24h"
+        },
+        {
+          "role": "Student",
+          "want": "create a custom puzzle and share it as a URL",
+          "soThat": "I can challenge classmates",
+          "acc": "Level Editor; array + mode → shareable URL; opens in play mode for anyone"
+        }
+      ],
+      "theories": [
+        "flow",
+        "sdt",
+        "mda",
+        "bloom"
+      ],
+      "playerTypes": {
+        "achiever": 25,
+        "explorer": 25,
+        "socialiser": 25,
+        "killer": 25
+      },
+      "hexad": {},
+      "octalysis": {},
+      "mechanics": [
+        "pts",
+        "lb",
+        "progress",
+        "challenge"
+      ],
+      "sixDim": {
+        "what": "8 puzzle modes (Sequential Sort, Binary Search, Insertion Sort, MergeSort, QuickSort, HeapSort, DP Knapsack, BFS Graph); drag-and-drop tile engine with algorithm-rule validation; star rating (★★★ = min moves + under par time); hint system (−1 star); Daily Sort Challenge (global seed, leaderboard); Level Editor (shareable URL)",
+        "why": "Flow: 4 tiles (level 1) → 64 tiles (level 5). SDT Competence: visible improvement. MDA: Mechanics = constrained drag-drop; Dynamics = optimal move discovery; Aesthetic = Mastery + Sensation (satisfying merge animation).",
+        "who": "Free Spirits 40% (experiment, try to break algorithm), Achievers 40% (3-star perfection, Daily leaderboard), Explorers 20% (edge cases in QuickSort pivot)",
+        "when": "Modes unlock sequentially with chapters. Daily Challenge always available. Level Editor from week 2.",
+        "how": "Wrong moves rejected immediately with algorithm-specific explanation (\"This violates MergeSort rule: left pointer must advance monotonically\"). No ambiguity. 0 false accepts by validation function.",
+        "where": "CSS Grid + HTML5 Drag-and-Drop API, single-file browser app. Level Editor encodes puzzle as shareable URL."
+      },
+      "narrativeTheme": "The SortQuest realm is in chaos — the Library of Ordered Knowledge has been scrambled by the Entropy Demon. As the last Algorithm Keeper, restore order using the ancient sorting laws.",
+      "narrativeArc": "Hero's Journey (departure → trials → return)",
+      "characters": "Algorithm Engineer (Student): Selects and deploys correct algorithms to clear each complexity wave using knowledge and pattern recognition.\nComplexity Horde (NPC Enemy): Waves of algorithmic problems with specific complexity classes requiring matched algorithm types.\nInstructor Avatar (NPC Guide): In-game professor providing contextual hints, chapter intros, and debrief prompts.",
+      "storyWorld": "The Sorting Academy is an ancient institution where computational knowledge is tested not by memorisation but by execution. Six halls represent the six sorting algorithm families: the Bubble Hall, the Selection Chamber, the Insertion Corridor, the Merge Sanctum, the Quick Arena, and the Heap Pinnacle. Each hall tests a specific algorithm family with increasing input complexity and edge-case difficulty. The Academy Boss Puzzle chamber sits at the pinnacle — accessible only to students who have demonstrated mastery across all six halls.",
+      "conceptMappings": [
+        {
+          "concept": "Sorting algorithm execution rules",
+          "mechanic": "Validation function rejects any move violating algorithm rules",
+          "dynamic": "MergeSort: cannot skip merge step; left pointer must advance monotonically",
+          "aesthetic": "Challenge + Mastery",
+          "rationale": "Constraint-enforcement turns the puzzle from tile-sort into algorithm-execution: student is constrained to think and act like the algorithm itself"
+        },
+        {
+          "concept": "Algorithm efficiency (operation count)",
+          "mechanic": "Move counter; star rating penalises excess moves",
+          "dynamic": "BubbleSort min 28 moves on 8 tiles; 40 moves = star drops",
+          "aesthetic": "Mastery + Achievement",
+          "rationale": "Move counter makes efficiency visceral — fewer moves feels better, which is the intuition behind optimisation"
+        },
+        {
+          "concept": "Pivot selection in QuickSort",
+          "mechanic": "Tap tile to declare pivot; board auto-colours red (>) blue (<); partition follows",
+          "dynamic": "Worst-case pivot (always max) → maximally unbalanced → more moves → star drop",
+          "aesthetic": "Discovery",
+          "rationale": "Visual partition immediately shows why random/median-of-3 strategies outperform worst-case picks"
+        }
+      ],
+      "mdaAnalysis": {
+        "mechanics": "Puzzle chain (sequential sorting challenges), Algorithm selection panel, Step-by-step execution validation, Hint token system (3 per session), Sandbox mode (unscored experimentation), Leaderboard by difficulty level reached, Speed-sort challenge mode.",
+        "dynamics": "The step-by-step execution validation mechanic forces students to think at the algorithm's execution level rather than just knowing the algorithm name, producing deeper cognitive engagement. Hint token scarcity creates authentic cost-benefit reasoning about knowledge confidence. Sandbox mode provides a low-stakes exploration space that complements the scored puzzle chain.",
+        "aesthetics": "Challenge (each puzzle requires genuine algorithm application, not guessing), Discovery (sandbox mode enables free algorithm experimentation), Accomplishment (advanced difficulty puzzle completion signals genuine SEN4012 mastery), Submission (puzzle aesthetic creates engaging spatial representation of abstract sorting concepts)."
+      },
+      "gameDuration": "",
+      "introText": "Welcome to the Sorting Academy. You are an algorithm apprentice, and your task is simple: sort the data correctly, step by step, using the algorithm the puzzle demands. Choose the wrong algorithm and the step-level validator will show exactly where your execution diverged from the correct trace — no vague wrong answers here. Use your hint tokens wisely; you have only three per session. Complete each sorting hall to advance and reach the Boss Puzzle chamber where the full sorting hierarchy is tested in a single complex trial. The Academy is waiting.",
+      "preGameSetup": {
+        "environmentConfig": "Arrange seating for individual device use. Confirm browser compatibility on all student devices or lab PCs. Project facilitator dashboard on classroom screen. Test session timer and leaderboard display.",
+        "materialsDistribution": "Each student accesses the game via shared URL or QR code. Distribute session handout with game rules summary and XP table. Confirm all students can see the projected leaderboard.",
+        "initialLogEntry": "Facilitator logs session start, date, class size, game variant, and initial difficulty setting in the session log."
+      },
+      "sessionSteps": [
+        {
+          "phase": "Mode selection",
+          "duration": "1 min",
+          "activity": "Select mode matching chapter. See rules summary + estimated move count for level 1.",
+          "facilitator": "Recommend mode matching this week",
+          "player": "Select mode; optionally select level 1–5"
+        },
+        {
+          "phase": "Puzzle play",
+          "duration": "5–15 min",
+          "activity": "Drag tiles; wrong moves rejected with tooltip; correct moves animate. Star rating in real time.",
+          "facilitator": "No active facilitation",
+          "player": "Active tile manipulation; read rejection tooltips"
+        },
+        {
+          "phase": "Daily Challenge",
+          "duration": "10 min",
+          "activity": "Global seed — same tiles + mode for all students. Leaderboard by min moves + time.",
+          "facilitator": "Post puzzle link to LMS Monday 08:00",
+          "player": "Compete; submit"
+        },
+        {
+          "phase": "Level Editor",
+          "duration": "15 min optional",
+          "activity": "Create custom puzzle; generate shareable URL; share with classmates.",
+          "facilitator": "Encourage peer puzzle creation",
+          "player": "Design; test; share URL"
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "SC-01",
+          "name": "Campaign",
+          "title": "SortQuest — Puzzle Campaign",
+          "setup": "Mode + difficulty level selected. Puzzle presented.",
+          "objective": "Solve in minimum moves, under par time, 0 hints",
+          "winCondition": "Solved: min moves, par time, 0 hints",
+          "loseCondition": "Reset >3 times or abandoned",
+          "maxPoints": 100,
+          "duration": "15 min",
+          "difficulty": "Standard",
+          "storyboard": "Mode select → Puzzle presented → Drag attempts → Wrong move rejected + tooltip → Correct sequence → Star rating → Leaderboard",
+          "algorithm": "PuzzleScore = max_pts − (excess_moves×5) − (hints×20) − max(0, overtime×2)",
+          "outcome": "★★★ (min moves, 0 hints, under par): +100. ★★ (correct, ≤2 hints or >par): +45. ★ (correct, >2 hints): +15.",
+          "activities": [
+            {
+              "id": "ACT-01",
+              "action": "MergeSort mode: merge two sorted columns into one output column",
+              "description": "Left [2,5,9] + right [1,7,8]. Drag tiles to output following merge rules.",
+              "trigger": "MergeSort mode level selected",
+              "winCondition": "Output [1,2,5,7,8,9] via valid merge moves only",
+              "winResult": "+100 pts (if min + no hints) + MergeMaster badge",
+              "winPoints": 100,
+              "loseCondition": "Reset 4+ times",
+              "loseResult": "0 pts; hint offered free on 4th reset",
+              "losePoints": 0,
+              "neutralCondition": "Correct, 1–2 hints or excess moves",
+              "neutralResult": "+45 + ★★",
+              "neutralPoints": 45,
+              "timer": "Par: 90s for level 1 (6 tiles)"
+            },
+            {
+              "id": "ACT-02",
+              "action": "QuickSort mode: select pivot and partition correctly",
+              "description": "Tap pivot tile. Board auto-colours. Drag partition.",
+              "trigger": "QuickSort mode selected",
+              "winCondition": "Correct pivot; partition in min gestures",
+              "winResult": "+100 + Pivot Master if median chosen",
+              "winPoints": 100,
+              "loseCondition": "3+ worst-case pivot selections",
+              "loseResult": "+15; Pivot Lesson tooltip",
+              "losePoints": 0,
+              "neutralCondition": "Correct partition, non-optimal pivot",
+              "neutralResult": "+45; star drops to ★★",
+              "neutralPoints": 45,
+              "timer": "Par: 60s for level 1 (8 tiles)"
+            }
+          ]
+        },
+        {
+          "id": "SC-02",
+          "name": "Daily Sort Challenge",
+          "title": "Daily Sort Challenge — Global Leaderboard",
+          "setup": "Global seed published Monday 08:00. All students same puzzle.",
+          "objective": "Solve in min moves within 24h; top leaderboard",
+          "winCondition": "Top 10 leaderboard by min moves",
+          "loseCondition": "Not completed within 24-hour window",
+          "maxPoints": 200,
+          "duration": "10 min",
+          "difficulty": "Competitive",
+          "storyboard": "LMS link → Seed loaded → Play (no hints) → Submit → Leaderboard",
+          "algorithm": "DailyScore = (100−excess_moves×2) × speed_bonus (≤2min: ×2.0; ≤5min: ×1.5; else ×1.0)",
+          "outcome": "Top 3: +200 + Daily Champion. Top 10: +100. Correct outside top 10: +50. Incomplete: 0.",
+          "activities": [
+            {
+              "id": "ACT-01",
+              "action": "Complete daily seed in min moves, no hints",
+              "description": "No hints in Daily (competitive fairness).",
+              "trigger": "Daily tab opened within window",
+              "winCondition": "Min moves solution",
+              "winResult": "+200 (top 3 likely) + Daily Champion",
+              "winPoints": 200,
+              "loseCondition": "Window expired without completion",
+              "loseResult": "0; makeup mode available",
+              "losePoints": 0,
+              "neutralCondition": "Correct but excess moves",
+              "neutralResult": "+50–100 by leaderboard rank",
+              "neutralPoints": 75,
+              "timer": "24-hour window; puzzle untimed"
+            }
+          ]
+        }
+      ],
+      "scoringSystem": {
+        "basis": "PuzzleScore = max_pts − (excess_moves×5) − (hints×20) − overtime×2. Daily: (100−excess×2) × speed_bonus.",
+        "bonuses": "★★★ any puzzle: +5. ★★★ all levels one mode: Mode Master +20. 0-hint session: Zero-Hint badge.",
+        "penalties": "Hints: −20 each (never blocked). Excess moves reduce score; completed puzzle minimum 15 pts.",
+        "badges": "MergeMaster, Pivot Master, Mode Master, Algorithm Keeper (all 8 modes), Daily Champion, Zero-Hint Scholar, Level Designer"
+      },
+      "socialFeatures": {},
+      "rewardTiers": {
+        "elite": "Algorithm Keeper (★★★ all 8 modes): 5-pt course bonus",
+        "professional": "Mode Master (★★★ all levels of 4 modes): 3-pt bonus",
+        "access": "Puzzle Solver (any ★★★): participation credit"
+      },
+      "executionLog": [],
+      "leaderboardConfig": {},
+      "risks": [],
+      "tuslerRisks": [
+        {
+          "risk": "Technical Platform Failure During Session",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Conduct full platform test on target lab devices 24h before session. Prepare a paper-based fallback version of the sorting puzzle game challenges. Verify browser compatibility on all student devices.",
+          "responsive": "Switch to prepared paper-based fallback immediately. Instructor verbally presents SEN4012 algorithm challenges; students answer on printed worksheets. Session data manually entered into system post-session."
+        },
+        {
+          "risk": "Widespread Rule Misunderstanding at Session Start",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Provide multi-modal game introduction: verbal briefing, printed rule card, and in-game tutorial overlay for the sorting puzzle game. Conduct a 2-minute practice round before official scoring begins.",
+          "responsive": "Facilitator pauses game immediately on detecting widespread confusion. Re-delivers rule explanation using a specific worked example. Q&A window opened before resuming. Game timer reset if necessary."
+        },
+        {
+          "risk": "Overemphasis on Winning Over Learning",
+          "category": "Puppy",
+          "prob": "High",
+          "impact": "Low",
+          "mitigation": "Design sorting puzzle game scoring to reward both performance and SEN4012 algorithm concept demonstration. Integrate mandatory reflection checkpoints mid-session where students must explain their decision rationale.",
+          "responsive": "Instructor intervenes to redirect student focus to SEN4012 algorithm learning objectives. Post-session assessment weights conceptual understanding over game performance score explicitly."
+        },
+        {
+          "risk": "Student Disengagement After Early Failure",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "Medium",
+          "mitigation": "Implement adaptive difficulty that reduces challenge intensity if a student is failing repeatedly in the sorting puzzle game. Provide visible progress indicators so students always see incremental advancement.",
+          "responsive": "Facilitator provides individual encouragement and targeted hint. Adaptive system reduces challenge difficulty for the next SEN4012 algorithm task. Optional easier entry point offered without public announcement."
+        },
+        {
+          "risk": "Assessment Misalignment with Course Learning Outcomes",
+          "category": "Alligator",
+          "prob": "Low",
+          "impact": "High",
+          "mitigation": "Conduct formal SEN4012 algorithm curriculum alignment review before deployment. Map every sorting puzzle game challenge item to specific course learning outcome statements in the alignment matrix.",
+          "responsive": "Instructor conducts post-session targeted debrief correcting any SEN4012 algorithm misconceptions surfaced by game challenge outcomes. Misaligned challenge items flagged for removal before next session."
+        },
+        {
+          "risk": "Incorrect Big-O Reasoning Reinforced as Correct",
+          "category": "Alligator",
+          "prob": "Low",
+          "impact": "High",
+          "mitigation": "Embed automated Big-O correctness checking in the sorting puzzle game — system must validate algorithm classification against verified answer key before awarding XP. Manual review of edge cases by instructor before deployment.",
+          "responsive": "Instructor delivers targeted post-session debrief correcting identified Big-O misconceptions. Specific algorithm challenge items producing widespread incorrect answers flagged for redesign before next session."
+        },
+        {
+          "risk": "Step-Level Validation Feels Punitive Rather Than Educational",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Design validation feedback as positive guidance rather than binary fail: 'This step is valid but consider whether this is the most efficient next move.' Animations reinforce correct steps before flagging errors.",
+          "responsive": "Instructor reframes error messages in session debrief as diagnostic information, not punishment. Post-session error pattern analysis shared with students as a personalised learning roadmap for next session."
+        },
+        {
+          "risk": "Sandbox Mode Time Consumption Leaving Insufficient Session Time",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "Medium",
+          "mitigation": "Enforce a maximum sandbox time allocation of 8 minutes per session, with a visible countdown and automatic transition to scored puzzle chain when the allocation expires. Sandbox findings prompts students to apply to scored chain.",
+          "responsive": "Facilitator announces sandbox time limit 2 minutes before expiry. Students who have not transitioned receive a facilitator-directed starter puzzle aligned to their sandbox exploration to bridge the transition."
+        },
+        {
+          "risk": "Boss Puzzle Algorithm Selection Produces Single Correct Answer Perception",
+          "category": "Puppy",
+          "prob": "High",
+          "impact": "Low",
+          "mitigation": "Design Boss Puzzle with two demonstrably valid algorithm solutions at different complexity-trade-off points. Award full XP for both, but differentiate feedback to highlight the performance difference between the two correct approaches.",
+          "responsive": "Instructor uses Boss Puzzle multiple-valid-solution structure in debrief to teach algorithm selection reasoning beyond binary correctness — reinforcing that SEN4012 algorithm selection is context-dependent, not prescriptive."
+        }
+      ],
+      "supportTeam": [
+        {
+          "role": "Frontend Developer",
+          "name": "",
+          "resp": "CSS Grid engine, drag-and-drop, 8 validation functions, Daily seed system"
+        },
+        {
+          "role": "Algorithm Specialist",
+          "name": "",
+          "resp": "Min move calculator; test suite for all 8 validation functions"
+        },
+        {
+          "role": "SEN4012 Instructor",
+          "name": "Yusuf Altunel",
+          "resp": "Mode-chapter mapping, par time calibration, assessment integration"
+        }
+      ],
+      "facilitatorRole": "",
+      "bloomOutcomes": [
+        {
+          "level": "Remember",
+          "bloom_k": "1",
+          "outcome": "Recall 5 fundamental sort operations",
+          "activity": "Mode selection screen — operations listed per mode",
+          "assessment": "Pre-session quiz: match operation to algorithm (target ≥80%)"
+        },
+        {
+          "level": "Understand",
+          "bloom_k": "2",
+          "outcome": "Explain why MergeSort needs separate output column but QuickSort partitions in-place",
+          "activity": "MergeSort vs QuickSort mode comparison",
+          "assessment": "Post-puzzle reflection answered correctly ≥70%"
+        },
+        {
+          "level": "Apply",
+          "bloom_k": "3",
+          "outcome": "Execute sorting rules correctly on given tile arrangement",
+          "activity": "Campaign: all 8 modes",
+          "assessment": "★★★ on ≥4 of 8 modes per student by week 12"
+        },
+        {
+          "level": "Analyse",
+          "bloom_k": "4",
+          "outcome": "Analyse how move count scales with input size",
+          "activity": "Free: same mode at level 1 (4 tiles) and level 4 (32 tiles)",
+          "assessment": "Scaling prediction quiz: ≥65% correct"
+        }
+      ],
+      "kirkpatrick": {
+        "l1": "\"How much did SortQuest make sorting intuitive?\" (1–5, target ≥4.2)",
+        "l2": "Sorting trace accuracy in timed lab test: ≥75% fully correct (baseline 38%)",
+        "l3": "Correct sorting selection in semester project: ≥70% (baseline 45%)",
+        "l4": "Final exam sorting trace (6 marks): mean ≥4.5/6 (baseline 2.1/6)"
+      },
+      "kpis": [
+        {
+          "level": "L1",
+          "metric": "Session NPS >= 7.5",
+          "method": "Post-session survey",
+          "baseline": "Lecture NPS 5.1",
+          "target": ">= 7.5"
+        },
+        {
+          "level": "L2",
+          "metric": "Chapter quiz improvement >= 20%",
+          "method": "Pre/post quiz per chapter",
+          "baseline": "Pre: ~58%",
+          "target": "Post: >= 72%"
+        },
+        {
+          "level": "L2",
+          "metric": "Boss wave accuracy >= 80%",
+          "method": "In-game boss completion rate",
+          "baseline": "First session: ~45%",
+          "target": "By ch6: >= 80%"
+        },
+        {
+          "level": "L3",
+          "metric": "Lab assignment accuracy >= 75%",
+          "method": "Lab assignment grade",
+          "baseline": "Prior cohort: 63%",
+          "target": ">= 75%"
+        },
+        {
+          "level": "L4",
+          "method": "Final exam sorting trace (6 marks): mean ≥4.5/6 (baseline 2.1/6)",
+          "metric": "L4 measurement"
+        }
+      ],
+      "futureEnhancements": [
+        "Adaptive Difficulty Engine: Adjust challenge difficulty in real-time based on per-student accuracy history.",
+        "AI Hint System: Context-aware Socratic hints triggered after 2 consecutive wrong selections.",
+        "Expanded Chapter Coverage: Challenges for all 13 Levitin chapters.",
+        "Collaborative Multiplayer Mode: Cooperative challenge mode for paired students.",
+        "LMS Grade Passback: Automatic XP-to-grade mapping with Moodle/Canvas gradebook."
+      ],
+      "dataCollection": "",
+      "continuousImprovement": "Monthly review of algorithm accuracy; adjust difficulty if <60% first-attempt success. Quarterly correlation with midterm scores; revise concept mapping if r<0.4. Annual Levitin alignment. Peer instructor review before new chapter release.",
+      "appendices": [
+        "Glossary of Terms",
+        "Game Component Inventory",
+        "Sample Game Session Log",
+        "Storyboard Visuals",
+        "Risk Register"
+      ],
+      "timeline": [],
+      "baselineEngagement": "",
+      "targetEngagement": "",
+      "baselineScore": "",
+      "attritionTarget": "",
+      "transferTarget": "",
+      "resultsKPI": "",
+      "analyticsplatform": "",
+      "usedRefs": {},
+      "gamePurpose": "Make abstract sorting algorithms concrete through physical manipulation with real operation-count cost feedback.",
+      "gameSubject": "Sorting algorithms: bubble, insertion, merge, quick, heap, counting — Levitin Chapters 3-7",
+      "gameMethod": "Flow: puzzle complexity scales with n; students experience O(n²) vs O(n log n) cost difference through XP expenditure.",
+      "gameMeasurement": "Pre/post quiz improvement ≥20% measured 48h after session; L3 transfer assessed via next assignment grade",
+      "gamePlayers": "SEN4012 Year-3/4 CE students, n≈32",
+      "gamePoints": "+50 XP for sort completion; bonus XP for fewer-than-optimal moves; leaderboard by total operations",
+      "gameAchievements": "Merge Master: complete merge-sort with 0 extra swaps; Speed Sorter: beat theoretical minimum step count",
+      "gameBadges": "Sort Expert badge: complete all 6 sorting algorithm puzzles; Optimal Sorter: achieve theoretical minimum moves",
+      "gameOverview": "A tile-puzzle visualiser for SEN4012 where students physically sort array tiles using a chosen algorithm — each move costs XP proportional to its operation count.",
+      "dur_preDesign": "2 weeks",
+      "dur_design": "3 weeks",
+      "dur_impl": "4 weeks",
+      "dur_ops": "8 weeks",
+      "dur_post": "2 weeks",
+      "teamMembers": [
+        {
+          "id": "1900005325",
+          "name": "Eray",
+          "surname": "Çalışkan",
+          "email": "19000005325@stu.iku.edu.tr",
+          "phone": "+905314293814"
+        },
+        {
+          "id": "2100005151",
+          "name": "Muhittin Efe",
+          "surname": "Kılıç",
+          "email": "2100005151@stu.iku.edu.tr",
+          "phone": "+905074444818"
+        }
+      ],
+      "deliverableJust": "A browser-based tile puzzle is uniquely suited because: (1) Active decision-making with immediate consequence creates stronger encoding than passive delivery; (2) Game mechanics directly parallel domain processes (see Concept-to-Game Mapping); (3) Performance logging enables objective Bloom L3+ skill assessment.",
+      "sdtAutonomy": "Students choose their approach to each sorting puzzle independently — selecting which sorting algorithm to apply, determining step sequence, and deciding when to use hint tokens versus reasoning independently. The open sandbox mode allows students to freely experiment with algorithm variants without scoring pressure, supporting self-directed algorithm exploration beyond the structured puzzle chain.",
+      "sdtCompetence": "Each puzzle completion with a correct sorting algorithm application awards XP proportional to the solution's time complexity optimality, making algorithm knowledge directly rewarding in a quantifiable way. The puzzle difficulty ladder (Bubble Sort fundamentals to Heap Sort) provides an explicit, topic-aligned competence staircase. Incorrect solutions reveal the execution step where the chosen algorithm diverged from correct behaviour.",
+      "sdtRelatedness": "Post-session puzzle board shared with the class shows which students reached which difficulty levels, creating peer conversation about sorting algorithm trade-offs. Group speed-sort challenges (simultaneous puzzle solving with live class comparison) create shared competitive energy. Pair mode allows two students to collaboratively solve a sorting challenge, requiring negotiated algorithm selection.",
+      "platform": "Browser-based web application; any modern browser. No installation required. Compatible with IKU computer labs, student devices, and mobile browsers.",
+      "narrativeEvolution": "Hall 1-2 — Bubble and Selection Halls (O(n²) Fundamentals): Apprentice completes Bubble Sort and Selection Sort puzzles at increasing input sizes. Step-level validation reveals common O(n²) execution misconceptions early. Hint tokens tempting but advised to save. SEN4012 concept: O(n²) sorting algorithm execution patterns and comparison count analysis.\n\nHall 3-4 — Insertion and Merge Halls (Transition to O(n log n)): Insertion Sort puzzles test best-case awareness. Merge Sort introduces divide-and-conquer execution tracing — the first multi-step recursive structure. Complexity jumps; some students use first hint tokens here. SEN4012 concept: insertion sort best-case O(n) and merge sort O(n log n) divide-and-conquer execution.\n\nHall 5-6 — QuickSort and Heap Halls (O(n log n) Mastery): Pivot selection in QuickSort puzzles tests worst-case awareness. HeapSort introduces heap property validation as a pre-sort step. Advanced students preserve hint tokens; others spend them here. SEN4012 concept: QuickSort pivot strategy, worst-case O(n²) scenario, and HeapSort O(n log n) guarantee.\n\nBoss Puzzle — Mixed-Requirement Trial: The Academy presents a complex scenario with multiple data sets, each requiring a different optimal sorting algorithm. Correct algorithm selection for each data set determines the final quality score. Debrief maps every step-level decision to SEN4012 sorting algorithm selection criteria and comparative analysis.",
+      "socialRationale": "",
+      "communityStandards": "",
+      "currencyName": "",
+      "pricingModel": "",
+      "adaptiveDifficulty": "",
+      "personalisation": "",
+      "lbCategories": [],
+      "wf_dash": "",
+      "wf_asset": "",
+      "wf_portfolio": "",
+      "logPrivacy": "Activity logs retained 6 months. Accessible only to facilitator and research team. Student identifiers anonymised in aggregate reports. Data per KVKK and GDPR. Students informed via course syllabus. Data destruction certificate at academic year end.",
+      "lbVisibility": "",
+      "lbReset": "",
+      "dcMethods": {},
+      "howEthics": "Student participation is voluntary; equivalent written task available for opt-outs. All performance data anonymised in aggregate reports. Data collected under KVKK and GDPR, disclosed in course syllabus. Assessment based on participation and reflection, not competitive ranking. Instructor monitors emotional wellbeing; distress triggers private check-in.",
+      "whyMotivation": "Students are motivated through three SDT core drives: Autonomy — puzzle approach selection and sandbox exploration give students genuine control over their algorithm learning strategy, respecting that different students prefer different entry points into algorithm understanding. Competence — step-by-step execution validation provides far more precise feedback than answer-level checking, making algorithm understanding feel like a real, verifiable skill rather than an arbitrary test performance. Relatedness — group speed-sort challenges and pair mode transform individual algorithm puzzle-solving into shared class events with authentic peer engagement. Through the Octalysis lens: Challenge, Development & Accomplishment, Discovery, Social Influence.",
+      "whoPlayers": "",
+      "howQuality": "",
+      "playerRoles": [
+        {
+          "name": "Algorithm Engineer",
+          "side": "Student",
+          "desc": "Student solving algorithm challenges",
+          "abilities": [
+            "Select algorithm strategies",
+            "Earn XP per correct solution",
+            "Use hint tokens"
+          ],
+          "objectives": [
+            "Complete all chapter challenges",
+            "Achieve ≥85% accuracy"
+          ],
+          "scoring": {
+            "correctSolution": 10,
+            "bossWave": 50,
+            "hintUsed": -5,
+            "speedBonus": 5
+          }
+        }
+      ],
+      "gameSides": [
+        {
+          "name": "Students",
+          "roles": [
+            "Algorithm Engineer"
+          ],
+          "winCondition": "Complete all waves with ≥85% accuracy across 12 chapters"
+        }
+      ],
+      "winConditions": [
+        {
+          "side": "Student",
+          "condition": "Clear all chapter challenges with ≥85% overall accuracy",
+          "points": 100
+        },
+        {
+          "side": "Student",
+          "condition": "Achieve perfect score on ≥3 consecutive chapters without hints",
+          "points": 50
+        }
+      ],
+      "gamePhases": [
+        {
+          "name": "Introduction & Calibration",
+          "seq": 1,
+          "duration": "5 min",
+          "description": "Instructor explains objectives; students review chapter theory",
+          "actions": [
+            "Review Levitin chapter",
+            "Set difficulty level",
+            "Complete warm-up challenge"
+          ],
+          "facilitator": "Present learning objectives; demo example; start timer"
+        },
+        {
+          "name": "Main Challenge — Tile Puzzle Sorting",
+          "seq": 2,
+          "duration": "20 min",
+          "description": "Students physically sort tile arrays using chosen algorithms — each operation costs XP",
+          "actions": [
+            "Apply algorithm selection",
+            "Earn XP per correct decision",
+            "Use hint tokens sparingly"
+          ],
+          "facilitator": "Monitor progress; pause at key moments; prompt reflection on wrong answers"
+        },
+        {
+          "name": "Debrief & Algorithm Review",
+          "seq": 3,
+          "duration": "10 min",
+          "description": "Instructor reveals optimal solutions; students discuss decisions",
+          "actions": [
+            "Review decision log",
+            "Identify O(n) vs O(n²) patterns",
+            "Connect to Levitin chapter"
+          ],
+          "facilitator": "Show optimal paths; ask 'why' questions; connect to next chapter"
+        }
+      ],
+      "eventCards": [
+        {
+          "id": "EV-01",
+          "name": "Array Scramble",
+          "trigger": "Chapter 5",
+          "effect": "Array shuffled mid-sort — student must adapt their chosen algorithm",
+          "pmConcept": "Robustness Under Change"
+        },
+        {
+          "id": "EV-02",
+          "name": "Efficiency Challenge",
+          "trigger": "Chapters 7-9",
+          "effect": "Only O(n log n) solutions accepted — O(n²) timeout added",
+          "pmConcept": "Complexity Lower Bounds"
+        },
+        {
+          "id": "EV-03",
+          "name": "Optimal Challenge",
+          "trigger": "Boss chapter",
+          "effect": "Must complete sort in theoretical minimum operations for full bonus",
+          "pmConcept": "Optimal Substructure"
+        }
+      ],
+      "roleScoring": [
+        {
+          "role": "Algorithm Engineer",
+          "action": "Correct algorithm selection (wave cleared)",
+          "points": 10,
+          "type": "base"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Boss wave cleared (optimal solution)",
+          "points": 50,
+          "type": "bonus"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Speed bonus (sub-threshold time)",
+          "points": 5,
+          "type": "bonus"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Hint token used",
+          "points": -5,
+          "type": "penalty"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Wrong algorithm selection",
+          "points": 0,
+          "type": "base"
+        }
+      ],
+      "teamFormationRules": "Individual play. Optional pair mode for collaborative decision-making. Class leaderboard shows anonymised rankings.",
+      "gameIntroScript": "Welcome to SortQuest! Your mission: apply the right algorithm to overcome each wave. Every correct selection earns XP. Boss waves test your deepest understanding. Use hint tokens wisely — each costs 5 XP. The Algorithm Master badge awaits students who clear all 12 chapter waves with ≥90% accuracy.",
+      "physicalArtifacts": [
+        {
+          "type": "Digital Game Interface",
+          "description": "Browser-based game accessible via URL",
+          "qty": "1 per student",
+          "material": "HTML5 web application"
+        },
+        {
+          "type": "Facilitator Dashboard",
+          "description": "Instructor view showing all student progress",
+          "qty": "1 per session",
+          "material": "Digital — same application, facilitator mode"
+        }
+      ],
+      "environmentalSetup": {
+        "zones": [
+          {
+            "name": "Workstation Area",
+            "desc": "Individual or paired PC/laptop stations",
+            "requirement": "SEN4012 Computer Lab — all stations with browser access"
+          },
+          {
+            "name": "Projection Zone",
+            "desc": "Instructor screen for demo and announcements",
+            "requirement": "Projector or TV display"
+          }
+        ],
+        "equipment": [
+          "Browser-compatible devices for all students",
+          "Stable internet connection",
+          "Instructor display"
+        ],
+        "accessibility": "All interactions digital; screen-reader compatible; keyboard navigable"
+      },
+      "learningContentDetails": {
+        "teachingSubject": "SEN4012: Algorithm complexity analysis, Big-O notation, sorting, searching, dynamic programming, greedy, graph algorithms — Levitin Chapters 2-13",
+        "declarativeKnowledge": "Pre-challenge briefings define algorithm properties and complexity classes using in-game visual explanations",
+        "proceduralKnowledge": "Students apply algorithm selection decisions with immediate consequence feedback (correct = wave cleared; wrong = wave penalty)",
+        "methodology": "Active learning via consequence-driven decision-making: challenge → decision → immediate feedback → reflection → next challenge",
+        "furtherSources": [
+          "Levitin 'Introduction to the Design and Analysis of Algorithms' 3rd Ed",
+          "Cormen et al. CLRS",
+          "SEN4012 lecture notes"
+        ]
+      },
+      "secondaryBenefits": [
+        "Enhance teamwork and collaborative problem-solving under time pressure",
+        "Foster adaptability and algorithmic reasoning in ambiguous situations",
+        "Bridge theoretical course content with practical application through experience",
+        "Develop communication and persuasion skills in academic context"
+      ],
+      "dataCollectionPlan": {
+        "responsible": "Course Facilitator / Gamification Team",
+        "fields": [
+          "Student ID (anonymised)",
+          "Session date",
+          "Score per round",
+          "Decision log",
+          "Role assigned",
+          "Final placement"
+        ],
+        "method": "Automated digital log + end-of-session survey",
+        "analysis": "Post-session: score correlation with SEN4012 midterm and final exam assessment performance; engagement survey NPS"
+      },
+      "glossary": [
+        {
+          "term": "Big-O Notation",
+          "definition": "Mathematical notation describing the upper bound of an algorithm's time/space complexity"
+        },
+        {
+          "term": "Wave",
+          "definition": "A set of algorithm challenges in one chapter — completion advances the student"
+        },
+        {
+          "term": "Boss Wave",
+          "definition": "The hardest challenge in a chapter requiring optimal algorithm selection"
+        },
+        {
+          "term": "Hint Token",
+          "definition": "A limited resource that reveals a clue at the cost of 5 XP"
+        },
+        {
+          "term": "Algorithm Engineer",
+          "definition": "The student role — responsible for selecting and defending algorithm choices"
+        },
+        {
+          "term": "Tile",
+          "definition": "A visual array element that must be sorted — each move costs operations which are deducted from XP pool"
+        }
+      ],
+      "lbCats": "Participant Names | Total XP | Badges | Session Rank | Personal Points % = (player XP / total class XP) x 100 | Chapter Completion % | Boss Wave Clears | Accuracy %",
+      "school": "Istanbul Kültür University — Computer Engineering Department",
+      "semester": "2025-2026 Spring Semester",
+      "instructorRole": "The instructor should only be assigned the role of questioning the game. No additional roles beyond questioning should be assigned. The instructor's focus is on facilitating reflection, probing understanding, and guiding critical thinking — not participating in game mechanics. If the instructor participates as a player, grading objectivity and the psychological safety of students may be compromised.",
+      "gameDurationRules": "No single game should exceed 30 minutes of active gameplay. Total session including introduction and debrief: 30 minutes. Recommended timing: Introduction 5 min + Active gameplay 20 min + Debrief & reflection 5 min. Instructor may pause at any time for teaching moments. Games exceeding time limit are concluded at the current phase boundary.",
+      "gameEndConditions": {
+        "condition1": {
+          "check": "Has the player solved all mandatory puzzles within the time limit?",
+          "result": "ESCAPE COMPLETE",
+          "outcome": "Game ends. Full XP and Escape Artist badge awarded. Debrief commences.",
+          "type": "win"
+        },
+        "condition2": {
+          "check": "Has the player used all hint tokens without completing the puzzle chain?",
+          "result": "ESCAPE FAILED",
+          "outcome": "Game ends. Partial XP for puzzles solved. Instructor walks through solution logic in debrief.",
+          "type": "lose"
+        },
+        "condition3": {
+          "check": "Has the session timer reached 0?",
+          "result": "TIME LIMIT REACHED",
+          "outcome": "Game concludes immediately. XP awarded for puzzles completed. Full solution revealed during debrief.",
+          "type": "draw"
+        }
+      },
+      "techStack": {
+        "software": [
+          {
+            "name": "Game Engine / Browser App",
+            "role": "Central game state, scoring, leaderboard, and phase management",
+            "stack": "Browser-based HTML5/JS; no server dependency"
+          },
+          {
+            "name": "Player Dashboard Interface",
+            "role": "Real-time XP, badge display, and progress tracking per player",
+            "stack": "Responsive single-page web app; mobile-compatible"
+          },
+          {
+            "name": "Facilitator Control Panel",
+            "role": "Game phase control, timer management, and result override capability",
+            "stack": "Password-protected admin view within same HTML bundle"
+          },
+          {
+            "name": "Export & Report Module",
+            "role": "Session log, grade-ready CSV, and PDF summary generation",
+            "stack": "Client-side PDF/CSV generation; no backend required"
+          }
+        ],
+        "hardware": [
+          {
+            "name": "Instructor Laptop/Tablet",
+            "role": "Facilitator control panel and shared display projection"
+          },
+          {
+            "name": "Student Devices (BYOD)",
+            "role": "Individual player interfaces; any modern browser; IKU lab PCs available"
+          },
+          {
+            "name": "Classroom Projector/Screen",
+            "role": "Shared leaderboard and phase announcement display"
+          }
+        ],
+        "gameComponents": [
+          "Digital scoreboard",
+          "XP & badge tracking system",
+          "Phase timer",
+          "Facilitator override panel",
+          "Session export log"
+        ]
+      },
+      "references": [
+        {
+          "citation": "Cormen, T.H., Leiserson, C.E., Rivest, R.L. & Stein, C. (2022). Introduction to Algorithms (4th ed.). MIT Press.",
+          "relevance": "Core textbook — algorithmic complexity foundations for game mechanics and scoring."
+        },
+        {
+          "citation": "Skiena, S.S. (2020). The Algorithm Design Manual (3rd ed.). Springer.",
+          "relevance": "Algorithm design patterns mapped directly to tower defence and puzzle challenge structures."
+        },
+        {
+          "citation": "Kapp, K.M. (2012). The Gamification of Learning and Instruction. Pfeiffer.",
+          "relevance": "Foundational gamification theory underpinning XP, badge, and leaderboard design."
+        },
+        {
+          "citation": "Deterding, S., Dixon, D., Khaled, R. & Nacke, L. (2011). From game design elements to gamefulness: Defining gamification. Proceedings of MindTrek 2011.",
+          "relevance": "Conceptual basis for distinguishing gamification from full game design."
+        },
+        {
+          "citation": "Chou, Y. (2015). Actionable Gamification: Beyond Points, Badges and Leaderboards. Octalysis Media.",
+          "relevance": "Octalysis framework applied to Core Drive analysis and reward structure design."
+        }
+      ],
+      "gameMechanicsDetail": {
+        "elements": [
+          {
+            "name": "Points & XP",
+            "purpose": "Quantify learning performance and motivate continued engagement",
+            "ontology": "earn condition = correct in-game decision or task completion; value = 5-100 XP; tracked per player per session; displayed on dashboard"
+          },
+          {
+            "name": "Badges & Achievements",
+            "purpose": "Reward specific accomplishments beyond cumulative score",
+            "ontology": "trigger = discrete game event; acquisition = one-time per session; visible on player profile and leaderboard"
+          },
+          {
+            "name": "Leaderboard",
+            "purpose": "Provide social comparison and competitive engagement",
+            "ontology": "ranking = descending XP order; scope = class-wide session; updated after each phase; anonymised for export"
+          },
+          {
+            "name": "Session Timer",
+            "purpose": "Create urgency and model real-world time constraints",
+            "ontology": "duration = configured per phase; expiry = triggers phase transition; visible countdown displayed at all times"
+          },
+          {
+            "name": "Puzzle Lock System",
+            "purpose": "Represent domain knowledge as sequential solution gates",
+            "ontology": "lock = challenge requiring specific knowledge key; key = correct answer; chain = ordered lock sequence to exit"
+          },
+          {
+            "name": "Hint Token",
+            "purpose": "Provide scaffolded support while preserving cognitive effort",
+            "ontology": "token = limited resource (3 per session); spend = reveals partial solution; tracked per player"
+          },
+          {
+            "name": "Room Progression",
+            "purpose": "Structure exploration with clear spatial and conceptual boundaries",
+            "ontology": "room = bounded challenge space; unlock = all locks solved; progression = sequential room chain to exit"
+          }
+        ]
+      },
+      "gameDynamics": {
+        "progressionSystems": "Puzzle chain advances through six sorting algorithm families in complexity order: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, QuickSort, and Heap Sort. Each family contains 3 puzzles of increasing input size and edge-case complexity. Completing a family unlocks the next and awards a family badge. The final boss puzzle requires choosing and applying the optimal algorithm for a complex mixed-requirement scenario.",
+        "feedbackLoops": "Step-validation feedback highlights the exact execution step where a student's algorithm trace diverges from correct behaviour, providing precise actionable feedback. Hint token use is tracked and displayed in the post-session report, providing feedback on knowledge confidence patterns. Sandbox mode provides self-directed feedback through observable algorithm execution without scoring pressure.",
+        "competition": "Leaderboard by puzzle chain depth and efficiency (hints used per puzzle). Weekly Sort Master badge for the student with the deepest chain and fewest hints used. Speed-sort challenge mode (all students attempt the same puzzle simultaneously with live class timer) creates high-energy competitive events throughout the semester.",
+        "collaboration": "Pair mode pairs students on a shared puzzle: one selects the algorithm, one executes the steps. Role alternation per puzzle ensures both students engage both selection and execution competencies. Disagreements on algorithm selection trigger a collaborative reasoning phase before commitment to the solution path.",
+        "adaptability": "Puzzle difficulty and input complexity are configurable per session. Hint token allocation is adjustable for assessment vs practice contexts. Sandbox mode can be enabled or disabled per session. Boss puzzle can be swapped per session to cover different algorithm category combinations. Speed-sort challenge timing is adjustable."
+      },
+      "personaList": "Persona 1 — The Precision Solver: Approaches each puzzle with full algorithm analysis before beginning. Rarely uses hints. Motivated by completing the boss puzzle with zero hints.\n\nPersona 2 — The Sandbox Explorer: Prefers unscored sandbox mode for algorithm experimentation before attempting scored puzzles. Uses sandbox to test incorrect approaches safely before committing.\n\nPersona 3 — The Speed Runner: Prioritises puzzle completion speed over optimality. May select a correct but suboptimal sorting algorithm for large inputs to avoid decision time cost. Needs instructor prompts to reconsider efficiency.",
+      "playerPersonas": [
+        {
+          "name": "The Precision Solver",
+          "description": "Analyses algorithm suitability fully before beginning execution trace. Motivated by zero-hint boss puzzle completion. Top efficiency leaderboard target.",
+          "motivations": [
+            "Complete full puzzle chain with zero hint tokens",
+            "Achieve optimal algorithm selection for boss puzzle mixed-requirement scenario",
+            "Top efficiency leaderboard across semester sessions"
+          ],
+          "challenges": [
+            "Over-analysis can exhaust session time before boss puzzle",
+            "Needs facilitator pacing signal when analysis phase exceeds intended duration"
+          ]
+        },
+        {
+          "name": "The Sandbox Explorer",
+          "description": "Uses sandbox mode as primary learning space before attempting scored chain. Algorithm understanding developed through experimental execution rather than prior theory.",
+          "motivations": [
+            "Discover all sorting algorithm execution patterns through sandbox exploration",
+            "Complete at least three puzzle chain families per session",
+            "Use sandbox insights to achieve correct boss puzzle algorithm selection"
+          ],
+          "challenges": [
+            "Sandbox time allocation leaves insufficient time for full scored chain",
+            "Needs structured transition signal from sandbox to scored chain"
+          ]
+        }
+      ],
+      "rewardStructure": {
+        "elite": "Sort Master badge + 'Sorting Academy Graduate' certificate for completing the full puzzle chain including Boss Puzzle with zero hints used",
+        "professional": "Algorithm Scholar badge + leaderboard recognition for completing ≥4 sorting algorithm families with ≤1 hint token used per family",
+        "access": "Participation certificate + 'Sorting Apprentice' badge for correctly completing ≥8 sorting algorithm puzzles across any difficulty tiers"
+      },
+      "rewardStructureDetail": {
+        "intrinsic": [
+          "Precise satisfaction of correctly tracing algorithm execution step-by-step — a level of mastery that abstract answers cannot provide",
+          "Discovery of sorting algorithm execution characteristics through sandbox experimentation that deepens conceptual understanding",
+          "Social recognition from class speed-sort competitions and efficiency leaderboard comparison across sessions"
+        ],
+        "extrinsic": {
+          "teamBased": [
+            {
+              "badge": "Class Sort Champions",
+              "trigger": "Class-wide session highest aggregate puzzle depth reached",
+              "type": "Class Achievement"
+            },
+            {
+              "badge": "Pair Solvers",
+              "trigger": "Pair mode duo completing Boss Puzzle with zero hints in minimum time",
+              "type": "Team Badge"
+            }
+          ],
+          "individual": [
+            {
+              "badge": "Zero Hint Graduate",
+              "trigger": "Completing full puzzle chain including Boss Puzzle with zero hint tokens used",
+              "points": 100
+            },
+            {
+              "badge": "Speed Sorter",
+              "trigger": "Winning class speed-sort challenge event",
+              "points": 60
+            },
+            {
+              "badge": "Sandbox Explorer",
+              "trigger": "Completing all available sorting algorithm explorations in sandbox mode",
+              "points": 30
+            },
+            {
+              "badge": "Boss Puzzle Champion",
+              "trigger": "Solving Boss Puzzle on first attempt with optimal algorithm selection",
+              "points": 80
+            }
+          ]
+        }
+      },
+      "socialInteraction": {
+        "collaboration": "Pair mode assigns algorithm selection to one student and execution trace to the other — creating complementary collaboration that ensures both students engage both cognitive layers of sorting algorithm mastery.",
+        "competition": "Class speed-sort challenge mode creates simultaneous competitive puzzle solving visible to all students — turning individual algorithm practice into a shared competitive performance event.",
+        "communityBuilding": "Post-session class puzzle board showing depth reached and hints used creates transparent peer comparison that drives improvement across sessions; sandbox findings are shared in class debrief."
+      },
+      "conceptualMap": [
+        {
+          "concept": "Sorting Algorithm Taxonomy",
+          "mechanic": "Puzzle Chain (6 algorithm families)",
+          "description": "Six-family puzzle chain maps directly to the SEN4012 sorting algorithm taxonomy — Bubble, Selection, Insertion, Merge, Quick, Heap — in complexity progression order.",
+          "courseReference": "Cormen et al. (2022): Chapters 6-9 — Sorting Algorithms"
+        },
+        {
+          "concept": "Execution-Level Understanding",
+          "mechanic": "Step-by-Step Validation",
+          "description": "Step validation forces students to trace algorithm execution precisely — developing execution-level understanding that distinguishes genuine algorithm knowledge from name recognition.",
+          "courseReference": "Cormen et al. (2022): Chapter 2 — Insertion Sort and Loop Invariants"
+        },
+        {
+          "concept": "Optimal Algorithm Selection",
+          "mechanic": "Boss Puzzle (mixed requirements)",
+          "description": "Boss puzzle presents scenarios requiring selection of the optimal algorithm across multiple competing criteria — operationalising the SEN4012 algorithm selection decision framework.",
+          "courseReference": "Skiena (2020): Chapter 4 — Sorting and Searching"
+        },
+        {
+          "concept": "Hypothesis Testing",
+          "mechanic": "Sandbox Mode",
+          "description": "Sandbox mode operationalises algorithmic hypothesis testing — students can experiment with algorithm variants on test inputs without scoring pressure, developing genuine algorithm intuition.",
+          "courseReference": "Skiena (2020): Chapter 1 — Problem Solving"
+        },
+        {
+          "concept": "Complexity Trade-offs",
+          "mechanic": "Algorithm Selection Panel",
+          "description": "Algorithm selection panel presents competing sorting options with different complexity profiles — requiring students to reason about best-case, worst-case, and average-case performance simultaneously.",
+          "courseReference": "Cormen et al. (2022): Chapter 8 — Linear-Time Sorting"
+        }
+      ],
+      "leaderboardDetails": {
+        "display": [
+          "Student Name",
+          "Total XP",
+          "Badges Earned",
+          "Session Rank",
+          "Personal XP % = (player XP / total class XP) × 100",
+          "Sorting Accuracy %"
+        ],
+        "personalFormula": "Personal XP % = (player XP / total class XP) × 100",
+        "classWideMetrics": [
+          "Class average Sorting accuracy per session",
+          "Top XP earner per session",
+          "Most improved XP across sessions",
+          "Average session completion rate"
+        ],
+        "recognition": "Session leaders earn bonus XP and leaderboard recognition",
+        "updateFrequency": "Real-time update after each phase; final standing after session end"
+      },
+      "continuousImprovements": [
+        {
+          "name": "Adaptive Complexity Scaling",
+          "description": "Implement algorithm-driven difficulty adjustment that scales sorting algorithm challenge complexity per student based on real-time session performance, ensuring optimal challenge across all SEN4012 skill levels.",
+          "category": "Game Design"
+        },
+        {
+          "name": "Big-O Ontology Integration",
+          "description": "Extend the puzzle game challenge pool using a formal Big-O complexity ontology, enabling systematic verification that all SEN4012 algorithm topics are covered proportionally across sessions.",
+          "category": "Ontology Engineering"
+        },
+        {
+          "name": "LLM Hint Engine",
+          "description": "Integrate an LLM-powered hint system that generates Socratic prompts aligned to SEN4012 Big-O analysis methodology, reducing facilitator dependency for in-session algorithm guidance.",
+          "category": "AI/ML Enhancement"
+        },
+        {
+          "name": "Cross-Session Mastery Tracking",
+          "description": "Implement longitudinal tracking of sorting algorithm algorithm knowledge across multiple sessions to identify persistent misconceptions and generate targeted SEN4012 revision recommendations.",
+          "category": "Analytics"
+        },
+        {
+          "name": "Assessment Export Module",
+          "description": "Add certified assessment mode exporting individual Big-O knowledge profiles as grade-ready reports aligned to SEN4012 course learning outcomes rubric.",
+          "category": "Infrastructure"
+        }
+      ]
+    }
+  },
+  "realizations": [
+    {
+      "ref": "problemStatement",
+      "category": "problemStatement",
+      "sec": 2,
+      "label": "Problem Statement",
+      "hint": "≥80 chars + a percentage for full credit",
+      "promised": "Students understand sorting algorithm names but cannot trace execution on a given array. SortQuest makes sorting visual and tactile: drag tiles into correct positions following real algorithm rules. Wrong individual moves are rejected immediately with an algorithm-specific explanation — there is no path to a correct final state through random dragging.",
+      "fulfilled": "yes",
+      "proof": "The problem is addressed by the deployed SortQuest prototype. Students can practise algorithm execution through tile-based puzzle interactions. Invalid moves are rejected with algorithm-specific feedback, helping players understand why a step does not follow the selected algorithm rule.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "targetPopulation",
+      "category": "targetPopulation",
+      "sec": 2,
+      "label": "Target Population",
+      "hint": "≥30 chars + numeric size",
+      "promised": "SEN4012 Analysis of Algorithms students (3rd/4th year, n≈35)",
+      "fulfilled": "yes",
+      "proof": "The game is designed for SEN4012 Analysis of Algorithms students. The selected modes and puzzle content focus on sorting, searching, heap operations, and graph traversal topics that are relevant to the course.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "successCriteria",
+      "category": "successCriteria",
+      "sec": 2,
+      "label": "Success Criteria",
+      "hint": "≥4 measurable criteria",
+      "promised": "",
+      "fulfilled": "partial",
+      "proof": "Formal success criteria were not fully defined in the imported proposal. However, the deployed game supports measurable indicators such as completion rate, score, moves, time, hints used, stars, and leaderboard entries. These can be used during the play phase to evaluate participation and playability.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "userStories",
+      "category": "userStories",
+      "sec": 3,
+      "label": "User Stories",
+      "hint": "≥5 stories",
+      "promised": "role: Student, want: drag numbered tiles following algorithm rules, soThat: I practise execution in a tactile visual way, acc: Valid moves snap + animate; invalid = red flash + tooltip with violated rule; move counter updates · role: Student, want: see star rating after each puzzle, soThat: I know how efficient my execution was, acc: 1–3 stars; breakdown: moves vs min, hints, time vs par; shown before leaderboard · role: Student, want: compete in a daily global puzzle with all classmates, soThat: I can fairly compare execution skill, acc: Daily tab; seed + expiry shown; no hints; leaderboard top 10; results after 24h · role: Student, want: create a custom puzzle and share it as a URL, soThat: I can challenge classmates, acc: Level Editor; array + mode → shareable URL; opens in play mode for anyone",
+      "fulfilled": "partial",
+      "proof": "Most user stories are implemented in the deployed prototype. Students can play tile-based algorithm puzzles, receive feedback for invalid moves, see final score and star rating, use hints, create a custom puzzle with the Level Editor, and generate a shareable URL. The Daily Challenge and leaderboard are implemented as browser-based local prototypes, not as a global backend leaderboard.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "frs",
+      "category": "frs",
+      "sec": 3,
+      "label": "Functional Requirements",
+      "hint": "≥1 FR mentioning logs/events/audit/recording",
+      "promised": "id: FR-SQ-01, desc: CSS Grid tile drag-and-drop; colour-coded by relative value, priority: Must · id: FR-SQ-02, desc: Validation rejects every invalid drag move with algorithm-specific tooltip, priority: Must · id: FR-SQ-03, desc: 8 puzzle modes each with distinct validation function and tile layout, priority: Must · id: FR-SQ-04, desc: Star rating (1–3): moves vs min, hints, time vs par, priority: Must · id: FR-SQ-05, desc: Daily Sort Challenge: global seed, no-hint, leaderboard by moves + time, priority: Should · id: FR-SQ-06, desc: Level Editor: array input + mode + shareable URL, priority: Should",
+      "fulfilled": "partial",
+      "proof": "The main functional requirements are implemented: CSS grid tile board, tile interaction, algorithm-specific validation, 8 puzzle modes, score and star rating, hint system, Level Editor, and shareable URL generation. The Daily Challenge exists in the prototype, but the leaderboard is stored locally in the browser instead of using a global online backend.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "nfrs",
+      "category": "nfrs",
+      "sec": 3,
+      "label": "Non-Functional Requirements",
+      "hint": "≥5 NFRs incl. privacy/GDPR/KVKK",
+      "promised": "id: NFR-SQ-01, attr: Usability, desc: Tile snap after release, target: <50ms · id: NFR-SQ-02, attr: Usability, desc: Validation rejects 100% of invalid moves all 8 modes, target: 200 invalid scenarios per mode, 0 false accepts (automated test suite)",
+      "fulfilled": "partial",
+      "proof": "The game provides responsive browser-based interaction, immediate visual feedback, and invalid move rejection for all modes. However, the full automated validation test suite with 200 invalid scenarios per mode was not implemented. Therefore, the usability goals are mostly addressed, while the complete automated NFR verification remains future work.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "logPrivacy",
+      "category": "logPrivacy",
+      "sec": 3,
+      "label": "Log Privacy Statement",
+      "hint": "Auxiliary for keyword detection",
+      "promised": "Activity logs retained 6 months. Accessible only to facilitator and research team. Student identifiers anonymised in aggregate reports. Data per KVKK and GDPR. Students informed via course syllabus. Data destruction certificate at academic year end.",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype does not use a backend server or external database. Leaderboard data is stored locally in the player’s browser through localStorage. No login or account system is required. The full formal log retention process described in the proposal, including facilitator-only access and destruction certificate, is not implemented in the prototype.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "dataCollectionPlan",
+      "category": "dataCollectionPlan",
+      "sec": 3,
+      "label": "Data Collection Plan",
+      "hint": "Auxiliary for keyword detection",
+      "promised": "responsible: Course Facilitator / Gamification Team · fields: [\"Student ID (anonymised)\",\"Session date\",\"Score per round\",\"Decision log\",\"Role assigned\",\"Final placement\"] · method: Automated digital log + end-of-session survey · analysis: Post-session: score correlation with SEN4012 midterm and final exam assessment performance; engagement survey NPS",
+      "fulfilled": "partial",
+      "proof": "The prototype collects basic gameplay results such as player name, algorithm mode, level, score, moves, time, and stars through the browser-based leaderboard. However, the complete data collection plan with anonymised student IDs, detailed decision logs, assigned roles, and post-session statistical analysis is not fully implemented yet. These parts are planned for the play phase and final submission.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "bloomOutcomes",
+      "category": "bloomOutcomes",
+      "sec": 4,
+      "label": "Bloom Outcomes",
+      "hint": "All 6 levels (L1-L6), outcome ≥20 chars",
+      "promised": "level: Remember, bloom_k: 1, outcome: Recall 5 fundamental sort operations, activity: Mode selection screen — operations listed per mode, assessment: Pre-session quiz: match operation to algorithm (target ≥80%) · level: Understand, bloom_k: 2, outcome: Explain why MergeSort needs separate output column but QuickSort partitions in-place, activity: MergeSort vs QuickSort mode comparison, assessment: Post-puzzle reflection answered correctly ≥70% · level: Apply, bloom_k: 3, outcome: Execute sorting rules correctly on given tile arrangement, activity: Campaign: all 8 modes, assessment: ★★★ on ≥4 of 8 modes per student by week 12 · level: Analyse, bloom_k: 4, outcome: Analyse how move count scales with input size, activity: Free: same mode at level 1 (4 tiles) and level 4 (32 tiles), assessment: Scaling prediction quiz: ≥65% correct",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype supports the Bloom levels through gameplay. Students recall algorithm operations, understand algorithm rules through feedback, apply sorting/searching/traversal steps in puzzle modes, and analyse efficiency through moves, time, score, and star rating. However, the proposed pre-session quiz, post-puzzle written reflection, and scaling prediction quiz are not fully implemented inside the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "theories",
+      "category": "theories",
+      "sec": 4,
+      "label": "Theories used",
+      "hint": "≥4 theories woven into the narrative by full name",
+      "promised": "flow · sdt · mda · bloom",
+      "fulfilled": "yes",
+      "proof": "The deployed game applies the proposed theories in its design. Flow is supported through level-based difficulty progression. SDT is supported through player choice, feedback, and competence-building. MDA is reflected through puzzle mechanics, algorithm validation, challenge, progress, and leaderboard elements. Bloom’s taxonomy is supported through algorithm recall, understanding, application, and analysis activities.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "mdaAnalysis",
+      "category": "mdaAnalysis",
+      "sec": 4,
+      "label": "MDA Analysis",
+      "hint": "Mechanics/Dynamics/Aesthetics each ≥50 chars",
+      "promised": "mechanics: Puzzle chain (sequential sorting challenges), Algorithm selection panel, Step-by-step execution validation, Hint token system (3 per session), Sandbox mode (unscored experimentation), Leaderboard by difficulty level reached, Speed-sort challenge mode. · dynamics: The step-by-step execution validation mechanic forces students to think at the algorithm's execution level rather than just knowing the algorithm name, producing deeper cognitive engagement. Hint token scarcity creates authentic cost-benefit reasoning about knowledge confidence. Sandbox mode provides a low-stakes exploration space that complements the scored puzzle chain. · aesthetics: Challenge (each puzzle requires genuine algorithm application, not guessing), Discovery (sandbox mode enables free algorithm experimentation), Accomplishment (advanced difficulty puzzle completion signals genuine SEN4012 mastery), Submission (puzzle aesthetic creates engaging spatial representation of abstract sorting concepts).",
+      "fulfilled": "yes",
+      "proof": "The deployed game implements the MDA structure through algorithm puzzle mechanics, step validation, score, timer, hints, levels, and leaderboard. These mechanics create gameplay dynamics such as strategic decision-making, trial-and-error learning, and improvement through feedback. The intended aesthetics of challenge, mastery, discovery, and accomplishment are visible in the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "hexad",
+      "category": "hexad",
+      "sec": 4,
+      "label": "HEXAD distribution",
+      "hint": "Percentages summing to 100±5",
+      "promised": "",
+      "fulfilled": "dropped",
+      "proof": "A formal HEXAD player type distribution was not included in the imported proposal and was not separately implemented in the deployed prototype. The game still supports different player motivations through challenge, progress, hints, leaderboard, and exploration, but no explicit HEXAD measurement or distribution is used.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "mechanics",
+      "category": "mechanics",
+      "sec": 4,
+      "label": "Mechanics",
+      "hint": "≥5 NON-PBL items",
+      "promised": "pts · lb · progress · challenge",
+      "fulfilled": "yes",
+      "proof": "The proposed mechanics are implemented. Points are represented through the score system, leaderboard records player results, progress is shown through levels and completion states, and challenge is created through algorithm-specific puzzle rules and invalid move feedback.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "sdtAutonomy",
+      "category": "sdtAutonomy",
+      "sec": 5,
+      "label": "SDT — Autonomy support",
+      "hint": "≥50 chars",
+      "promised": "Students choose their approach to each sorting puzzle independently — selecting which sorting algorithm to apply, determining step sequence, and deciding when to use hint tokens versus reasoning independently. The open sandbox mode allows students to freely experiment with algorithm variants without scoring pressure, supporting self-directed algorithm exploration beyond the structured puzzle chain.",
+      "fulfilled": "partial",
+      "proof": "The deployed game supports autonomy by allowing players to choose the algorithm mode, difficulty level, hint usage, reset/new puzzle actions, daily challenge, and custom arrays through the Level Editor. However, the full sandbox mode for experimenting with algorithm variants without scoring pressure is not separately implemented.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "sdtCompetence",
+      "category": "sdtCompetence",
+      "sec": 5,
+      "label": "SDT — Competence support",
+      "hint": "≥50 chars",
+      "promised": "Each puzzle completion with a correct sorting algorithm application awards XP proportional to the solution's time complexity optimality, making algorithm knowledge directly rewarding in a quantifiable way. The puzzle difficulty ladder (Bubble Sort fundamentals to Heap Sort) provides an explicit, topic-aligned competence staircase. Incorrect solutions reveal the execution step where the chosen algorithm diverged from correct behaviour.",
+      "fulfilled": "yes",
+      "proof": "The deployed game strongly supports competence. Players receive immediate feedback for valid and invalid moves, see explanations when a move violates the algorithm rule, and track their performance through score, moves, time, hints used, and star rating. The level system also creates a visible difficulty ladder from easier to harder puzzles.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "sdtRelatedness",
+      "category": "sdtRelatedness",
+      "sec": 5,
+      "label": "SDT — Relatedness support",
+      "hint": "≥50 chars",
+      "promised": "Post-session puzzle board shared with the class shows which students reached which difficulty levels, creating peer conversation about sorting algorithm trade-offs. Group speed-sort challenges (simultaneous puzzle solving with live class comparison) create shared competitive energy. Pair mode allows two students to collaboratively solve a sorting challenge, requiring negotiated algorithm selection.",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype partially supports relatedness through the local leaderboard, Daily Challenge, and shareable puzzle links. These features allow comparison and peer challenge in a limited form. However, real class-wide online leaderboard, pair mode, and simultaneous group speed-sort challenges are not implemented.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "octalysis",
+      "category": "octalysis",
+      "sec": 5,
+      "label": "Octalysis (0.0-1.0 per drive)",
+      "hint": "≥2 white-hat drives ≥0.5; whiteTotal ≥ blackTotal",
+      "promised": "",
+      "fulfilled": "no",
+      "proof": "A formal Octalysis score or white-hat/black-hat analysis was not included in the imported proposal and was not implemented as a separate measurement in the prototype. The game still uses motivational elements such as challenge, progress, feedback, achievement, and leaderboard.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "narrativeTheme",
+      "category": "narrativeTheme",
+      "sec": 6,
+      "label": "Narrative Theme",
+      "hint": "Rich at ≥400 chars; weave all 5 theories by full name",
+      "promised": "The SortQuest realm is in chaos — the Library of Ordered Knowledge has been scrambled by the Entropy Demon. As the last Algorithm Keeper, restore order using the ancient sorting laws.",
+      "fulfilled": "partial",
+      "proof": "The deployed game partially implements the proposed narrative. The final interface uses an Algorithm Academy / Cyber Puzzle Game theme with a game-like visual style, hero panel, badges, quest message area, and puzzle board atmosphere. However, the full Entropy Demon and Algorithm Keeper story is not deeply integrated into gameplay text or progression.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "gameOverview",
+      "category": "gameOverview",
+      "sec": 6,
+      "label": "Game Overview",
+      "hint": "Auxiliary for narrative weaving",
+      "promised": "A tile-puzzle visualiser for SEN4012 where students physically sort array tiles using a chosen algorithm — each move costs XP proportional to its operation count.",
+      "fulfilled": "yes",
+      "proof": "The deployed prototype matches the proposed game overview. It is a tile-puzzle algorithm visualiser where students interact with algorithm challenges, follow algorithm-specific rules, receive feedback, and are evaluated through moves, time, score, hints, and star rating.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "conceptMappings",
+      "category": "conceptMappings",
+      "sec": 6,
+      "label": "Concept-Game Mappings",
+      "hint": "≥5 mappings",
+      "promised": "concept: Sorting algorithm execution rules, mechanic: Validation function rejects any move violating algorithm rules, dynamic: MergeSort: cannot skip merge step; left pointer must advance monotonically, aesthetic: Challenge + Mastery, rationale: Constraint-enforcement turns the puzzle from tile-sort into algorithm-execution: student is constrained to think and act like the algorithm itself · concept: Algorithm efficiency (operation count), mechanic: Move counter; star rating penalises excess moves, dynamic: BubbleSort min 28 moves on 8 tiles; 40 moves = star drops, aesthetic: Mastery + Achievement, rationale: Move counter makes efficiency visceral — fewer moves feels better, which is the intuition behind optimisation · concept: Pivot selection in QuickSort, mechanic: Tap tile to declare pivot; board auto-colours red (>) blue (<); partition follows, dynamic: Worst-case pivot (always max) → maximally unbalanced → more moves → star drop, aesthetic: Discovery, rationale: Visual partition immediately shows why random/median-of-3 strategies outperform worst-case picks",
+      "fulfilled": "partial",
+      "proof": "The main concept-to-game mappings are partially implemented. Algorithm execution rules are represented through validation logic and feedback messages. Efficiency is represented through moves, score, time, hints, and stars. Quick Sort, Merge Sort, Heap Sort, Binary Search, and BFS concepts are included as playable modes. However, some advanced mappings, such as fully animated partition/merge visualisations and detailed complexity trade-off panels, are simplified in the prototype.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "scenarios",
+      "category": "scenarios",
+      "sec": 7,
+      "label": "Scenarios",
+      "hint": "≥3 scenarios",
+      "promised": "id: SC-01, name: Campaign, title: SortQuest — Puzzle Campaign, setup: Mode + difficulty level selected. Puzzle presented., objective: Solve in minimum moves, under par time, 0 hints, winCondition: Solved: min moves, par time, 0 hints, loseCondition: Reset >3 times or abandoned, maxPoints: 100, duration: 15 min, difficulty: Standard, storyboard: Mode select → Puzzle presented → Drag attempts → Wrong move rejected + tooltip → Correct sequence → Star rating → Leaderboard, algorithm: PuzzleScore = max_pts − (excess_moves×5) − (hints×20) − max(0, overtime×2), outcome: ★★★ (min moves, 0 hints, under par): +100. ★★ (correct, ≤2 hints or >par): +45. ★ (correct, >2 hints): +15., activities: [object Object],[object Object] · id: SC-02, name: Daily Sort Challenge, title: Daily Sort Challenge — Global Leaderboard, setup: Global seed published Monday 08:00. All students same puzzle., objective: Solve in min moves within 24h; top leaderboard, winCondition: Top 10 leaderboard by min moves, loseCondition: Not completed within 24-hour window, maxPoints: 200, duration: 10 min, difficulty: Competitive, storyboard: LMS link → Seed loaded → Play (no hints) → Submit → Leaderboard, algorithm: DailyScore = (100−excess_moves×2) × speed_bonus (≤2min: ×2.0; ≤5min: ×1.5; else ×1.0), outcome: Top 3: +200 + Daily Champion. Top 10: +100. Correct outside top 10: +50. Incomplete: 0., activities: [object Object]",
+      "fulfilled": "partial",
+      "proof": "The main scenarios are partially implemented. The deployed game includes a campaign-style play flow through algorithm mode and level selection, scoring, star rating, hints, leaderboard, Level Editor, and Daily Challenge. However, the Daily Challenge is implemented as a local browser prototype rather than a global 24-hour online competition with backend-based top 10 ranking and bonus calculation.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "gameDuration",
+      "category": "gameDuration",
+      "sec": 7,
+      "label": "Game Duration",
+      "hint": "Descriptive ≥30 chars (not a bare number)",
+      "promised": "",
+      "fulfilled": "partial",
+      "proof": "The deployed game supports short browser-based play sessions. Players can complete lower levels in a few minutes, while higher levels may take longer depending on algorithm mode and tile count. A strict global session duration limit is not enforced, but time is tracked with an in-game timer.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "sessionSteps",
+      "category": "sessionSteps",
+      "sec": 7,
+      "label": "Session Steps",
+      "hint": "≥4 steps",
+      "promised": "phase: Mode selection, duration: 1 min, activity: Select mode matching chapter. See rules summary + estimated move count for level 1., facilitator: Recommend mode matching this week, player: Select mode; optionally select level 1–5 · phase: Puzzle play, duration: 5–15 min, activity: Drag tiles; wrong moves rejected with tooltip; correct moves animate. Star rating in real time., facilitator: No active facilitation, player: Active tile manipulation; read rejection tooltips · phase: Daily Challenge, duration: 10 min, activity: Global seed — same tiles + mode for all students. Leaderboard by min moves + time., facilitator: Post puzzle link to LMS Monday 08:00, player: Compete; submit · phase: Level Editor, duration: 15 min optional, activity: Create custom puzzle; generate shareable URL; share with classmates., facilitator: Encourage peer puzzle creation, player: Design; test; share URL",
+      "fulfilled": "partial",
+      "proof": "The main player-facing session steps are implemented: players select an algorithm mode and level, play the puzzle, receive feedback, use hints/reset/new puzzle, complete the level, view results, try Daily Challenge, and use the Level Editor. Facilitator-managed classroom steps, LMS posting, and formal session control are not implemented inside the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "rewardStructure",
+      "category": "rewardStructure",
+      "sec": 8,
+      "label": "Reward Structure",
+      "hint": "All 3 tiers (elite / professional / access) required",
+      "promised": "elite: Sort Master badge + 'Sorting Academy Graduate' certificate for completing the full puzzle chain including Boss Puzzle with zero hints used · professional: Algorithm Scholar badge + leaderboard recognition for completing ≥4 sorting algorithm families with ≤1 hint token used per family · access: Participation certificate + 'Sorting Apprentice' badge for correctly completing ≥8 sorting algorithm puzzles across any difficulty tiers",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype partially implements the reward structure through score, final star rating, hints penalty, completion feedback, and leaderboard ranking. However, the full three-tier badge and certificate system with Sort Master, Algorithm Scholar, and Sorting Apprentice rewards is not implemented as a separate automated achievement system.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "kpis",
+      "category": "kpis",
+      "sec": 9,
+      "label": "KPIs",
+      "hint": "≥1 KPI at each of L1, L2, L3, L4",
+      "promised": "level: L1, metric: Session NPS >= 7.5, method: Post-session survey, baseline: Lecture NPS 5.1, target: >= 7.5 · level: L2, metric: Chapter quiz improvement >= 20%, method: Pre/post quiz per chapter, baseline: Pre: ~58%, target: Post: >= 72% · level: L2, metric: Boss wave accuracy >= 80%, method: In-game boss completion rate, baseline: First session: ~45%, target: By ch6: >= 80% · level: L3, metric: Lab assignment accuracy >= 75%, method: Lab assignment grade, baseline: Prior cohort: 63%, target: >= 75% · level: L4, method: Final exam sorting trace (6 marks): mean ≥4.5/6 (baseline 2.1/6), metric: L4 measurement",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype partially supports KPI measurement. The game records useful gameplay indicators such as score, moves, time, hints used, stars, algorithm mode, and level through the browser-based leaderboard. These values can support completion rate and playability evaluation. However, the full Kirkpatrick KPI process, including post-session survey, pre/post chapter quiz improvement, lab assignment comparison, and final exam performance analysis, is not implemented inside the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "tuslerRisks",
+      "category": "tuslerRisks",
+      "sec": 10,
+      "label": "Tusler Risks",
+      "hint": "≥4 risks across all 4 categories; ≥25-char mitigation each",
+      "promised": "risk: Technical Platform Failure During Session, category: Tiger, prob: High, impact: High, mitigation: Conduct full platform test on target lab devices 24h before session. Prepare a paper-based fallback version of the sorting puzzle game challenges. Verify browser compatibility on all student devices., responsive: Switch to prepared paper-based fallback immediately. Instructor verbally presents SEN4012 algorithm challenges; students answer on printed worksheets. Session data manually entered into system post-session. · risk: Widespread Rule Misunderstanding at Session Start, category: Tiger, prob: High, impact: High, mitigation: Provide multi-modal game introduction: verbal briefing, printed rule card, and in-game tutorial overlay for the sorting puzzle game. Conduct a 2-minute practice round before official scoring begins., responsive: Facilitator pauses game immediately on detecting widespread confusion. Re-delivers rule explanation using a specific worked example. Q&A window opened before resuming. Game timer reset if necessary. · risk: Overemphasis on Winning Over Learning, category: Puppy, prob: High, impact: Low, mitigation: Design sorting puzzle game scoring to reward both performance and SEN4012 algorithm concept demonstration. Integrate mandatory reflection checkpoints mid-session where students must explain their decision rationale., responsive: Instructor intervenes to redirect student focus to SEN4012 algorithm learning objectives. Post-session assessment weights conceptual understanding over game performance score explicitly. · risk: Student Disengagement After Early Failure, category: Tiger, prob: High, impact: Medium, mitigation: Implement adaptive difficulty that reduces challenge intensity if a student is failing repeatedly in the sorting puzzle game. Provide visible progress indicators so students always see incremental advancement., responsive: Facilitator provides individual encouragement and targeted hint. Adaptive system reduces challenge difficulty for the next SEN4012 algorithm task. Optional easier entry point offered without public announcement. · risk: Assessment Misalignment with Course Learning Outcomes, category: Alligator, prob: Low, impact: High, mitigation: Conduct formal SEN4012 algorithm curriculum alignment review before deployment. Map every sorting puzzle game challenge item to specific course learning outcome statements in the alignment matrix., responsive: Instructor conducts post-session targeted debrief correcting any SEN4012 algorithm misconceptions surfaced by game challenge outcomes. Misaligned challenge items flagged for removal before next session. · risk: Incorrect Big-O Reasoning Reinforced as Correct, category: Alligator, prob: Low, impact: High, mitigation: Embed automated Big-O correctness checking in the sorting puzzle game — system must validate algorithm classification against verified answer key before awarding XP. Manual review of edge cases by instructor before deployment., responsive: Instructor delivers targeted post-session debrief correcting identified Big-O misconceptions. Specific algorithm challenge items producing widespread incorrect answers flagged for redesign before next session. · risk: Step-Level Validation Feels Punitive Rather Than Educational, category: Tiger, prob: High, impact: High, mitigation: Design validation feedback as positive guidance rather than binary fail: 'This step is valid but consider whether this is the most efficient next move.' Animations reinforce correct steps before flagging errors., responsive: Instructor reframes error messages in session debrief as diagnostic information, not punishment. Post-session error pattern analysis shared with students as a personalised learning roadmap for next session. · risk: Sandbox Mode Time Consumption Leaving Insufficient Session Time, category: Tiger, prob: High, impact: Medium, mitigation: Enforce a maximum sandbox time allocation of 8 minutes per session, with a visible countdown and automatic transition to scored puzzle chain when the allocation expires. Sandbox findings prompts students to apply to scored chain., responsive: Facilitator announces sandbox time limit 2 minutes before expiry. Students who have not transitioned receive a facilitator-directed starter puzzle aligned to their sandbox exploration to bridge the transition. · risk: Boss Puzzle Algorithm Selection Produces Single Correct Answer Perception, category: Puppy, prob: High, impact: Low, mitigation: Design Boss Puzzle with two demonstrably valid algorithm solutions at different complexity-trade-off points. Award full XP for both, but differentiate feedback to highlight the performance difference between the two correct approaches., responsive: Instructor uses Boss Puzzle multiple-valid-solution structure in debrief to teach algorithm selection reasoning beyond binary correctness — reinforcing that SEN4012 algorithm selection is context-dependent, not prescriptive.",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype addresses several technical and usability risks through a browser-based implementation, GitHub Pages deployment, clear How to Play instructions, immediate feedback for invalid moves, reset/new puzzle options, responsive design, and a simple local leaderboard. However, the complete risk plan described in the proposal, including paper-based fallback materials, formal instructor debrief process, adaptive difficulty engine, and manual review workflow, is not fully implemented inside the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "supportTeam",
+      "category": "supportTeam",
+      "sec": 10,
+      "label": "Support Team",
+      "hint": "≥3 members",
+      "promised": "role: Frontend Developer, name: , resp: CSS Grid engine, drag-and-drop, 8 validation functions, Daily seed system · role: Algorithm Specialist, name: , resp: Min move calculator; test suite for all 8 validation functions · role: SEN4012 Instructor, name: Yusuf Altunel, resp: Mode-chapter mapping, par time calibration, assessment integration",
+      "fulfilled": "partial",
+      "proof": "The support structure was partially implemented by the project team. The frontend, game interface, algorithm modes, validation logic, scoring, and deployment were completed by the student team members. The proposal listed some support roles as TBD, so the full named support team structure was not separately formalised.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "facilitatorRole",
+      "category": "facilitatorRole",
+      "sec": 10,
+      "label": "Facilitator Role",
+      "hint": "≥30 chars",
+      "promised": "",
+      "fulfilled": "no",
+      "proof": "A separate facilitator role was not included in the imported proposal and was not implemented as a dedicated in-game role or dashboard. The current prototype is player-facing and can be played directly through the browser link.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "wf_dash",
+      "category": "wf_dash",
+      "sec": 11,
+      "label": "Dashboard Wireframe",
+      "hint": "≥80 chars layout description",
+      "promised": "",
+      "fulfilled": "no",
+      "proof": "A separate dashboard wireframe was not included in the imported proposal and was not submitted as a standalone design artifact. The deployed game includes the actual playable interface with header, game panel, stats, puzzle board, daily challenge, level editor, and leaderboard sections.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "wf_asset",
+      "category": "wf_asset",
+      "sec": 11,
+      "label": "Asset Wireframe",
+      "hint": "≥80 chars",
+      "promised": "",
+      "fulfilled": "no",
+      "proof": "A separate asset wireframe was not included in the imported proposal and was not created as a standalone artifact. The final visual assets are implemented directly in the HTML/CSS interface using styled tiles, panels, buttons, and leaderboard components.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "wf_portfolio",
+      "category": "wf_portfolio",
+      "sec": 11,
+      "label": "Portfolio Wireframe",
+      "hint": "≥80 chars",
+      "promised": "",
+      "fulfilled": "no",
+      "proof": "A separate portfolio wireframe was not included in the imported proposal and was not implemented. The project is delivered as a playable browser-based game rather than a portfolio-style presentation page.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "inScope",
+      "category": "inScope",
+      "sec": 12,
+      "label": "In Scope",
+      "hint": "For compassion model: include \"losePoints=0\" / \"no punitive\"",
+      "promised": "8 modes + validation · Star rating · Daily Challenge · Level Editor · 4→64 tile scaling · Hint system",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype implements the main in-scope features: 8 algorithm modes, algorithm-specific validation, star rating, Daily Challenge, Level Editor, 4–64 tile scaling, and hint system. Daily Challenge is implemented as a local browser-based prototype rather than a global backend challenge system, so the overall in-scope implementation is marked as partial.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "outScope",
+      "category": "outScope",
+      "sec": 12,
+      "label": "Out of Scope",
+      "hint": "",
+      "promised": "Mobile swipe (Phase 2) · Multiplayer puzzle race (Phase 2)",
+      "fulfilled": "dropped",
+      "proof": "Mobile swipe support and multiplayer puzzle race were defined as Phase 2 / out-of-scope items in the proposal. They were intentionally not implemented in the current playable prototype and are left for future development.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "whyMotivation",
+      "category": "whyMotivation",
+      "sec": 12,
+      "label": "Why (Motivation)",
+      "hint": "",
+      "promised": "Students are motivated through three SDT core drives: Autonomy — puzzle approach selection and sandbox exploration give students genuine control over their algorithm learning strategy, respecting that different students prefer different entry points into algorithm understanding. Competence — step-by-step execution validation provides far more precise feedback than answer-level checking, making algorithm understanding feel like a real, verifiable skill rather than an arbitrary test performance. Relatedness — group speed-sort challenges and pair mode transform individual algorithm puzzle-solving into shared class events with authentic peer engagement. Through the Octalysis lens: Challenge, Development & Accomplishment, Discovery, Social Influence.",
+      "fulfilled": "partial",
+      "proof": "The deployed game partially implements the proposed motivation design. Autonomy is supported through mode, level, hint, reset, new puzzle, Daily Challenge, and Level Editor choices. Competence is supported through immediate feedback, scoring, timer, stars, and invalid move explanations. Relatedness is partially supported through local leaderboard and share links. However, sandbox mode, pair mode, and full class-wide speed-sort events are not implemented.",
+      "evidenceRefs": "",
+      "reason": ""
+    },
+    {
+      "ref": "howEthics",
+      "category": "howEthics",
+      "sec": 12,
+      "label": "How (Ethics)",
+      "hint": "",
+      "promised": "Student participation is voluntary; equivalent written task available for opt-outs. All performance data anonymised in aggregate reports. Data collected under KVKK and GDPR, disclosed in course syllabus. Assessment based on participation and reflection, not competitive ranking. Instructor monitors emotional wellbeing; distress triggers private check-in.",
+      "fulfilled": "partial",
+      "proof": "The deployed prototype follows a low-data approach: it does not require login, account creation, backend storage, or external database usage. Leaderboard data is stored locally in the player’s browser. However, the full formal ethics process described in the proposal, including opt-out written task, official KVKK/GDPR disclosure workflow, and instructor wellbeing monitoring, is not implemented inside the game.",
+      "evidenceRefs": "",
+      "reason": ""
+    }
+  ],
+  "projectEvidence": {
+    "repoUrl": "https://github.com/MuhittinEfeKilic/sortquest-algorithm-visualiser",
+    "deployUrl": "https://muhittinefekilic.github.io/sortquest-algorithm-visualiser/",
+    "demoUrl": "",
+    "buildSha": "v1.0",
+    "notes": "SortQuest is deployed as a browser-based HTML/CSS/JavaScript game on GitHub Pages. The current version includes 8 algorithm modes, 5 difficulty levels, scoring, timer, hints, star rating, level editor, share link generation, daily challenge, and browser-based leaderboard. No login or installation is required."
+  },
+  "deployment": {
+    "gameId": "GM-B1E981AC7672",
+    "title": "SortQuest: Tile Puzzle Algorithm Visualiser (SEN4012)",
+    "projectStatus": "play_link",
+    "coordinatorName": "Yusuf Altunel",
+    "evidenceMode": "real",
+    "claimsDeployed": true,
+    "courseCode": "SEN4012",
+    "maxGameScore": 100,
+    "platform": "Any modern browser on desktop or laptop. Recommended: Chrome, Edge, Firefox, or Safari. Internet connection is required only to open the GitHub Pages link.",
+    "githubUrl": "https://github.com/MuhittinEfeKilic/sortquest-algorithm-visualiser",
+    "contactForAccess": "2100005151@stu.iku.edu.tr",
+    "availableDate": "2026-06-08",
+    "description": "A tile-puzzle visualiser for SEN4012 where students physically sort array tiles using a chosen algorithm — each move costs XP proportional to its operation count.",
+    "whatYouCanEarn": "pts, lb, progress, challenge",
+    "estPlayTime": "",
+    "audience": "SEN4012 Analysis of Algorithms students (3rd/4th year, n≈35)",
+    "howToPlay": "Open the play link in a modern browser. Select an algorithm mode and a difficulty level. Solve the puzzle by selecting or moving tiles according to the selected algorithm’s rules. Valid moves are accepted and invalid moves are rejected with an explanation. The game tracks moves, time, score, hints used, and final star rating. Players can use Hint, Reset, and New Puzzle buttons. They can also try the Daily Challenge, load a custom array in Level Editor, generate a share link, and compare scores on the leaderboard.",
+    "accessUrl": "https://muhittinefekilic.github.io/sortquest-algorithm-visualiser/",
+    "downloadUrl": "",
+    "accessRights": "Open to all players. No login, password, installation, or account is required. The game runs directly in the browser.",
+    "logFiles": [
+      {
+        "path": "logs/sortquest_initial_test_logs.jsonl",
+        "sha256": "47aab98ce8723759973b56f82c098ec072d97b7e62a01a4aaa1d5bc2ab19b3e1",
+        "format": "jsonl",
+        "rowCount": 8
+      }
+    ]
+  },
+  "embeddedLogs": [
+    {
+      "path": "logs/sortquest_initial_test_logs.jsonl",
+      "sha256": "47aab98ce8723759973b56f82c098ec072d97b7e62a01a4aaa1d5bc2ab19b3e1",
+      "content": "{\"ts\": \"2026-06-08T12:00:00Z\", \"playerPseudoId\": \"test-p001\", \"sessionId\": \"test-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"session_start\", \"payload\": {\"mode\": \"bubble\", \"level\": 1, \"phase\": \"initial_test\"}}\n{\"ts\": \"2026-06-08T12:00:30Z\", \"playerPseudoId\": \"test-p001\", \"sessionId\": \"test-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"score_update\", \"payload\": {\"score\": 95, \"moves\": 1, \"hintsUsed\": 0}}\n{\"ts\": \"2026-06-08T12:01:05Z\", \"playerPseudoId\": \"test-p001\", \"sessionId\": \"test-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"level_complete\", \"payload\": {\"algorithm\": \"Bubble Sort\", \"level\": 1, \"score\": 95, \"moves\": 1, \"time\": \"00:01\", \"stars\": 3, \"completed\": true}}\n{\"ts\": \"2026-06-08T12:01:10Z\", \"playerPseudoId\": \"test-p001\", \"sessionId\": \"test-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"session_end\", \"payload\": {\"completed\": true, \"finalScore\": 95}}\n{\"ts\": \"2026-06-08T12:03:00Z\", \"playerPseudoId\": \"prototype-p002\", \"sessionId\": \"prototype-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"session_start\", \"payload\": {\"mode\": \"quick\", \"level\": 1, \"phase\": \"initial_prototype\"}}\n{\"ts\": \"2026-06-08T12:03:45Z\", \"playerPseudoId\": \"prototype-p002\", \"sessionId\": \"prototype-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"score_update\", \"payload\": {\"score\": 90, \"moves\": 2, \"hintsUsed\": 0}}\n{\"ts\": \"2026-06-08T12:04:20Z\", \"playerPseudoId\": \"prototype-p002\", \"sessionId\": \"prototype-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"level_complete\", \"payload\": {\"algorithm\": \"Quick Sort\", \"level\": 1, \"score\": 90, \"moves\": 2, \"time\": \"00:02\", \"stars\": 3, \"completed\": true}}\n{\"ts\": \"2026-06-08T12:04:25Z\", \"playerPseudoId\": \"prototype-p002\", \"sessionId\": \"prototype-session-001\", \"gameId\": \"GM-B1E981AC7672\", \"eventType\": \"session_end\", \"payload\": {\"completed\": true, \"finalScore\": 90}}\n"
+    }
+  ],
+  "teamMembers": [
+    {
+      "legalStudentId": "1900005325",
+      "name": "Eray",
+      "surname": "Çalışkan",
+      "role": "Member"
+    },
+    {
+      "legalStudentId": "2100005151",
+      "name": "Muhittin Efe",
+      "surname": "Kılıç",
+      "role": "Team Leader"
+    }
+  ],
+  "players": [],
+  "subjectiveRatings": [],
+  "idBasis": {
+    "memberLegalIds": [
+      "1900005325",
+      "2100005151"
+    ],
+    "courseCode": "SEN4012",
+    "title": "SortQuest: Tile Puzzle Algorithm Visualiser (SEN4012)",
+    "proposalHash": "582cc15772fc"
+  },
+  "proposal": {
+    "gppt_version": "v51",
+    "exported_at": null,
+    "state": {
+      "step": 13,
+      "totalSteps": 13,
+      "domain": "academic",
+      "projectType": "Digital Puzzle Game",
+      "projectTitle": "SortQuest: Tile Puzzle Algorithm Visualiser (SEN4012)",
+      "teamName": "Eferay Squad",
+      "proposer": "Yusuf Altunel",
+      "organisation": "Istanbul Kültür University, Computer Engineering Dept.",
+      "targetPopulation": "SEN4012 Analysis of Algorithms students (3rd/4th year, n≈35)",
+      "sampleSize": "35",
+      "problemStatement": "Students understand sorting algorithm names but cannot trace execution on a given array. SortQuest makes sorting visual and tactile: drag tiles into correct positions following real algorithm rules. Wrong individual moves are rejected immediately with an algorithm-specific explanation — there is no path to a correct final state through random dragging.",
+      "startDate": "2026-09-01",
+      "proposalDate": "2026-03-24",
+      "courseCode": "SEN4012",
+      "deliverableArea": "Algorithm Design, Complexity Analysis, Problem-Solving Skills, Computational Thinking, Practical Coding Application",
+      "deliverableAreas": [
+        "Algorithm Design",
+        "Complexity Analysis",
+        "Problem-Solving Skills",
+        "Computational Thinking",
+        "Practical Coding Application"
+      ],
+      "inScope": [
+        "8 modes + validation",
+        "Star rating",
+        "Daily Challenge",
+        "Level Editor",
+        "4→64 tile scaling",
+        "Hint system"
+      ],
+      "outScope": [
+        "Mobile swipe (Phase 2)",
+        "Multiplayer puzzle race (Phase 2)"
+      ],
+      "frs": [
+        {
+          "id": "FR-SQ-01",
+          "desc": "CSS Grid tile drag-and-drop; colour-coded by relative value",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-02",
+          "desc": "Validation rejects every invalid drag move with algorithm-specific tooltip",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-03",
+          "desc": "8 puzzle modes each with distinct validation function and tile layout",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-04",
+          "desc": "Star rating (1–3): moves vs min, hints, time vs par",
+          "priority": "Must"
+        },
+        {
+          "id": "FR-SQ-05",
+          "desc": "Daily Sort Challenge: global seed, no-hint, leaderboard by moves + time",
+          "priority": "Should"
+        },
+        {
+          "id": "FR-SQ-06",
+          "desc": "Level Editor: array input + mode + shareable URL",
+          "priority": "Should"
+        }
+      ],
+      "nfrs": [
+        {
+          "id": "NFR-SQ-01",
+          "attr": "Usability",
+          "desc": "Tile snap after release",
+          "target": "<50ms"
+        },
+        {
+          "id": "NFR-SQ-02",
+          "attr": "Usability",
+          "desc": "Validation rejects 100% of invalid moves all 8 modes",
+          "target": "200 invalid scenarios per mode, 0 false accepts (automated test suite)"
+        }
+      ],
+      "successCriteria": [],
+      "userStories": [
+        {
+          "role": "Student",
+          "want": "drag numbered tiles following algorithm rules",
+          "soThat": "I practise execution in a tactile visual way",
+          "acc": "Valid moves snap + animate; invalid = red flash + tooltip with violated rule; move counter updates"
+        },
+        {
+          "role": "Student",
+          "want": "see star rating after each puzzle",
+          "soThat": "I know how efficient my execution was",
+          "acc": "1–3 stars; breakdown: moves vs min, hints, time vs par; shown before leaderboard"
+        },
+        {
+          "role": "Student",
+          "want": "compete in a daily global puzzle with all classmates",
+          "soThat": "I can fairly compare execution skill",
+          "acc": "Daily tab; seed + expiry shown; no hints; leaderboard top 10; results after 24h"
+        },
+        {
+          "role": "Student",
+          "want": "create a custom puzzle and share it as a URL",
+          "soThat": "I can challenge classmates",
+          "acc": "Level Editor; array + mode → shareable URL; opens in play mode for anyone"
+        }
+      ],
+      "theories": [
+        "flow",
+        "sdt",
+        "mda",
+        "bloom"
+      ],
+      "playerTypes": {
+        "achiever": 25,
+        "explorer": 25,
+        "socialiser": 25,
+        "killer": 25
+      },
+      "hexad": {},
+      "octalysis": {},
+      "mechanics": [
+        "pts",
+        "lb",
+        "progress",
+        "challenge"
+      ],
+      "sixDim": {
+        "what": "8 puzzle modes (Sequential Sort, Binary Search, Insertion Sort, MergeSort, QuickSort, HeapSort, DP Knapsack, BFS Graph); drag-and-drop tile engine with algorithm-rule validation; star rating (★★★ = min moves + under par time); hint system (−1 star); Daily Sort Challenge (global seed, leaderboard); Level Editor (shareable URL)",
+        "why": "Flow: 4 tiles (level 1) → 64 tiles (level 5). SDT Competence: visible improvement. MDA: Mechanics = constrained drag-drop; Dynamics = optimal move discovery; Aesthetic = Mastery + Sensation (satisfying merge animation).",
+        "who": "Free Spirits 40% (experiment, try to break algorithm), Achievers 40% (3-star perfection, Daily leaderboard), Explorers 20% (edge cases in QuickSort pivot)",
+        "when": "Modes unlock sequentially with chapters. Daily Challenge always available. Level Editor from week 2.",
+        "how": "Wrong moves rejected immediately with algorithm-specific explanation (\"This violates MergeSort rule: left pointer must advance monotonically\"). No ambiguity. 0 false accepts by validation function.",
+        "where": "CSS Grid + HTML5 Drag-and-Drop API, single-file browser app. Level Editor encodes puzzle as shareable URL."
+      },
+      "narrativeTheme": "The SortQuest realm is in chaos — the Library of Ordered Knowledge has been scrambled by the Entropy Demon. As the last Algorithm Keeper, restore order using the ancient sorting laws.",
+      "narrativeArc": "Hero's Journey (departure → trials → return)",
+      "characters": "Algorithm Engineer (Student): Selects and deploys correct algorithms to clear each complexity wave using knowledge and pattern recognition.\nComplexity Horde (NPC Enemy): Waves of algorithmic problems with specific complexity classes requiring matched algorithm types.\nInstructor Avatar (NPC Guide): In-game professor providing contextual hints, chapter intros, and debrief prompts.",
+      "storyWorld": "The Sorting Academy is an ancient institution where computational knowledge is tested not by memorisation but by execution. Six halls represent the six sorting algorithm families: the Bubble Hall, the Selection Chamber, the Insertion Corridor, the Merge Sanctum, the Quick Arena, and the Heap Pinnacle. Each hall tests a specific algorithm family with increasing input complexity and edge-case difficulty. The Academy Boss Puzzle chamber sits at the pinnacle — accessible only to students who have demonstrated mastery across all six halls.",
+      "conceptMappings": [
+        {
+          "concept": "Sorting algorithm execution rules",
+          "mechanic": "Validation function rejects any move violating algorithm rules",
+          "dynamic": "MergeSort: cannot skip merge step; left pointer must advance monotonically",
+          "aesthetic": "Challenge + Mastery",
+          "rationale": "Constraint-enforcement turns the puzzle from tile-sort into algorithm-execution: student is constrained to think and act like the algorithm itself"
+        },
+        {
+          "concept": "Algorithm efficiency (operation count)",
+          "mechanic": "Move counter; star rating penalises excess moves",
+          "dynamic": "BubbleSort min 28 moves on 8 tiles; 40 moves = star drops",
+          "aesthetic": "Mastery + Achievement",
+          "rationale": "Move counter makes efficiency visceral — fewer moves feels better, which is the intuition behind optimisation"
+        },
+        {
+          "concept": "Pivot selection in QuickSort",
+          "mechanic": "Tap tile to declare pivot; board auto-colours red (>) blue (<); partition follows",
+          "dynamic": "Worst-case pivot (always max) → maximally unbalanced → more moves → star drop",
+          "aesthetic": "Discovery",
+          "rationale": "Visual partition immediately shows why random/median-of-3 strategies outperform worst-case picks"
+        }
+      ],
+      "mdaAnalysis": {
+        "mechanics": "Puzzle chain (sequential sorting challenges), Algorithm selection panel, Step-by-step execution validation, Hint token system (3 per session), Sandbox mode (unscored experimentation), Leaderboard by difficulty level reached, Speed-sort challenge mode.",
+        "dynamics": "The step-by-step execution validation mechanic forces students to think at the algorithm's execution level rather than just knowing the algorithm name, producing deeper cognitive engagement. Hint token scarcity creates authentic cost-benefit reasoning about knowledge confidence. Sandbox mode provides a low-stakes exploration space that complements the scored puzzle chain.",
+        "aesthetics": "Challenge (each puzzle requires genuine algorithm application, not guessing), Discovery (sandbox mode enables free algorithm experimentation), Accomplishment (advanced difficulty puzzle completion signals genuine SEN4012 mastery), Submission (puzzle aesthetic creates engaging spatial representation of abstract sorting concepts)."
+      },
+      "gameDuration": "",
+      "introText": "Welcome to the Sorting Academy. You are an algorithm apprentice, and your task is simple: sort the data correctly, step by step, using the algorithm the puzzle demands. Choose the wrong algorithm and the step-level validator will show exactly where your execution diverged from the correct trace — no vague wrong answers here. Use your hint tokens wisely; you have only three per session. Complete each sorting hall to advance and reach the Boss Puzzle chamber where the full sorting hierarchy is tested in a single complex trial. The Academy is waiting.",
+      "preGameSetup": {
+        "environmentConfig": "Arrange seating for individual device use. Confirm browser compatibility on all student devices or lab PCs. Project facilitator dashboard on classroom screen. Test session timer and leaderboard display.",
+        "materialsDistribution": "Each student accesses the game via shared URL or QR code. Distribute session handout with game rules summary and XP table. Confirm all students can see the projected leaderboard.",
+        "initialLogEntry": "Facilitator logs session start, date, class size, game variant, and initial difficulty setting in the session log."
+      },
+      "sessionSteps": [
+        {
+          "phase": "Mode selection",
+          "duration": "1 min",
+          "activity": "Select mode matching chapter. See rules summary + estimated move count for level 1.",
+          "facilitator": "Recommend mode matching this week",
+          "player": "Select mode; optionally select level 1–5"
+        },
+        {
+          "phase": "Puzzle play",
+          "duration": "5–15 min",
+          "activity": "Drag tiles; wrong moves rejected with tooltip; correct moves animate. Star rating in real time.",
+          "facilitator": "No active facilitation",
+          "player": "Active tile manipulation; read rejection tooltips"
+        },
+        {
+          "phase": "Daily Challenge",
+          "duration": "10 min",
+          "activity": "Global seed — same tiles + mode for all students. Leaderboard by min moves + time.",
+          "facilitator": "Post puzzle link to LMS Monday 08:00",
+          "player": "Compete; submit"
+        },
+        {
+          "phase": "Level Editor",
+          "duration": "15 min optional",
+          "activity": "Create custom puzzle; generate shareable URL; share with classmates.",
+          "facilitator": "Encourage peer puzzle creation",
+          "player": "Design; test; share URL"
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "SC-01",
+          "name": "Campaign",
+          "title": "SortQuest — Puzzle Campaign",
+          "setup": "Mode + difficulty level selected. Puzzle presented.",
+          "objective": "Solve in minimum moves, under par time, 0 hints",
+          "winCondition": "Solved: min moves, par time, 0 hints",
+          "loseCondition": "Reset >3 times or abandoned",
+          "maxPoints": 100,
+          "duration": "15 min",
+          "difficulty": "Standard",
+          "storyboard": "Mode select → Puzzle presented → Drag attempts → Wrong move rejected + tooltip → Correct sequence → Star rating → Leaderboard",
+          "algorithm": "PuzzleScore = max_pts − (excess_moves×5) − (hints×20) − max(0, overtime×2)",
+          "outcome": "★★★ (min moves, 0 hints, under par): +100. ★★ (correct, ≤2 hints or >par): +45. ★ (correct, >2 hints): +15.",
+          "activities": [
+            {
+              "id": "ACT-01",
+              "action": "MergeSort mode: merge two sorted columns into one output column",
+              "description": "Left [2,5,9] + right [1,7,8]. Drag tiles to output following merge rules.",
+              "trigger": "MergeSort mode level selected",
+              "winCondition": "Output [1,2,5,7,8,9] via valid merge moves only",
+              "winResult": "+100 pts (if min + no hints) + MergeMaster badge",
+              "winPoints": 100,
+              "loseCondition": "Reset 4+ times",
+              "loseResult": "0 pts; hint offered free on 4th reset",
+              "losePoints": 0,
+              "neutralCondition": "Correct, 1–2 hints or excess moves",
+              "neutralResult": "+45 + ★★",
+              "neutralPoints": 45,
+              "timer": "Par: 90s for level 1 (6 tiles)"
+            },
+            {
+              "id": "ACT-02",
+              "action": "QuickSort mode: select pivot and partition correctly",
+              "description": "Tap pivot tile. Board auto-colours. Drag partition.",
+              "trigger": "QuickSort mode selected",
+              "winCondition": "Correct pivot; partition in min gestures",
+              "winResult": "+100 + Pivot Master if median chosen",
+              "winPoints": 100,
+              "loseCondition": "3+ worst-case pivot selections",
+              "loseResult": "+15; Pivot Lesson tooltip",
+              "losePoints": 0,
+              "neutralCondition": "Correct partition, non-optimal pivot",
+              "neutralResult": "+45; star drops to ★★",
+              "neutralPoints": 45,
+              "timer": "Par: 60s for level 1 (8 tiles)"
+            }
+          ]
+        },
+        {
+          "id": "SC-02",
+          "name": "Daily Sort Challenge",
+          "title": "Daily Sort Challenge — Global Leaderboard",
+          "setup": "Global seed published Monday 08:00. All students same puzzle.",
+          "objective": "Solve in min moves within 24h; top leaderboard",
+          "winCondition": "Top 10 leaderboard by min moves",
+          "loseCondition": "Not completed within 24-hour window",
+          "maxPoints": 200,
+          "duration": "10 min",
+          "difficulty": "Competitive",
+          "storyboard": "LMS link → Seed loaded → Play (no hints) → Submit → Leaderboard",
+          "algorithm": "DailyScore = (100−excess_moves×2) × speed_bonus (≤2min: ×2.0; ≤5min: ×1.5; else ×1.0)",
+          "outcome": "Top 3: +200 + Daily Champion. Top 10: +100. Correct outside top 10: +50. Incomplete: 0.",
+          "activities": [
+            {
+              "id": "ACT-01",
+              "action": "Complete daily seed in min moves, no hints",
+              "description": "No hints in Daily (competitive fairness).",
+              "trigger": "Daily tab opened within window",
+              "winCondition": "Min moves solution",
+              "winResult": "+200 (top 3 likely) + Daily Champion",
+              "winPoints": 200,
+              "loseCondition": "Window expired without completion",
+              "loseResult": "0; makeup mode available",
+              "losePoints": 0,
+              "neutralCondition": "Correct but excess moves",
+              "neutralResult": "+50–100 by leaderboard rank",
+              "neutralPoints": 75,
+              "timer": "24-hour window; puzzle untimed"
+            }
+          ]
+        }
+      ],
+      "scoringSystem": {
+        "basis": "PuzzleScore = max_pts − (excess_moves×5) − (hints×20) − overtime×2. Daily: (100−excess×2) × speed_bonus.",
+        "bonuses": "★★★ any puzzle: +5. ★★★ all levels one mode: Mode Master +20. 0-hint session: Zero-Hint badge.",
+        "penalties": "Hints: −20 each (never blocked). Excess moves reduce score; completed puzzle minimum 15 pts.",
+        "badges": "MergeMaster, Pivot Master, Mode Master, Algorithm Keeper (all 8 modes), Daily Champion, Zero-Hint Scholar, Level Designer"
+      },
+      "socialFeatures": {},
+      "rewardTiers": {
+        "elite": "Algorithm Keeper (★★★ all 8 modes): 5-pt course bonus",
+        "professional": "Mode Master (★★★ all levels of 4 modes): 3-pt bonus",
+        "access": "Puzzle Solver (any ★★★): participation credit"
+      },
+      "executionLog": [],
+      "leaderboardConfig": {},
+      "risks": [],
+      "tuslerRisks": [
+        {
+          "risk": "Technical Platform Failure During Session",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Conduct full platform test on target lab devices 24h before session. Prepare a paper-based fallback version of the sorting puzzle game challenges. Verify browser compatibility on all student devices.",
+          "responsive": "Switch to prepared paper-based fallback immediately. Instructor verbally presents SEN4012 algorithm challenges; students answer on printed worksheets. Session data manually entered into system post-session."
+        },
+        {
+          "risk": "Widespread Rule Misunderstanding at Session Start",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Provide multi-modal game introduction: verbal briefing, printed rule card, and in-game tutorial overlay for the sorting puzzle game. Conduct a 2-minute practice round before official scoring begins.",
+          "responsive": "Facilitator pauses game immediately on detecting widespread confusion. Re-delivers rule explanation using a specific worked example. Q&A window opened before resuming. Game timer reset if necessary."
+        },
+        {
+          "risk": "Overemphasis on Winning Over Learning",
+          "category": "Puppy",
+          "prob": "High",
+          "impact": "Low",
+          "mitigation": "Design sorting puzzle game scoring to reward both performance and SEN4012 algorithm concept demonstration. Integrate mandatory reflection checkpoints mid-session where students must explain their decision rationale.",
+          "responsive": "Instructor intervenes to redirect student focus to SEN4012 algorithm learning objectives. Post-session assessment weights conceptual understanding over game performance score explicitly."
+        },
+        {
+          "risk": "Student Disengagement After Early Failure",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "Medium",
+          "mitigation": "Implement adaptive difficulty that reduces challenge intensity if a student is failing repeatedly in the sorting puzzle game. Provide visible progress indicators so students always see incremental advancement.",
+          "responsive": "Facilitator provides individual encouragement and targeted hint. Adaptive system reduces challenge difficulty for the next SEN4012 algorithm task. Optional easier entry point offered without public announcement."
+        },
+        {
+          "risk": "Assessment Misalignment with Course Learning Outcomes",
+          "category": "Alligator",
+          "prob": "Low",
+          "impact": "High",
+          "mitigation": "Conduct formal SEN4012 algorithm curriculum alignment review before deployment. Map every sorting puzzle game challenge item to specific course learning outcome statements in the alignment matrix.",
+          "responsive": "Instructor conducts post-session targeted debrief correcting any SEN4012 algorithm misconceptions surfaced by game challenge outcomes. Misaligned challenge items flagged for removal before next session."
+        },
+        {
+          "risk": "Incorrect Big-O Reasoning Reinforced as Correct",
+          "category": "Alligator",
+          "prob": "Low",
+          "impact": "High",
+          "mitigation": "Embed automated Big-O correctness checking in the sorting puzzle game — system must validate algorithm classification against verified answer key before awarding XP. Manual review of edge cases by instructor before deployment.",
+          "responsive": "Instructor delivers targeted post-session debrief correcting identified Big-O misconceptions. Specific algorithm challenge items producing widespread incorrect answers flagged for redesign before next session."
+        },
+        {
+          "risk": "Step-Level Validation Feels Punitive Rather Than Educational",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "High",
+          "mitigation": "Design validation feedback as positive guidance rather than binary fail: 'This step is valid but consider whether this is the most efficient next move.' Animations reinforce correct steps before flagging errors.",
+          "responsive": "Instructor reframes error messages in session debrief as diagnostic information, not punishment. Post-session error pattern analysis shared with students as a personalised learning roadmap for next session."
+        },
+        {
+          "risk": "Sandbox Mode Time Consumption Leaving Insufficient Session Time",
+          "category": "Tiger",
+          "prob": "High",
+          "impact": "Medium",
+          "mitigation": "Enforce a maximum sandbox time allocation of 8 minutes per session, with a visible countdown and automatic transition to scored puzzle chain when the allocation expires. Sandbox findings prompts students to apply to scored chain.",
+          "responsive": "Facilitator announces sandbox time limit 2 minutes before expiry. Students who have not transitioned receive a facilitator-directed starter puzzle aligned to their sandbox exploration to bridge the transition."
+        },
+        {
+          "risk": "Boss Puzzle Algorithm Selection Produces Single Correct Answer Perception",
+          "category": "Puppy",
+          "prob": "High",
+          "impact": "Low",
+          "mitigation": "Design Boss Puzzle with two demonstrably valid algorithm solutions at different complexity-trade-off points. Award full XP for both, but differentiate feedback to highlight the performance difference between the two correct approaches.",
+          "responsive": "Instructor uses Boss Puzzle multiple-valid-solution structure in debrief to teach algorithm selection reasoning beyond binary correctness — reinforcing that SEN4012 algorithm selection is context-dependent, not prescriptive."
+        }
+      ],
+      "supportTeam": [
+        {
+          "role": "Frontend Developer",
+          "name": "",
+          "resp": "CSS Grid engine, drag-and-drop, 8 validation functions, Daily seed system"
+        },
+        {
+          "role": "Algorithm Specialist",
+          "name": "",
+          "resp": "Min move calculator; test suite for all 8 validation functions"
+        },
+        {
+          "role": "SEN4012 Instructor",
+          "name": "Yusuf Altunel",
+          "resp": "Mode-chapter mapping, par time calibration, assessment integration"
+        }
+      ],
+      "facilitatorRole": "",
+      "bloomOutcomes": [
+        {
+          "level": "Remember",
+          "bloom_k": "1",
+          "outcome": "Recall 5 fundamental sort operations",
+          "activity": "Mode selection screen — operations listed per mode",
+          "assessment": "Pre-session quiz: match operation to algorithm (target ≥80%)"
+        },
+        {
+          "level": "Understand",
+          "bloom_k": "2",
+          "outcome": "Explain why MergeSort needs separate output column but QuickSort partitions in-place",
+          "activity": "MergeSort vs QuickSort mode comparison",
+          "assessment": "Post-puzzle reflection answered correctly ≥70%"
+        },
+        {
+          "level": "Apply",
+          "bloom_k": "3",
+          "outcome": "Execute sorting rules correctly on given tile arrangement",
+          "activity": "Campaign: all 8 modes",
+          "assessment": "★★★ on ≥4 of 8 modes per student by week 12"
+        },
+        {
+          "level": "Analyse",
+          "bloom_k": "4",
+          "outcome": "Analyse how move count scales with input size",
+          "activity": "Free: same mode at level 1 (4 tiles) and level 4 (32 tiles)",
+          "assessment": "Scaling prediction quiz: ≥65% correct"
+        }
+      ],
+      "kirkpatrick": {
+        "l1": "\"How much did SortQuest make sorting intuitive?\" (1–5, target ≥4.2)",
+        "l2": "Sorting trace accuracy in timed lab test: ≥75% fully correct (baseline 38%)",
+        "l3": "Correct sorting selection in semester project: ≥70% (baseline 45%)",
+        "l4": "Final exam sorting trace (6 marks): mean ≥4.5/6 (baseline 2.1/6)"
+      },
+      "kpis": [
+        {
+          "level": "L1",
+          "metric": "Session NPS >= 7.5",
+          "method": "Post-session survey",
+          "baseline": "Lecture NPS 5.1",
+          "target": ">= 7.5"
+        },
+        {
+          "level": "L2",
+          "metric": "Chapter quiz improvement >= 20%",
+          "method": "Pre/post quiz per chapter",
+          "baseline": "Pre: ~58%",
+          "target": "Post: >= 72%"
+        },
+        {
+          "level": "L2",
+          "metric": "Boss wave accuracy >= 80%",
+          "method": "In-game boss completion rate",
+          "baseline": "First session: ~45%",
+          "target": "By ch6: >= 80%"
+        },
+        {
+          "level": "L3",
+          "metric": "Lab assignment accuracy >= 75%",
+          "method": "Lab assignment grade",
+          "baseline": "Prior cohort: 63%",
+          "target": ">= 75%"
+        },
+        {
+          "level": "L4",
+          "method": "Final exam sorting trace (6 marks): mean ≥4.5/6 (baseline 2.1/6)",
+          "metric": "L4 measurement"
+        }
+      ],
+      "futureEnhancements": [
+        "Adaptive Difficulty Engine: Adjust challenge difficulty in real-time based on per-student accuracy history.",
+        "AI Hint System: Context-aware Socratic hints triggered after 2 consecutive wrong selections.",
+        "Expanded Chapter Coverage: Challenges for all 13 Levitin chapters.",
+        "Collaborative Multiplayer Mode: Cooperative challenge mode for paired students.",
+        "LMS Grade Passback: Automatic XP-to-grade mapping with Moodle/Canvas gradebook."
+      ],
+      "dataCollection": "",
+      "continuousImprovement": "Monthly review of algorithm accuracy; adjust difficulty if <60% first-attempt success. Quarterly correlation with midterm scores; revise concept mapping if r<0.4. Annual Levitin alignment. Peer instructor review before new chapter release.",
+      "appendices": [
+        "Glossary of Terms",
+        "Game Component Inventory",
+        "Sample Game Session Log",
+        "Storyboard Visuals",
+        "Risk Register"
+      ],
+      "timeline": [],
+      "baselineEngagement": "",
+      "targetEngagement": "",
+      "baselineScore": "",
+      "attritionTarget": "",
+      "transferTarget": "",
+      "resultsKPI": "",
+      "analyticsplatform": "",
+      "usedRefs": {},
+      "gamePurpose": "Make abstract sorting algorithms concrete through physical manipulation with real operation-count cost feedback.",
+      "gameSubject": "Sorting algorithms: bubble, insertion, merge, quick, heap, counting — Levitin Chapters 3-7",
+      "gameMethod": "Flow: puzzle complexity scales with n; students experience O(n²) vs O(n log n) cost difference through XP expenditure.",
+      "gameMeasurement": "Pre/post quiz improvement ≥20% measured 48h after session; L3 transfer assessed via next assignment grade",
+      "gamePlayers": "SEN4012 Year-3/4 CE students, n≈32",
+      "gamePoints": "+50 XP for sort completion; bonus XP for fewer-than-optimal moves; leaderboard by total operations",
+      "gameAchievements": "Merge Master: complete merge-sort with 0 extra swaps; Speed Sorter: beat theoretical minimum step count",
+      "gameBadges": "Sort Expert badge: complete all 6 sorting algorithm puzzles; Optimal Sorter: achieve theoretical minimum moves",
+      "gameOverview": "A tile-puzzle visualiser for SEN4012 where students physically sort array tiles using a chosen algorithm — each move costs XP proportional to its operation count.",
+      "dur_preDesign": "2 weeks",
+      "dur_design": "3 weeks",
+      "dur_impl": "4 weeks",
+      "dur_ops": "8 weeks",
+      "dur_post": "2 weeks",
+      "teamMembers": [
+        {
+          "id": "1900005325",
+          "name": "Eray",
+          "surname": "Çalışkan",
+          "email": "19000005325@stu.iku.edu.tr",
+          "phone": "+905314293814"
+        },
+        {
+          "id": "2100005151",
+          "name": "Muhittin Efe",
+          "surname": "Kılıç",
+          "email": "2100005151@stu.iku.edu.tr",
+          "phone": "+905074444818"
+        }
+      ],
+      "deliverableJust": "A browser-based tile puzzle is uniquely suited because: (1) Active decision-making with immediate consequence creates stronger encoding than passive delivery; (2) Game mechanics directly parallel domain processes (see Concept-to-Game Mapping); (3) Performance logging enables objective Bloom L3+ skill assessment.",
+      "sdtAutonomy": "Students choose their approach to each sorting puzzle independently — selecting which sorting algorithm to apply, determining step sequence, and deciding when to use hint tokens versus reasoning independently. The open sandbox mode allows students to freely experiment with algorithm variants without scoring pressure, supporting self-directed algorithm exploration beyond the structured puzzle chain.",
+      "sdtCompetence": "Each puzzle completion with a correct sorting algorithm application awards XP proportional to the solution's time complexity optimality, making algorithm knowledge directly rewarding in a quantifiable way. The puzzle difficulty ladder (Bubble Sort fundamentals to Heap Sort) provides an explicit, topic-aligned competence staircase. Incorrect solutions reveal the execution step where the chosen algorithm diverged from correct behaviour.",
+      "sdtRelatedness": "Post-session puzzle board shared with the class shows which students reached which difficulty levels, creating peer conversation about sorting algorithm trade-offs. Group speed-sort challenges (simultaneous puzzle solving with live class comparison) create shared competitive energy. Pair mode allows two students to collaboratively solve a sorting challenge, requiring negotiated algorithm selection.",
+      "platform": "Browser-based web application; any modern browser. No installation required. Compatible with IKU computer labs, student devices, and mobile browsers.",
+      "narrativeEvolution": "Hall 1-2 — Bubble and Selection Halls (O(n²) Fundamentals): Apprentice completes Bubble Sort and Selection Sort puzzles at increasing input sizes. Step-level validation reveals common O(n²) execution misconceptions early. Hint tokens tempting but advised to save. SEN4012 concept: O(n²) sorting algorithm execution patterns and comparison count analysis.\n\nHall 3-4 — Insertion and Merge Halls (Transition to O(n log n)): Insertion Sort puzzles test best-case awareness. Merge Sort introduces divide-and-conquer execution tracing — the first multi-step recursive structure. Complexity jumps; some students use first hint tokens here. SEN4012 concept: insertion sort best-case O(n) and merge sort O(n log n) divide-and-conquer execution.\n\nHall 5-6 — QuickSort and Heap Halls (O(n log n) Mastery): Pivot selection in QuickSort puzzles tests worst-case awareness. HeapSort introduces heap property validation as a pre-sort step. Advanced students preserve hint tokens; others spend them here. SEN4012 concept: QuickSort pivot strategy, worst-case O(n²) scenario, and HeapSort O(n log n) guarantee.\n\nBoss Puzzle — Mixed-Requirement Trial: The Academy presents a complex scenario with multiple data sets, each requiring a different optimal sorting algorithm. Correct algorithm selection for each data set determines the final quality score. Debrief maps every step-level decision to SEN4012 sorting algorithm selection criteria and comparative analysis.",
+      "socialRationale": "",
+      "communityStandards": "",
+      "currencyName": "",
+      "pricingModel": "",
+      "adaptiveDifficulty": "",
+      "personalisation": "",
+      "lbCategories": [],
+      "wf_dash": "",
+      "wf_asset": "",
+      "wf_portfolio": "",
+      "logPrivacy": "Activity logs retained 6 months. Accessible only to facilitator and research team. Student identifiers anonymised in aggregate reports. Data per KVKK and GDPR. Students informed via course syllabus. Data destruction certificate at academic year end.",
+      "lbVisibility": "",
+      "lbReset": "",
+      "dcMethods": {},
+      "howEthics": "Student participation is voluntary; equivalent written task available for opt-outs. All performance data anonymised in aggregate reports. Data collected under KVKK and GDPR, disclosed in course syllabus. Assessment based on participation and reflection, not competitive ranking. Instructor monitors emotional wellbeing; distress triggers private check-in.",
+      "whyMotivation": "Students are motivated through three SDT core drives: Autonomy — puzzle approach selection and sandbox exploration give students genuine control over their algorithm learning strategy, respecting that different students prefer different entry points into algorithm understanding. Competence — step-by-step execution validation provides far more precise feedback than answer-level checking, making algorithm understanding feel like a real, verifiable skill rather than an arbitrary test performance. Relatedness — group speed-sort challenges and pair mode transform individual algorithm puzzle-solving into shared class events with authentic peer engagement. Through the Octalysis lens: Challenge, Development & Accomplishment, Discovery, Social Influence.",
+      "whoPlayers": "",
+      "howQuality": "",
+      "playerRoles": [
+        {
+          "name": "Algorithm Engineer",
+          "side": "Student",
+          "desc": "Student solving algorithm challenges",
+          "abilities": [
+            "Select algorithm strategies",
+            "Earn XP per correct solution",
+            "Use hint tokens"
+          ],
+          "objectives": [
+            "Complete all chapter challenges",
+            "Achieve ≥85% accuracy"
+          ],
+          "scoring": {
+            "correctSolution": 10,
+            "bossWave": 50,
+            "hintUsed": -5,
+            "speedBonus": 5
+          }
+        }
+      ],
+      "gameSides": [
+        {
+          "name": "Students",
+          "roles": [
+            "Algorithm Engineer"
+          ],
+          "winCondition": "Complete all waves with ≥85% accuracy across 12 chapters"
+        }
+      ],
+      "winConditions": [
+        {
+          "side": "Student",
+          "condition": "Clear all chapter challenges with ≥85% overall accuracy",
+          "points": 100
+        },
+        {
+          "side": "Student",
+          "condition": "Achieve perfect score on ≥3 consecutive chapters without hints",
+          "points": 50
+        }
+      ],
+      "gamePhases": [
+        {
+          "name": "Introduction & Calibration",
+          "seq": 1,
+          "duration": "5 min",
+          "description": "Instructor explains objectives; students review chapter theory",
+          "actions": [
+            "Review Levitin chapter",
+            "Set difficulty level",
+            "Complete warm-up challenge"
+          ],
+          "facilitator": "Present learning objectives; demo example; start timer"
+        },
+        {
+          "name": "Main Challenge — Tile Puzzle Sorting",
+          "seq": 2,
+          "duration": "20 min",
+          "description": "Students physically sort tile arrays using chosen algorithms — each operation costs XP",
+          "actions": [
+            "Apply algorithm selection",
+            "Earn XP per correct decision",
+            "Use hint tokens sparingly"
+          ],
+          "facilitator": "Monitor progress; pause at key moments; prompt reflection on wrong answers"
+        },
+        {
+          "name": "Debrief & Algorithm Review",
+          "seq": 3,
+          "duration": "10 min",
+          "description": "Instructor reveals optimal solutions; students discuss decisions",
+          "actions": [
+            "Review decision log",
+            "Identify O(n) vs O(n²) patterns",
+            "Connect to Levitin chapter"
+          ],
+          "facilitator": "Show optimal paths; ask 'why' questions; connect to next chapter"
+        }
+      ],
+      "eventCards": [
+        {
+          "id": "EV-01",
+          "name": "Array Scramble",
+          "trigger": "Chapter 5",
+          "effect": "Array shuffled mid-sort — student must adapt their chosen algorithm",
+          "pmConcept": "Robustness Under Change"
+        },
+        {
+          "id": "EV-02",
+          "name": "Efficiency Challenge",
+          "trigger": "Chapters 7-9",
+          "effect": "Only O(n log n) solutions accepted — O(n²) timeout added",
+          "pmConcept": "Complexity Lower Bounds"
+        },
+        {
+          "id": "EV-03",
+          "name": "Optimal Challenge",
+          "trigger": "Boss chapter",
+          "effect": "Must complete sort in theoretical minimum operations for full bonus",
+          "pmConcept": "Optimal Substructure"
+        }
+      ],
+      "roleScoring": [
+        {
+          "role": "Algorithm Engineer",
+          "action": "Correct algorithm selection (wave cleared)",
+          "points": 10,
+          "type": "base"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Boss wave cleared (optimal solution)",
+          "points": 50,
+          "type": "bonus"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Speed bonus (sub-threshold time)",
+          "points": 5,
+          "type": "bonus"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Hint token used",
+          "points": -5,
+          "type": "penalty"
+        },
+        {
+          "role": "Algorithm Engineer",
+          "action": "Wrong algorithm selection",
+          "points": 0,
+          "type": "base"
+        }
+      ],
+      "teamFormationRules": "Individual play. Optional pair mode for collaborative decision-making. Class leaderboard shows anonymised rankings.",
+      "gameIntroScript": "Welcome to SortQuest! Your mission: apply the right algorithm to overcome each wave. Every correct selection earns XP. Boss waves test your deepest understanding. Use hint tokens wisely — each costs 5 XP. The Algorithm Master badge awaits students who clear all 12 chapter waves with ≥90% accuracy.",
+      "physicalArtifacts": [
+        {
+          "type": "Digital Game Interface",
+          "description": "Browser-based game accessible via URL",
+          "qty": "1 per student",
+          "material": "HTML5 web application"
+        },
+        {
+          "type": "Facilitator Dashboard",
+          "description": "Instructor view showing all student progress",
+          "qty": "1 per session",
+          "material": "Digital — same application, facilitator mode"
+        }
+      ],
+      "environmentalSetup": {
+        "zones": [
+          {
+            "name": "Workstation Area",
+            "desc": "Individual or paired PC/laptop stations",
+            "requirement": "SEN4012 Computer Lab — all stations with browser access"
+          },
+          {
+            "name": "Projection Zone",
+            "desc": "Instructor screen for demo and announcements",
+            "requirement": "Projector or TV display"
+          }
+        ],
+        "equipment": [
+          "Browser-compatible devices for all students",
+          "Stable internet connection",
+          "Instructor display"
+        ],
+        "accessibility": "All interactions digital; screen-reader compatible; keyboard navigable"
+      },
+      "learningContentDetails": {
+        "teachingSubject": "SEN4012: Algorithm complexity analysis, Big-O notation, sorting, searching, dynamic programming, greedy, graph algorithms — Levitin Chapters 2-13",
+        "declarativeKnowledge": "Pre-challenge briefings define algorithm properties and complexity classes using in-game visual explanations",
+        "proceduralKnowledge": "Students apply algorithm selection decisions with immediate consequence feedback (correct = wave cleared; wrong = wave penalty)",
+        "methodology": "Active learning via consequence-driven decision-making: challenge → decision → immediate feedback → reflection → next challenge",
+        "furtherSources": [
+          "Levitin 'Introduction to the Design and Analysis of Algorithms' 3rd Ed",
+          "Cormen et al. CLRS",
+          "SEN4012 lecture notes"
+        ]
+      },
+      "secondaryBenefits": [
+        "Enhance teamwork and collaborative problem-solving under time pressure",
+        "Foster adaptability and algorithmic reasoning in ambiguous situations",
+        "Bridge theoretical course content with practical application through experience",
+        "Develop communication and persuasion skills in academic context"
+      ],
+      "dataCollectionPlan": {
+        "responsible": "Course Facilitator / Gamification Team",
+        "fields": [
+          "Student ID (anonymised)",
+          "Session date",
+          "Score per round",
+          "Decision log",
+          "Role assigned",
+          "Final placement"
+        ],
+        "method": "Automated digital log + end-of-session survey",
+        "analysis": "Post-session: score correlation with SEN4012 midterm and final exam assessment performance; engagement survey NPS"
+      },
+      "glossary": [
+        {
+          "term": "Big-O Notation",
+          "definition": "Mathematical notation describing the upper bound of an algorithm's time/space complexity"
+        },
+        {
+          "term": "Wave",
+          "definition": "A set of algorithm challenges in one chapter — completion advances the student"
+        },
+        {
+          "term": "Boss Wave",
+          "definition": "The hardest challenge in a chapter requiring optimal algorithm selection"
+        },
+        {
+          "term": "Hint Token",
+          "definition": "A limited resource that reveals a clue at the cost of 5 XP"
+        },
+        {
+          "term": "Algorithm Engineer",
+          "definition": "The student role — responsible for selecting and defending algorithm choices"
+        },
+        {
+          "term": "Tile",
+          "definition": "A visual array element that must be sorted — each move costs operations which are deducted from XP pool"
+        }
+      ],
+      "lbCats": "Participant Names | Total XP | Badges | Session Rank | Personal Points % = (player XP / total class XP) x 100 | Chapter Completion % | Boss Wave Clears | Accuracy %",
+      "school": "Istanbul Kültür University — Computer Engineering Department",
+      "semester": "2025-2026 Spring Semester",
+      "instructorRole": "The instructor should only be assigned the role of questioning the game. No additional roles beyond questioning should be assigned. The instructor's focus is on facilitating reflection, probing understanding, and guiding critical thinking — not participating in game mechanics. If the instructor participates as a player, grading objectivity and the psychological safety of students may be compromised.",
+      "gameDurationRules": "No single game should exceed 30 minutes of active gameplay. Total session including introduction and debrief: 30 minutes. Recommended timing: Introduction 5 min + Active gameplay 20 min + Debrief & reflection 5 min. Instructor may pause at any time for teaching moments. Games exceeding time limit are concluded at the current phase boundary.",
+      "gameEndConditions": {
+        "condition1": {
+          "check": "Has the player solved all mandatory puzzles within the time limit?",
+          "result": "ESCAPE COMPLETE",
+          "outcome": "Game ends. Full XP and Escape Artist badge awarded. Debrief commences.",
+          "type": "win"
+        },
+        "condition2": {
+          "check": "Has the player used all hint tokens without completing the puzzle chain?",
+          "result": "ESCAPE FAILED",
+          "outcome": "Game ends. Partial XP for puzzles solved. Instructor walks through solution logic in debrief.",
+          "type": "lose"
+        },
+        "condition3": {
+          "check": "Has the session timer reached 0?",
+          "result": "TIME LIMIT REACHED",
+          "outcome": "Game concludes immediately. XP awarded for puzzles completed. Full solution revealed during debrief.",
+          "type": "draw"
+        }
+      },
+      "techStack": {
+        "software": [
+          {
+            "name": "Game Engine / Browser App",
+            "role": "Central game state, scoring, leaderboard, and phase management",
+            "stack": "Browser-based HTML5/JS; no server dependency"
+          },
+          {
+            "name": "Player Dashboard Interface",
+            "role": "Real-time XP, badge display, and progress tracking per player",
+            "stack": "Responsive single-page web app; mobile-compatible"
+          },
+          {
+            "name": "Facilitator Control Panel",
+            "role": "Game phase control, timer management, and result override capability",
+            "stack": "Password-protected admin view within same HTML bundle"
+          },
+          {
+            "name": "Export & Report Module",
+            "role": "Session log, grade-ready CSV, and PDF summary generation",
+            "stack": "Client-side PDF/CSV generation; no backend required"
+          }
+        ],
+        "hardware": [
+          {
+            "name": "Instructor Laptop/Tablet",
+            "role": "Facilitator control panel and shared display projection"
+          },
+          {
+            "name": "Student Devices (BYOD)",
+            "role": "Individual player interfaces; any modern browser; IKU lab PCs available"
+          },
+          {
+            "name": "Classroom Projector/Screen",
+            "role": "Shared leaderboard and phase announcement display"
+          }
+        ],
+        "gameComponents": [
+          "Digital scoreboard",
+          "XP & badge tracking system",
+          "Phase timer",
+          "Facilitator override panel",
+          "Session export log"
+        ]
+      },
+      "references": [
+        {
+          "citation": "Cormen, T.H., Leiserson, C.E., Rivest, R.L. & Stein, C. (2022). Introduction to Algorithms (4th ed.). MIT Press.",
+          "relevance": "Core textbook — algorithmic complexity foundations for game mechanics and scoring."
+        },
+        {
+          "citation": "Skiena, S.S. (2020). The Algorithm Design Manual (3rd ed.). Springer.",
+          "relevance": "Algorithm design patterns mapped directly to tower defence and puzzle challenge structures."
+        },
+        {
+          "citation": "Kapp, K.M. (2012). The Gamification of Learning and Instruction. Pfeiffer.",
+          "relevance": "Foundational gamification theory underpinning XP, badge, and leaderboard design."
+        },
+        {
+          "citation": "Deterding, S., Dixon, D., Khaled, R. & Nacke, L. (2011). From game design elements to gamefulness: Defining gamification. Proceedings of MindTrek 2011.",
+          "relevance": "Conceptual basis for distinguishing gamification from full game design."
+        },
+        {
+          "citation": "Chou, Y. (2015). Actionable Gamification: Beyond Points, Badges and Leaderboards. Octalysis Media.",
+          "relevance": "Octalysis framework applied to Core Drive analysis and reward structure design."
+        }
+      ],
+      "gameMechanicsDetail": {
+        "elements": [
+          {
+            "name": "Points & XP",
+            "purpose": "Quantify learning performance and motivate continued engagement",
+            "ontology": "earn condition = correct in-game decision or task completion; value = 5-100 XP; tracked per player per session; displayed on dashboard"
+          },
+          {
+            "name": "Badges & Achievements",
+            "purpose": "Reward specific accomplishments beyond cumulative score",
+            "ontology": "trigger = discrete game event; acquisition = one-time per session; visible on player profile and leaderboard"
+          },
+          {
+            "name": "Leaderboard",
+            "purpose": "Provide social comparison and competitive engagement",
+            "ontology": "ranking = descending XP order; scope = class-wide session; updated after each phase; anonymised for export"
+          },
+          {
+            "name": "Session Timer",
+            "purpose": "Create urgency and model real-world time constraints",
+            "ontology": "duration = configured per phase; expiry = triggers phase transition; visible countdown displayed at all times"
+          },
+          {
+            "name": "Puzzle Lock System",
+            "purpose": "Represent domain knowledge as sequential solution gates",
+            "ontology": "lock = challenge requiring specific knowledge key; key = correct answer; chain = ordered lock sequence to exit"
+          },
+          {
+            "name": "Hint Token",
+            "purpose": "Provide scaffolded support while preserving cognitive effort",
+            "ontology": "token = limited resource (3 per session); spend = reveals partial solution; tracked per player"
+          },
+          {
+            "name": "Room Progression",
+            "purpose": "Structure exploration with clear spatial and conceptual boundaries",
+            "ontology": "room = bounded challenge space; unlock = all locks solved; progression = sequential room chain to exit"
+          }
+        ]
+      },
+      "gameDynamics": {
+        "progressionSystems": "Puzzle chain advances through six sorting algorithm families in complexity order: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, QuickSort, and Heap Sort. Each family contains 3 puzzles of increasing input size and edge-case complexity. Completing a family unlocks the next and awards a family badge. The final boss puzzle requires choosing and applying the optimal algorithm for a complex mixed-requirement scenario.",
+        "feedbackLoops": "Step-validation feedback highlights the exact execution step where a student's algorithm trace diverges from correct behaviour, providing precise actionable feedback. Hint token use is tracked and displayed in the post-session report, providing feedback on knowledge confidence patterns. Sandbox mode provides self-directed feedback through observable algorithm execution without scoring pressure.",
+        "competition": "Leaderboard by puzzle chain depth and efficiency (hints used per puzzle). Weekly Sort Master badge for the student with the deepest chain and fewest hints used. Speed-sort challenge mode (all students attempt the same puzzle simultaneously with live class timer) creates high-energy competitive events throughout the semester.",
+        "collaboration": "Pair mode pairs students on a shared puzzle: one selects the algorithm, one executes the steps. Role alternation per puzzle ensures both students engage both selection and execution competencies. Disagreements on algorithm selection trigger a collaborative reasoning phase before commitment to the solution path.",
+        "adaptability": "Puzzle difficulty and input complexity are configurable per session. Hint token allocation is adjustable for assessment vs practice contexts. Sandbox mode can be enabled or disabled per session. Boss puzzle can be swapped per session to cover different algorithm category combinations. Speed-sort challenge timing is adjustable."
+      },
+      "personaList": "Persona 1 — The Precision Solver: Approaches each puzzle with full algorithm analysis before beginning. Rarely uses hints. Motivated by completing the boss puzzle with zero hints.\n\nPersona 2 — The Sandbox Explorer: Prefers unscored sandbox mode for algorithm experimentation before attempting scored puzzles. Uses sandbox to test incorrect approaches safely before committing.\n\nPersona 3 — The Speed Runner: Prioritises puzzle completion speed over optimality. May select a correct but suboptimal sorting algorithm for large inputs to avoid decision time cost. Needs instructor prompts to reconsider efficiency.",
+      "playerPersonas": [
+        {
+          "name": "The Precision Solver",
+          "description": "Analyses algorithm suitability fully before beginning execution trace. Motivated by zero-hint boss puzzle completion. Top efficiency leaderboard target.",
+          "motivations": [
+            "Complete full puzzle chain with zero hint tokens",
+            "Achieve optimal algorithm selection for boss puzzle mixed-requirement scenario",
+            "Top efficiency leaderboard across semester sessions"
+          ],
+          "challenges": [
+            "Over-analysis can exhaust session time before boss puzzle",
+            "Needs facilitator pacing signal when analysis phase exceeds intended duration"
+          ]
+        },
+        {
+          "name": "The Sandbox Explorer",
+          "description": "Uses sandbox mode as primary learning space before attempting scored chain. Algorithm understanding developed through experimental execution rather than prior theory.",
+          "motivations": [
+            "Discover all sorting algorithm execution patterns through sandbox exploration",
+            "Complete at least three puzzle chain families per session",
+            "Use sandbox insights to achieve correct boss puzzle algorithm selection"
+          ],
+          "challenges": [
+            "Sandbox time allocation leaves insufficient time for full scored chain",
+            "Needs structured transition signal from sandbox to scored chain"
+          ]
+        }
+      ],
+      "rewardStructure": {
+        "elite": "Sort Master badge + 'Sorting Academy Graduate' certificate for completing the full puzzle chain including Boss Puzzle with zero hints used",
+        "professional": "Algorithm Scholar badge + leaderboard recognition for completing ≥4 sorting algorithm families with ≤1 hint token used per family",
+        "access": "Participation certificate + 'Sorting Apprentice' badge for correctly completing ≥8 sorting algorithm puzzles across any difficulty tiers"
+      },
+      "rewardStructureDetail": {
+        "intrinsic": [
+          "Precise satisfaction of correctly tracing algorithm execution step-by-step — a level of mastery that abstract answers cannot provide",
+          "Discovery of sorting algorithm execution characteristics through sandbox experimentation that deepens conceptual understanding",
+          "Social recognition from class speed-sort competitions and efficiency leaderboard comparison across sessions"
+        ],
+        "extrinsic": {
+          "teamBased": [
+            {
+              "badge": "Class Sort Champions",
+              "trigger": "Class-wide session highest aggregate puzzle depth reached",
+              "type": "Class Achievement"
+            },
+            {
+              "badge": "Pair Solvers",
+              "trigger": "Pair mode duo completing Boss Puzzle with zero hints in minimum time",
+              "type": "Team Badge"
+            }
+          ],
+          "individual": [
+            {
+              "badge": "Zero Hint Graduate",
+              "trigger": "Completing full puzzle chain including Boss Puzzle with zero hint tokens used",
+              "points": 100
+            },
+            {
+              "badge": "Speed Sorter",
+              "trigger": "Winning class speed-sort challenge event",
+              "points": 60
+            },
+            {
+              "badge": "Sandbox Explorer",
+              "trigger": "Completing all available sorting algorithm explorations in sandbox mode",
+              "points": 30
+            },
+            {
+              "badge": "Boss Puzzle Champion",
+              "trigger": "Solving Boss Puzzle on first attempt with optimal algorithm selection",
+              "points": 80
+            }
+          ]
+        }
+      },
+      "socialInteraction": {
+        "collaboration": "Pair mode assigns algorithm selection to one student and execution trace to the other — creating complementary collaboration that ensures both students engage both cognitive layers of sorting algorithm mastery.",
+        "competition": "Class speed-sort challenge mode creates simultaneous competitive puzzle solving visible to all students — turning individual algorithm practice into a shared competitive performance event.",
+        "communityBuilding": "Post-session class puzzle board showing depth reached and hints used creates transparent peer comparison that drives improvement across sessions; sandbox findings are shared in class debrief."
+      },
+      "conceptualMap": [
+        {
+          "concept": "Sorting Algorithm Taxonomy",
+          "mechanic": "Puzzle Chain (6 algorithm families)",
+          "description": "Six-family puzzle chain maps directly to the SEN4012 sorting algorithm taxonomy — Bubble, Selection, Insertion, Merge, Quick, Heap — in complexity progression order.",
+          "courseReference": "Cormen et al. (2022): Chapters 6-9 — Sorting Algorithms"
+        },
+        {
+          "concept": "Execution-Level Understanding",
+          "mechanic": "Step-by-Step Validation",
+          "description": "Step validation forces students to trace algorithm execution precisely — developing execution-level understanding that distinguishes genuine algorithm knowledge from name recognition.",
+          "courseReference": "Cormen et al. (2022): Chapter 2 — Insertion Sort and Loop Invariants"
+        },
+        {
+          "concept": "Optimal Algorithm Selection",
+          "mechanic": "Boss Puzzle (mixed requirements)",
+          "description": "Boss puzzle presents scenarios requiring selection of the optimal algorithm across multiple competing criteria — operationalising the SEN4012 algorithm selection decision framework.",
+          "courseReference": "Skiena (2020): Chapter 4 — Sorting and Searching"
+        },
+        {
+          "concept": "Hypothesis Testing",
+          "mechanic": "Sandbox Mode",
+          "description": "Sandbox mode operationalises algorithmic hypothesis testing — students can experiment with algorithm variants on test inputs without scoring pressure, developing genuine algorithm intuition.",
+          "courseReference": "Skiena (2020): Chapter 1 — Problem Solving"
+        },
+        {
+          "concept": "Complexity Trade-offs",
+          "mechanic": "Algorithm Selection Panel",
+          "description": "Algorithm selection panel presents competing sorting options with different complexity profiles — requiring students to reason about best-case, worst-case, and average-case performance simultaneously.",
+          "courseReference": "Cormen et al. (2022): Chapter 8 — Linear-Time Sorting"
+        }
+      ],
+      "leaderboardDetails": {
+        "display": [
+          "Student Name",
+          "Total XP",
+          "Badges Earned",
+          "Session Rank",
+          "Personal XP % = (player XP / total class XP) × 100",
+          "Sorting Accuracy %"
+        ],
+        "personalFormula": "Personal XP % = (player XP / total class XP) × 100",
+        "classWideMetrics": [
+          "Class average Sorting accuracy per session",
+          "Top XP earner per session",
+          "Most improved XP across sessions",
+          "Average session completion rate"
+        ],
+        "recognition": "Session leaders earn bonus XP and leaderboard recognition",
+        "updateFrequency": "Real-time update after each phase; final standing after session end"
+      },
+      "continuousImprovements": [
+        {
+          "name": "Adaptive Complexity Scaling",
+          "description": "Implement algorithm-driven difficulty adjustment that scales sorting algorithm challenge complexity per student based on real-time session performance, ensuring optimal challenge across all SEN4012 skill levels.",
+          "category": "Game Design"
+        },
+        {
+          "name": "Big-O Ontology Integration",
+          "description": "Extend the puzzle game challenge pool using a formal Big-O complexity ontology, enabling systematic verification that all SEN4012 algorithm topics are covered proportionally across sessions.",
+          "category": "Ontology Engineering"
+        },
+        {
+          "name": "LLM Hint Engine",
+          "description": "Integrate an LLM-powered hint system that generates Socratic prompts aligned to SEN4012 Big-O analysis methodology, reducing facilitator dependency for in-session algorithm guidance.",
+          "category": "AI/ML Enhancement"
+        },
+        {
+          "name": "Cross-Session Mastery Tracking",
+          "description": "Implement longitudinal tracking of sorting algorithm algorithm knowledge across multiple sessions to identify persistent misconceptions and generate targeted SEN4012 revision recommendations.",
+          "category": "Analytics"
+        },
+        {
+          "name": "Assessment Export Module",
+          "description": "Add certified assessment mode exporting individual Big-O knowledge profiles as grade-ready reports aligned to SEN4012 course learning outcomes rubric.",
+          "category": "Infrastructure"
+        }
+      ]
+    }
+  },
+  "submissionPhase": "initial",
+  "playerCategories": {
+    "test-p001": "test",
+    "prototype-p002": "prototype"
+  },
+  "structure": {
+    "teams": [
+      {
+        "teamId": "TM-6D8F986A5FD7",
+        "gameId": "GM-B1E981AC7672",
+        "classId": "SEN4012",
+        "members": [
+          "1900005325",
+          "2100005151"
+        ]
+      }
+    ],
+    "classes": [
+      {
+        "classId": "SEN4012",
+        "coordinator": "Yusuf Altunel",
+        "teams": [
+          "TM-6D8F986A5FD7"
+        ]
+      }
+    ]
+  }
+}
