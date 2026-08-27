@@ -24,8 +24,8 @@
             </div>
         </header>
 
-        <section class="how-to-play-panel">
-            <h2>How to Play</h2>
+        <section class="how-to-play-panel" aria-labelledby="howToTitle">
+            <h2 id="howToTitle">How to Play</h2>
             <div class="how-to-content">
                 <div class="modes">
                     <h3>Algorithm Modes</h3>
@@ -92,15 +92,38 @@
                 <div><small>Hints Used</small><span id="hintsUsed">0</span></div>
             </div>
 
-            <div id="messageBox" class="message-box">
+            <div id="messageBox" class="message-box" role="status" aria-live="polite" aria-atomic="true">
                 Select two adjacent tiles to make a Bubble Sort move.
             </div>
 
-            <div id="passInfo" class="pass-info">
+            <div id="passInfo" class="pass-info" aria-live="polite">
                 Compare adjacent tiles.
             </div>
 
-            <div id="tileBoard" class="tile-board">
+            <section class="learning-panel" aria-labelledby="learningTitle">
+                <div class="learning-panel-header">
+                    <div>
+                        <span id="phaseBadge" class="phase-badge">Compare</span>
+                        <h2 id="learningTitle">Bubble Sort objective</h2>
+                    </div>
+                    <span id="stepProgress" class="step-progress">Step 0</span>
+                </div>
+                <p id="algorithmSummary">Repeatedly compare neighboring values and move larger values to the right.</p>
+                <div id="algorithmMeta" class="algorithm-meta">Average time: O(n²) · Focus: adjacent comparisons</div>
+                <div id="visualState" class="visual-state" aria-live="polite"></div>
+            </section>
+
+            <section id="bfsGraphPanel" class="bfs-graph-panel hidden" aria-labelledby="bfsGraphTitle">
+                <div class="learning-panel-header">
+                    <h2 id="bfsGraphTitle">BFS Graph</h2>
+                    <span id="bfsQueue" class="queue-state">Queue: A</span>
+                </div>
+                <div class="graph-scroll">
+                    <svg id="bfsGraph" role="img" aria-label="Breadth-first search graph"></svg>
+                </div>
+            </section>
+
+            <div id="tileBoard" class="tile-board" role="group" aria-label="Interactive puzzle tiles">
                 <!-- Tiles will be created with JavaScript -->
             </div>
 
@@ -111,13 +134,32 @@
                 <p>Final Score: <span id="finalScore">100</span></p>
                 <p>Hints Used: <span id="finalHints">0</span></p>
                 <p class="stars" id="finalStars">★★★</p>
+                <div class="result-actions">
+                    <button type="button" id="replayBtn">Replay</button>
+                    <button type="button" id="nextLevelBtn">Next Level</button>
+                    <button type="button" id="changeAlgorithmBtn">Change Algorithm</button>
+                    <button type="button" id="resultDailyBtn">Daily Challenge</button>
+                </div>
             </div>
 
             <div class="buttons">
-                <button id="hintBtn">Hint</button>
-                <button id="resetBtn">Reset</button>
-                <button id="newPuzzleBtn">New Puzzle</button>
+                <button id="hintBtn" type="button" title="Hint (H)">Hint</button>
+                <button id="resetBtn" type="button" title="Reset (R)">Reset</button>
+                <button id="newPuzzleBtn" type="button">New Puzzle</button>
             </div>
+
+            <dialog id="leaderboardDialog" aria-labelledby="leaderboardDialogTitle">
+                <form id="leaderboardForm" method="dialog">
+                    <h2 id="leaderboardDialogTitle">Save your result</h2>
+                    <label for="playerNameInput">Player name</label>
+                    <input id="playerNameInput" name="playerName" maxlength="30" autocomplete="nickname" value="Anonymous">
+                    <div class="dialog-actions">
+                        <button type="button" id="skipLeaderboardBtn">Skip</button>
+                        <button type="submit">Save Result</button>
+                    </div>
+                </form>
+            </dialog>
+            <p class="keyboard-help"><strong>Keyboard:</strong> Tab/arrow keys navigate tiles, Enter or Space selects, H gives a hint, R resets.</p>
 
 <div class="daily-challenge-panel">
     <div class="daily-challenge-header">
@@ -130,11 +172,14 @@
 <div class="level-editor-panel">
     <h2>Level Editor</h2>
     <div class="level-editor-row">
-        <input id="customArrayInput" type="text" placeholder="Example: 5,2,8,1,4" />
+        <label class="sr-only" for="customArrayInput">Comma-separated puzzle values</label>
+        <input id="customArrayInput" type="text" inputmode="numeric" autocomplete="off" aria-describedby="customPuzzleHelp" placeholder="Example: 5,2,8,1,4" />
         <button id="loadCustomBtn">Load Custom Puzzle</button>
     </div>
+    <p id="customPuzzleHelp" class="field-help">Enter 3–64 unique positive whole numbers separated by commas.</p>
     <div class="level-editor-row">
         <button id="generateShareBtn">Generate Share Link</button>
+        <label class="sr-only" for="shareLinkInput">Generated share link</label>
         <input id="shareLinkInput" type="text" readonly placeholder="Share link will appear here" />
     </div>
 </div>
@@ -196,6 +241,6 @@
     </div>
 
     <!-- JavaScript file connection -->
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

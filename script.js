@@ -1,4 +1,22 @@
 // SortQuest - Tile Puzzle Algorithm Visualiser
+import {
+    computeBfsOrder as buildBfsOrder,
+    findFirstInversion,
+    findMinimumIndex,
+    computeHeapTrace as buildHeapTrace,
+    computeMergeTrace as buildMergeTrace,
+    computeQuickTrace as buildQuickTrace,
+    generateBfsGraph as buildBfsGraph,
+    generateBfsLabels as buildBfsLabels,
+    sortedCopy,
+} from "./js/algorithms.js";
+import {
+    getDailyChallengeDefinition as buildDailyChallenge,
+    getTileCountForLevel as resolveTileCount,
+    parsePuzzleParams,
+    parseStoredRecords,
+    validateCustomPuzzleInput as validatePuzzleInput,
+} from "./js/puzzle-utils.js";
 
 let originalTiles = [];
 let tiles = [];
@@ -7,11 +25,13 @@ let selectedIndex = null;
 let moves = 0;
 let score = 100;
 let hintsUsed = 0;
+let hintStage = 0;
 let selectionPassIndex = 0;
 let insertionIndex = 1;
 let insertionCurrentPosition = 1;
 let seconds = 0;
 let timerInterval = null;
+let timerStartedAt = null;
 let gameStarted = false;
 let gameFinished = false;
 let isCustomPuzzle = false;
@@ -20,6 +40,7 @@ let isDailyChallenge = false;
 let dailyDate = "";
 let dailySeed = "";
 let dailyOriginalTiles = [];
+let pendingLeaderboardRecord = null;
 
 // Merge Sort state
 let mergeTrace = [];
@@ -75,9 +96,35 @@ const loadCustomBtn = document.getElementById("loadCustomBtn");
 const generateShareBtn = document.getElementById("generateShareBtn");
 const shareLinkInput = document.getElementById("shareLinkInput");
 const hintsUsedText = document.getElementById("hintsUsed");
+const leaderboardDialog = document.getElementById("leaderboardDialog");
+const leaderboardForm = document.getElementById("leaderboardForm");
+const playerNameInput = document.getElementById("playerNameInput");
+const skipLeaderboardBtn = document.getElementById("skipLeaderboardBtn");
+const phaseBadge = document.getElementById("phaseBadge");
+const learningTitle = document.getElementById("learningTitle");
+const algorithmSummary = document.getElementById("algorithmSummary");
+const algorithmMeta = document.getElementById("algorithmMeta");
+const stepProgress = document.getElementById("stepProgress");
+const visualState = document.getElementById("visualState");
+const bfsGraphPanel = document.getElementById("bfsGraphPanel");
+const bfsGraphElement = document.getElementById("bfsGraph");
+const bfsQueue = document.getElementById("bfsQueue");
+const replayBtn = document.getElementById("replayBtn");
+const nextLevelBtn = document.getElementById("nextLevelBtn");
+const changeAlgorithmBtn = document.getElementById("changeAlgorithmBtn");
+const resultDailyBtn = document.getElementById("resultDailyBtn");
 const leaderboardStorageKey = "sortquestLeaderboard";
 const dailyLeaderboardStorageKey = "sortquestDailyLeaderboard";
-const dailyModes = ["bubble", "selection", "insertion", "merge", "quick", "heap", "binary", "bfs"];
+const algorithmLearning = {
+    bubble: ["Bubble Sort objective", "Repeatedly compare neighboring values and move larger values to the right.", "Average/Worst: O(n²) · Focus: adjacent comparisons"],
+    selection: ["Selection Sort objective", "Find the smallest remaining value and lock it into the next position.", "All cases: O(n²) · Focus: minimum selection"],
+    insertion: ["Insertion Sort objective", "Grow a sorted prefix by moving the current key left into place.", "Average/Worst: O(n²) · Best: O(n) · Focus: sorted prefix"],
+    merge: ["Merge Sort objective", "Combine two sorted halves by repeatedly choosing their smallest front value.", "All cases: O(n log n) · Focus: divide and merge"],
+    quick: ["Quick Sort objective", "Partition the active range around a pivot, then solve each side.", "Average: O(n log n) · Worst: O(n²) · Focus: partitioning"],
+    heap: ["Heap Sort objective", "Use a max heap to move the largest remaining value into the sorted tail.", "All cases: O(n log n) · Focus: heap property"],
+    binary: ["Binary Search objective", "Discard half of a sorted search range after each midpoint check.", "Worst: O(log n) · Focus: range elimination"],
+    bfs: ["Breadth-First Search objective", "Visit nodes level by level using a first-in, first-out queue.", "O(V + E) · Focus: queue-based traversal"],
+};
 
 function renderTiles() {
     tileBoard.innerHTML = "";
@@ -85,9 +132,11 @@ function renderTiles() {
     tiles.forEach((value, index) => {
         const tile = document.createElement("div");
         tile.classList.add("tile");
+        let stateLabel = "Ready";
 
         if (selectedIndex === index) {
             tile.classList.add("selected");
+            stateLabel = "Selected";
         }
 
         if (
@@ -96,6 +145,7 @@ function renderTiles() {
             index === selectionPassIndex
         ) {
             tile.classList.add("current-pass");
+            stateLabel = "Target";
         }
 
         if (
@@ -104,49 +154,73 @@ function renderTiles() {
             index === insertionCurrentPosition
         ) {
             tile.classList.add("current-key");
+            stateLabel = "Current key";
         }
 
-        if (
-            algorithmSelect.value === "merge" &&
-            !gameFinished &&
-            value === getTraceExpectedValue(mergeTrace, mergeTraceIndex)
-        ) {
-            tile.classList.add("merge-active", "trace-expected");
+        if (algorithmSelect.value === "merge" && !gameFinished && mergeTraceIndex < mergeTrace.length) {
+            const step = mergeTrace[mergeTraceIndex];
+            if (index >= step.rangeStart && index <= step.rangeEnd) {
+                tile.classList.add("algorithm-active");
+                stateLabel = "Active range";
+            }
+            if (value === step.value) {
+                tile.classList.add("merge-active", "trace-expected");
+                stateLabel = "Compared next";
+            }
         }
 
-        if (
-            algorithmSelect.value === "quick" &&
-            !gameFinished &&
-            value === getTraceExpectedValue(quickTrace, quickTraceIndex)
-        ) {
-            tile.classList.add("quick-pivot", "trace-expected");
+        if (algorithmSelect.value === "quick" && !gameFinished && quickTraceIndex < quickTrace.length) {
+            const step = quickTrace[quickTraceIndex];
+            if (index >= step.low && index <= step.high) {
+                tile.classList.add("algorithm-active");
+                stateLabel = "Active partition";
+            } else {
+                tile.classList.add("algorithm-complete");
+                stateLabel = "Outside partition";
+            }
+            if (value === step.pivot) {
+                tile.classList.add("quick-pivot");
+                stateLabel = "Pivot";
+            }
+            if (value === step.value) tile.classList.add("trace-expected");
         }
 
-        if (
-            algorithmSelect.value === "heap" &&
-            !gameFinished &&
-            value === getTraceExpectedValue(heapTrace, heapTraceIndex)
-        ) {
-            tile.classList.add("heap-root", "trace-expected");
+        if (algorithmSelect.value === "heap" && !gameFinished && heapTraceIndex < heapTrace.length) {
+            const step = heapTrace[heapTraceIndex];
+            if (index < step.heapSize) {
+                tile.classList.add("algorithm-active");
+                stateLabel = "Active heap";
+            } else {
+                tile.classList.add("algorithm-sorted");
+                stateLabel = "Sorted tail";
+            }
+            if (value === step.value) {
+                tile.classList.add("heap-root", "trace-expected");
+                stateLabel = "Heap maximum";
+            }
         }
 
         if (algorithmSelect.value === "binary") {
             if (!gameFinished && index >= binaryLow && index <= binaryHigh) {
                 tile.classList.add("binary-range");
+                stateLabel = "Search range";
             }
 
             if (!gameFinished && index === binaryMid) {
                 tile.classList.add("binary-mid");
+                stateLabel = "Middle";
             }
 
             if (gameFinished && index === binaryFoundIndex) {
                 tile.classList.add("binary-found");
+                stateLabel = "Found";
             }
         }
 
         if (algorithmSelect.value === "bfs") {
             if (bfsVisitedNodes.includes(value)) {
                 tile.classList.add("bfs-visited");
+                stateLabel = "Visited";
             }
 
             if (
@@ -155,10 +229,16 @@ function renderTiles() {
                 value === bfsOrder[bfsTraceIndex]
             ) {
                 tile.classList.add("bfs-next");
+                stateLabel = "Queue front";
             }
         }
 
         tile.textContent = value;
+        tile.tabIndex = index === 0 ? 0 : -1;
+        tile.setAttribute("role", "button");
+        tile.dataset.state = stateLabel;
+        tile.setAttribute("aria-label", `Tile ${value}, position ${index + 1}, ${stateLabel}`);
+        tile.setAttribute("aria-pressed", selectedIndex === index ? "true" : "false");
         tile.draggable = true;
         tile.addEventListener("click", () => handleTileClick(index));
         tile.addEventListener("dragstart", (event) => handleTileDragStart(event, index));
@@ -166,11 +246,30 @@ function renderTiles() {
         tile.addEventListener("dragleave", (event) => handleTileDragLeave(event));
         tile.addEventListener("drop", (event) => handleTileDrop(event, index));
         tile.addEventListener("dragend", handleTileDragEnd);
+        tile.addEventListener("keydown", (event) => handleTileKeydown(event, index));
 
         tileBoard.appendChild(tile);
     });
 
     updatePassInfo();
+    renderLearningState();
+}
+
+function handleTileKeydown(event, index) {
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleTileClick(index);
+        return;
+    }
+
+    const direction = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1
+        : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
+    if (!direction) return;
+    event.preventDefault();
+    const nextIndex = (index + direction + tiles.length) % tiles.length;
+    const tileElements = tileBoard.querySelectorAll(".tile");
+    tileElements.forEach((element, tileIndex) => { element.tabIndex = tileIndex === nextIndex ? 0 : -1; });
+    tileElements[nextIndex]?.focus();
 }
 
 function handleTileDragStart(event, index) {
@@ -508,92 +607,7 @@ function validateInsertionSortMove(firstIndex, secondIndex) {
 }
 
 function findMinIndex(startIndex) {
-    let minIndex = startIndex;
-
-    for (let i = startIndex + 1; i < tiles.length; i++) {
-        if (tiles[i] < tiles[minIndex]) {
-            minIndex = i;
-        }
-    }
-
-    return minIndex;
-}
-
-// ===== MERGE SORT HELPERS =====
-function computeMergeTrace(arr) {
-    const trace = [];
-
-    function sortRange(values, startIndex) {
-        if (values.length <= 1) {
-            return values;
-        }
-
-        const middle = Math.floor(values.length / 2);
-        const left = sortRange(values.slice(0, middle), startIndex);
-        const right = sortRange(values.slice(middle), startIndex + middle);
-        const merged = [];
-        let leftIndex = 0;
-        let rightIndex = 0;
-
-        while (leftIndex < left.length && rightIndex < right.length) {
-            const takeLeft = left[leftIndex] <= right[rightIndex];
-            const value = takeLeft ? left[leftIndex] : right[rightIndex];
-
-            trace.push({
-                value,
-                action: "merge",
-                rangeStart: startIndex,
-                rangeEnd: startIndex + values.length - 1,
-                leftValues: [...left],
-                rightValues: [...right],
-                source: takeLeft ? "left" : "right",
-            });
-
-            merged.push(value);
-
-            if (takeLeft) {
-                leftIndex++;
-            } else {
-                rightIndex++;
-            }
-        }
-
-        while (leftIndex < left.length) {
-            const value = left[leftIndex];
-            trace.push({
-                value,
-                action: "merge",
-                rangeStart: startIndex,
-                rangeEnd: startIndex + values.length - 1,
-                leftValues: [...left],
-                rightValues: [...right],
-                source: "left",
-            });
-            merged.push(value);
-            leftIndex++;
-        }
-
-        while (rightIndex < right.length) {
-            const value = right[rightIndex];
-            trace.push({
-                value,
-                action: "merge",
-                rangeStart: startIndex,
-                rangeEnd: startIndex + values.length - 1,
-                leftValues: [...left],
-                rightValues: [...right],
-                source: "right",
-            });
-            merged.push(value);
-            rightIndex++;
-        }
-
-        return merged;
-    }
-
-    sortRange([...arr], 0);
-
-    return trace;
+    return findMinimumIndex(tiles, startIndex);
 }
 
 function validateMergeSortMove(clickedIndex) {
@@ -612,7 +626,7 @@ function validateMergeSortMove(clickedIndex) {
         updateStats();
 
         if (mergeTraceIndex >= mergeTrace.length) {
-            tiles = getSortedTiles(originalTiles);
+            tiles = sortedCopy(originalTiles);
         }
 
         selectedIndex = null;
@@ -628,64 +642,6 @@ function validateMergeSortMove(clickedIndex) {
         "error"
     );
     renderTiles();
-}
-
-// ===== QUICK SORT HELPERS =====
-function computeQuickTrace(arr) {
-    const trace = [];
-    const working = [...arr];
-
-    function partition(low, high) {
-        const pivot = working[high];
-        let smallerBoundary = low;
-
-        trace.push({
-            value: pivot,
-            action: "choose-pivot",
-            low,
-            high,
-            pivot,
-        });
-
-        for (let scan = low; scan < high; scan++) {
-            if (working[scan] < pivot) {
-                trace.push({
-                    value: working[scan],
-                    action: "move-before-pivot",
-                    low,
-                    high,
-                    pivot,
-                });
-                swapArrayValues(working, smallerBoundary, scan);
-                smallerBoundary++;
-            }
-        }
-
-        trace.push({
-            value: pivot,
-            action: "place-pivot",
-            low,
-            high,
-            pivot,
-        });
-        swapArrayValues(working, smallerBoundary, high);
-
-        return smallerBoundary;
-    }
-
-    function quickSort(low, high) {
-        if (low >= high) {
-            return;
-        }
-
-        const pivotIndex = partition(low, high);
-        quickSort(low, pivotIndex - 1);
-        quickSort(pivotIndex + 1, high);
-    }
-
-    quickSort(0, working.length - 1);
-
-    return trace;
 }
 
 function validateQuickSortMove(clickedIndex) {
@@ -704,7 +660,7 @@ function validateQuickSortMove(clickedIndex) {
         updateStats();
 
         if (quickTraceIndex >= quickTrace.length) {
-            tiles = getSortedTiles(originalTiles);
+            tiles = sortedCopy(originalTiles);
         }
 
         selectedIndex = null;
@@ -720,48 +676,6 @@ function validateQuickSortMove(clickedIndex) {
         "error"
     );
     renderTiles();
-}
-
-// ===== HEAP SORT HELPERS =====
-function computeHeapTrace(arr) {
-    const trace = [];
-    const heap = [...arr];
-
-    function heapify(heapSize, rootIndex) {
-        let largest = rootIndex;
-        const leftChild = rootIndex * 2 + 1;
-        const rightChild = rootIndex * 2 + 2;
-
-        if (leftChild < heapSize && heap[leftChild] > heap[largest]) {
-            largest = leftChild;
-        }
-
-        if (rightChild < heapSize && heap[rightChild] > heap[largest]) {
-            largest = rightChild;
-        }
-
-        if (largest !== rootIndex) {
-            swapArrayValues(heap, rootIndex, largest);
-            heapify(heapSize, largest);
-        }
-    }
-
-    for (let i = Math.floor(heap.length / 2) - 1; i >= 0; i--) {
-        heapify(heap.length, i);
-    }
-
-    for (let endIndex = heap.length - 1; endIndex > 0; endIndex--) {
-        trace.push({
-            value: heap[0],
-            action: "extract-max",
-            sortedPosition: endIndex,
-            heapSize: endIndex + 1,
-        });
-        swapArrayValues(heap, 0, endIndex);
-        heapify(endIndex, 0);
-    }
-
-    return trace;
 }
 
 function validateHeapSortMove(clickedIndex) {
@@ -780,7 +694,7 @@ function validateHeapSortMove(clickedIndex) {
         updateStats();
 
         if (heapTraceIndex >= heapTrace.length) {
-            tiles = getSortedTiles(originalTiles);
+            tiles = sortedCopy(originalTiles);
         }
 
         selectedIndex = null;
@@ -796,24 +710,6 @@ function validateHeapSortMove(clickedIndex) {
         "error"
     );
     renderTiles();
-}
-
-function getTraceExpectedValue(trace, index) {
-    if (index >= trace.length) {
-        return null;
-    }
-
-    return trace[index].value;
-}
-
-function swapArrayValues(array, indexA, indexB) {
-    const temp = array[indexA];
-    array[indexA] = array[indexB];
-    array[indexB] = temp;
-}
-
-function getSortedTiles(array) {
-    return [...array].sort((a, b) => a - b);
 }
 
 function getMergeStepMessage(step) {
@@ -884,71 +780,12 @@ function validateBinarySearchMove(clickedIndex) {
 
 // ===== BFS GRAPH HELPERS =====
 function prepareBfsGraph() {
-    const nodeCount = getTileCountForLevel(levelSelect.value);
-    tiles = generateBfsLabels(nodeCount);
-    bfsGraph = generateBfsGraph(tiles);
-    bfsOrder = computeBfsOrder("A", bfsGraph);
+    const nodeCount = resolveTileCount(levelSelect.value);
+    tiles = buildBfsLabels(nodeCount);
+    bfsGraph = buildBfsGraph(tiles);
+    bfsOrder = buildBfsOrder("A", bfsGraph);
     bfsTraceIndex = 0;
     bfsVisitedNodes = [];
-}
-
-function generateBfsLabels(count) {
-    return Array.from({ length: count }, (_, index) => {
-        return getBfsLabel(index);
-    });
-}
-
-function getBfsLabel(index) {
-    let label = "";
-    let value = index;
-
-    do {
-        label = String.fromCharCode(65 + (value % 26)) + label;
-        value = Math.floor(value / 26) - 1;
-    } while (value >= 0);
-
-    return label;
-}
-
-function generateBfsGraph(labels) {
-    const graph = {};
-
-    labels.forEach((label, index) => {
-        graph[label] = [];
-
-        const leftChildIndex = index * 2 + 1;
-        const rightChildIndex = index * 2 + 2;
-
-        if (leftChildIndex < labels.length) {
-            graph[label].push(labels[leftChildIndex]);
-        }
-
-        if (rightChildIndex < labels.length) {
-            graph[label].push(labels[rightChildIndex]);
-        }
-    });
-
-    return graph;
-}
-
-function computeBfsOrder(startNode, graph) {
-    const visited = new Set([startNode]);
-    const queue = [startNode];
-    const order = [];
-
-    while (queue.length > 0) {
-        const currentNode = queue.shift();
-        order.push(currentNode);
-
-        graph[currentNode].forEach((neighbor) => {
-            if (!visited.has(neighbor)) {
-                visited.add(neighbor);
-                queue.push(neighbor);
-            }
-        });
-    }
-
-    return order;
 }
 
 function validateBfsMove(clickedIndex) {
@@ -1097,14 +934,8 @@ function checkWin() {
 }
 
 function promptAndSaveLeaderboard() {
-    let playerName = prompt("Enter your name for the leaderboard:", "Anonymous");
-
-    if (!playerName || !playerName.trim()) {
-        playerName = "Anonymous";
-    }
-
-    const record = {
-        playerName,
+    pendingLeaderboardRecord = {
+        playerName: "Anonymous",
         algorithm: algorithmSelect.options[algorithmSelect.selectedIndex].text,
         level: levelSelect.value,
         score,
@@ -1116,15 +947,143 @@ function promptAndSaveLeaderboard() {
     };
 
     if (isDailyChallenge) {
-        record.date = dailyDate;
-        record.dailySeed = dailySeed;
-        saveDailyLeaderboardRecord(record);
-        renderDailyLeaderboard();
-        return;
+        pendingLeaderboardRecord.date = dailyDate;
+        pendingLeaderboardRecord.dailySeed = dailySeed;
     }
 
-    saveLeaderboardRecord(record);
-    renderLeaderboard();
+    if (typeof leaderboardDialog.showModal === "function") {
+        playerNameInput.value = "Anonymous";
+        leaderboardDialog.showModal();
+        playerNameInput.select();
+    } else {
+        savePendingLeaderboardRecord();
+    }
+}
+
+function renderLearningState() {
+    const mode = algorithmSelect.value;
+    const [title, summary, meta] = algorithmLearning[mode];
+    learningTitle.textContent = title;
+    algorithmSummary.textContent = summary;
+    algorithmMeta.textContent = meta;
+    visualState.replaceChildren();
+
+    let phase = "Compare";
+    let progress = `Moves: ${moves}`;
+    let details = "Choose the next step using the highlighted state.";
+
+    if (mode === "selection") {
+        phase = "Select minimum";
+        progress = `Pass ${Math.min(selectionPassIndex + 1, tiles.length)}/${tiles.length - 1}`;
+        details = `Target position ${selectionPassIndex + 1}; the earlier positions are complete.`;
+    } else if (mode === "insertion") {
+        phase = "Insert key";
+        progress = `Key ${Math.min(insertionIndex + 1, tiles.length)}/${tiles.length}`;
+        details = `Sorted prefix: positions 1–${Math.max(1, insertionCurrentPosition)}. Compare the key with its left neighbor.`;
+    } else if (mode === "merge") {
+        phase = "Merge halves";
+        progress = `Step ${Math.min(mergeTraceIndex + 1, mergeTrace.length)}/${mergeTrace.length}`;
+        const step = mergeTrace[mergeTraceIndex];
+        if (step) details = `Active range ${step.rangeStart + 1}–${step.rangeEnd + 1}. Left remaining [${step.leftRemaining.join(", ") || "empty"}] · Right remaining [${step.rightRemaining.join(", ") || "empty"}]. Compare ${step.comparedValues.join(" and ")}.`;
+    } else if (mode === "quick") {
+        const step = quickTrace[quickTraceIndex];
+        phase = step?.action === "choose-pivot" ? "Choose pivot" : step?.action === "place-pivot" ? "Place pivot" : "Partition";
+        progress = `Step ${Math.min(quickTraceIndex + 1, quickTrace.length)}/${quickTrace.length}`;
+        if (step) details = `Active range ${step.low + 1}–${step.high + 1}; pivot ${step.pivot}. Values smaller than the pivot belong on its left.`;
+    } else if (mode === "heap") {
+        phase = "Extract maximum";
+        progress = `Extraction ${Math.min(heapTraceIndex + 1, heapTrace.length)}/${heapTrace.length}`;
+        const step = heapTrace[heapTraceIndex];
+        if (step) details = `Heap [${step.heapSnapshot.join(", ")}]. Root ${step.value}${step.children.length ? ` is ≥ children ${step.children.join(" and ")}` : " has no children"}, so it moves to sorted position ${step.sortedPosition + 1}.`;
+    } else if (mode === "binary") {
+        phase = gameFinished ? "Target found" : "Check midpoint";
+        progress = `Range ${Math.max(0, binaryHigh - binaryLow + 1)} values`;
+        details = gameFinished ? `Target ${binaryTarget} was found.` : `Target ${binaryTarget}; compare it with midpoint ${tiles[binaryMid]} at position ${binaryMid + 1}.`;
+    } else if (mode === "bfs") {
+        phase = gameFinished ? "Traversal complete" : "Dequeue next";
+        progress = `Visited ${bfsTraceIndex}/${bfsOrder.length}`;
+        const queue = getBfsQueue();
+        details = queue.length ? `Queue front: ${queue[0]}. Visit it before the nodes behind it.` : "The queue is empty; traversal is complete.";
+    }
+
+    phaseBadge.textContent = phase;
+    stepProgress.textContent = progress;
+    const detailText = document.createElement("p");
+    detailText.textContent = details;
+    visualState.appendChild(detailText);
+
+    bfsGraphPanel.classList.toggle("hidden", mode !== "bfs");
+    if (mode === "bfs") renderBfsGraph();
+}
+
+function getBfsQueue() {
+    const queue = ["A"];
+    for (let index = 0; index < bfsTraceIndex; index++) {
+        const node = queue.shift();
+        if (node) queue.push(...(bfsGraph[node] || []));
+    }
+    return queue;
+}
+
+function renderBfsGraph() {
+    const namespace = "http://www.w3.org/2000/svg";
+    const width = 800;
+    const levels = Math.max(1, Math.ceil(Math.log2(tiles.length + 1)));
+    const height = Math.max(220, levels * 90);
+    const positions = new Map();
+    bfsGraphElement.replaceChildren();
+    bfsGraphElement.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    tiles.forEach((label, index) => {
+        const level = Math.floor(Math.log2(index + 1));
+        const firstAtLevel = 2 ** level - 1;
+        const offset = index - firstAtLevel;
+        const count = 2 ** level;
+        positions.set(label, { x: ((offset + 1) * width) / (count + 1), y: 45 + level * 88 });
+    });
+
+    Object.entries(bfsGraph).forEach(([parent, children]) => {
+        children.forEach((child) => {
+            const line = document.createElementNS(namespace, "line");
+            line.setAttribute("x1", positions.get(parent).x);
+            line.setAttribute("y1", positions.get(parent).y);
+            line.setAttribute("x2", positions.get(child).x);
+            line.setAttribute("y2", positions.get(child).y);
+            line.setAttribute("class", bfsVisitedNodes.includes(parent) ? "graph-edge visited" : "graph-edge");
+            bfsGraphElement.appendChild(line);
+        });
+    });
+
+    const queue = getBfsQueue();
+    tiles.forEach((label) => {
+        const group = document.createElementNS(namespace, "g");
+        const position = positions.get(label);
+        const state = bfsVisitedNodes.includes(label) ? "visited" : queue[0] === label ? "current" : "pending";
+        group.setAttribute("class", `graph-node ${state}`);
+        group.setAttribute("transform", `translate(${position.x} ${position.y})`);
+        const circle = document.createElementNS(namespace, "circle");
+        circle.setAttribute("r", "24");
+        const text = document.createElementNS(namespace, "text");
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("dy", ".35em");
+        text.textContent = label;
+        group.append(circle, text);
+        bfsGraphElement.appendChild(group);
+    });
+    bfsQueue.textContent = `Queue: ${queue.join(" → ") || "empty"}`;
+}
+
+function savePendingLeaderboardRecord() {
+    if (!pendingLeaderboardRecord) return;
+
+    if (pendingLeaderboardRecord.date) {
+        saveDailyLeaderboardRecord(pendingLeaderboardRecord);
+        renderDailyLeaderboard();
+    } else {
+        saveLeaderboardRecord(pendingLeaderboardRecord);
+        renderLeaderboard();
+    }
+    pendingLeaderboardRecord = null;
 }
 
 function getPerfectMoveLimit() {
@@ -1246,27 +1205,6 @@ function getInsertionPerfectMoves(array) {
     return movesCount;
 }
 
-function getTileCountForLevel(levelValue) {
-    switch (levelValue) {
-        case "1":
-            return 4;
-        case "2":
-            return 8;
-        case "3":
-            return 16;
-        case "4":
-            return 32;
-        case "5":
-            return 64;
-        default:
-            return 4;
-    }
-}
-
-function isValidLevelValue(levelValue) {
-    return ["1", "2", "3", "4", "5"].includes(levelValue);
-}
-
 function calculateStars() {
     const perfectLimit = getPerfectMoveLimit();
     const tileCount = tiles.length;
@@ -1356,11 +1294,8 @@ function saveDailyLeaderboardRecords(records) {
 
 function readStoredRecords(storageKey) {
     try {
-        const stored = localStorage.getItem(storageKey);
-        const parsed = stored ? JSON.parse(stored) : [];
-        return Array.isArray(parsed) ? parsed : [];
+        return parseStoredRecords(localStorage.getItem(storageKey));
     } catch (error) {
-        removeStoredRecords(storageKey, false);
         return [];
     }
 }
@@ -1499,13 +1434,22 @@ function clearDailyLeaderboard() {
 }
 
 function updateStats() {
-    moveCount.textContent = moves;
-    hintsUsedText.textContent = hintsUsed;
-
     score = Math.max(0, 100 - moves * 5 - hintsUsed * 10);
-    scoreText.textContent = score;
+    setHudValue(moveCount, moves);
+    setHudValue(hintsUsedText, hintsUsed);
+    setHudValue(scoreText, score);
 }
 
+function setHudValue(element, value) {
+    if (element.textContent === String(value)) return;
+    element.textContent = value;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        element.animate(
+            [{ transform: "translateY(3px)", opacity: 0.55 }, { transform: "translateY(0)", opacity: 1 }],
+            { duration: 180, easing: "ease-out" }
+        );
+    }
+}
 
 function setMessage(message, type) {
     messageBox.textContent = message;
@@ -1519,6 +1463,15 @@ function setMessage(message, type) {
     if (type === "error") {
         messageBox.classList.add("error");
     }
+
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        messageBox.animate(
+            type === "error"
+                ? [{ transform: "translateX(-3px)" }, { transform: "translateX(3px)" }, { transform: "translateX(0)" }]
+                : [{ opacity: 0.55, transform: "translateY(2px)" }, { opacity: 1, transform: "translateY(0)" }],
+            { duration: type === "error" ? 170 : 190, easing: "ease-out" }
+        );
+    }
 }
 
 function startTimer() {
@@ -1527,16 +1480,22 @@ function startTimer() {
     }
 
     gameStarted = true;
+    timerStartedAt = Date.now() - seconds * 1000;
 
     timerInterval = setInterval(() => {
-        seconds++;
+        seconds = Math.floor((Date.now() - timerStartedAt) / 1000);
         updateTimerText();
     }, 1000);
 }
 
 function stopTimer() {
+    if (timerStartedAt !== null && gameStarted) {
+        seconds = Math.floor((Date.now() - timerStartedAt) / 1000);
+        updateTimerText();
+    }
     clearInterval(timerInterval);
     timerInterval = null;
+    timerStartedAt = null;
 }
 
 function updateTimerText() {
@@ -1583,20 +1542,7 @@ function exitDailyChallenge(showMessage) {
 }
 
 function getDailyChallengeDefinition() {
-    const date = getDailyDateString();
-    const seed = `sortquest-${date}`;
-    const seedNumber = getSeedNumber(seed);
-    const mode = dailyModes[seedNumber % dailyModes.length];
-    const level = seedNumber % 2 === 0 ? "2" : "3";
-    const tileCount = getTileCountForLevel(level);
-
-    return {
-        date,
-        seed,
-        mode,
-        level,
-        tiles: generateSeededTiles(tileCount, seedNumber),
-    };
+    return buildDailyChallenge(getDailyDateString());
 }
 
 function getDailyDateString() {
@@ -1606,47 +1552,6 @@ function getDailyDateString() {
     const day = String(today.getDate()).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
-}
-
-function getSeedNumber(seedText) {
-    let hash = 0;
-
-    for (let i = 0; i < seedText.length; i++) {
-        hash = (hash * 31 + seedText.charCodeAt(i)) >>> 0;
-    }
-
-    return hash;
-}
-
-function seededRandom(seed) {
-    let value = seed >>> 0;
-
-    return () => {
-        value = (value * 1664525 + 1013904223) >>> 0;
-        return value / 4294967296;
-    };
-}
-
-function generateSeededTiles(tileCount, seed) {
-    const random = seededRandom(seed);
-    const puzzle = Array.from({ length: tileCount }, (_, index) => index + 1);
-
-    for (let i = puzzle.length - 1; i > 0; i--) {
-        const j = Math.floor(random() * (i + 1));
-        const temp = puzzle[i];
-        puzzle[i] = puzzle[j];
-        puzzle[j] = temp;
-    }
-
-    const alreadySorted = puzzle.every((value, index) => value === index + 1);
-
-    if (alreadySorted && puzzle.length > 1) {
-        const temp = puzzle[0];
-        puzzle[0] = puzzle[1];
-        puzzle[1] = temp;
-    }
-
-    return puzzle;
 }
 
 function updateDailyChallengeStatus() {
@@ -1661,12 +1566,16 @@ function updateDailyChallengeStatus() {
             `Active: ${challenge.date} | Seed: ${challenge.seed} | Mode: ${algorithmSelect.options[algorithmSelect.selectedIndex].text} | Level ${levelSelect.value}`;
         dailyChallengeStatus.parentElement.classList.add("daily-active");
         hintBtn.classList.add("button-disabled");
+        hintBtn.disabled = true;
+        hintBtn.setAttribute("aria-disabled", "true");
         return;
     }
 
     dailyChallengeStatus.textContent = `Today: ${challenge.date} | Seed: ${challenge.seed}`;
     dailyChallengeStatus.parentElement.classList.remove("daily-active");
     hintBtn.classList.remove("button-disabled");
+    hintBtn.disabled = false;
+    hintBtn.removeAttribute("aria-disabled");
 }
 
 function resetGame() {
@@ -1675,21 +1584,23 @@ function resetGame() {
     moves = 0;
     score = 100;
     hintsUsed = 0;
+    hintStage = 0;
     selectionPassIndex = 0;
     insertionIndex = 1;
     insertionCurrentPosition = 1;
     seconds = 0;
     gameStarted = false;
+    timerStartedAt = null;
     gameFinished = false;
 
     // Reset new mode states
-    mergeTrace = computeMergeTrace(originalTiles);
+    mergeTrace = buildMergeTrace(originalTiles);
     mergeTraceIndex = 0;
 
-    quickTrace = computeQuickTrace(originalTiles);
+    quickTrace = buildQuickTrace(originalTiles);
     quickTraceIndex = 0;
 
-    heapTrace = computeHeapTrace(originalTiles);
+    heapTrace = buildHeapTrace(originalTiles);
     heapTraceIndex = 0;
 
     binaryTarget = null;
@@ -1739,7 +1650,7 @@ function newPuzzle() {
 }
 
 function loadCustomPuzzle(inputValue) {
-    const validation = validateCustomPuzzleInput(inputValue);
+    const validation = validatePuzzleInput(inputValue);
 
     if (!validation.valid) {
         setMessage(validation.message, "error");
@@ -1771,47 +1682,32 @@ function generateShareLink() {
 }
 
 function loadPuzzleFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const custom = params.get("custom");
-    const mode = params.get("mode");
-    const level = params.get("level");
-
-    if (!custom) {
+    const parsed = parsePuzzleParams(window.location.search);
+    if (!parsed.hasPuzzle) {
         return;
     }
 
-    const validation = validateCustomPuzzleInput(custom);
-
-    if (!validation.valid) {
-        setMessage(validation.message, "error");
+    if (!parsed.valid) {
+        setMessage(`Shared puzzle could not be loaded: ${parsed.message}`, "error");
         return;
     }
 
-    originalTiles = [...validation.numbers];
+    originalTiles = [...parsed.numbers];
     exitDailyChallenge(false);
     isCustomPuzzle = true;
     customArrayInput.value = originalTiles.join(",");
 
-    const validModes = ["bubble", "selection", "insertion", "merge", "quick", "heap", "binary", "bfs"];
-    if (mode && validModes.includes(mode)) {
-        algorithmSelect.value = mode;
-    }
-
-    if (level && isValidLevelValue(level)) {
-        levelSelect.value = level;
-    }
+    algorithmSelect.value = parsed.mode;
+    levelSelect.value = parsed.level;
 
     resetGame();
-    setMessage("Custom puzzle loaded successfully.", "success");
+    setMessage(parsed.usedFallback
+        ? "Shared puzzle loaded. Unsupported options were reset to safe defaults."
+        : "Shared puzzle loaded successfully.", "success");
 }
 
 function findFirstBubbleSwapHint() {
-    for (let i = 0; i < tiles.length - 1; i++) {
-        if (tiles[i] > tiles[i + 1]) {
-            return { left: tiles[i], right: tiles[i + 1] };
-        }
-    }
-    return null;
+    return findFirstInversion(tiles);
 }
 
 function handleHintClick() {
@@ -1826,6 +1722,7 @@ function handleHintClick() {
     }
 
     hintsUsed += 1;
+    hintStage = Math.min(3, hintStage + 1);
     updateStats();
 
     if (algorithmSelect.value === "bubble") {
@@ -1836,13 +1733,21 @@ function handleHintClick() {
             return;
         }
 
-        setMessage(`Hint: Try swapping ${hint.left} and ${hint.right}.`, "normal");
+        setMessage(hintStage === 1
+            ? "Hint 1/3: Bubble Sort only swaps adjacent values that are out of order."
+            : hintStage === 2
+                ? "Hint 2/3: Scan from the left for the first neighboring pair where the left value is larger."
+                : `Hint 3/3: Try swapping ${hint.left} and ${hint.right}.`, "normal");
         return;
     }
 
     if (algorithmSelect.value === "selection") {
         setMessage(
-            `Hint: Find the minimum from position ${selectionPassIndex + 1} onward and place it at position ${selectionPassIndex + 1}.`,
+            hintStage === 1
+                ? "Hint 1/3: Selection Sort fixes one position per pass by finding the smallest remaining value."
+                : hintStage === 2
+                    ? `Hint 2/3: Search positions ${selectionPassIndex + 1} through ${tiles.length}.`
+                    : `Hint 3/3: Place ${tiles[findMinIndex(selectionPassIndex)]} at position ${selectionPassIndex + 1}.`,
             "normal"
         );
         return;
@@ -1850,27 +1755,26 @@ function handleHintClick() {
 
     if (algorithmSelect.value === "insertion") {
         const leftIndex = insertionCurrentPosition - 1;
-        if (
-            insertionCurrentPosition > 0 &&
-            tiles[leftIndex] > tiles[insertionCurrentPosition]
-        ) {
-            setMessage(
-                "Hint: Move the current key left by swapping it with the larger tile before it.",
-                "normal"
-            );
-        } else {
-            setMessage(
-                "Hint: The current key is already in the correct position. Click it twice to confirm.",
-                "normal"
-            );
-        }
+        const needsSwap = insertionCurrentPosition > 0 && tiles[leftIndex] > tiles[insertionCurrentPosition];
+        setMessage(hintStage === 1
+            ? "Hint 1/3: Insertion Sort grows a sorted prefix one key at a time."
+            : hintStage === 2
+                ? `Hint 2/3: Compare key ${tiles[insertionCurrentPosition]} with the value immediately to its left.`
+                : needsSwap
+                    ? `Hint 3/3: Swap ${tiles[insertionCurrentPosition]} with ${tiles[leftIndex]}.`
+                    : `Hint 3/3: The key is placed; select ${tiles[insertionCurrentPosition]} twice to confirm.`, "normal");
         return;
     }
 
     if (algorithmSelect.value === "merge") {
         if (mergeTraceIndex < mergeTrace.length) {
+            const step = mergeTrace[mergeTraceIndex];
             setMessage(
-                `Hint: ${getMergeStepMessage(mergeTrace[mergeTraceIndex])}`,
+                hintStage === 1
+                    ? "Hint 1/3: Merge by comparing the first unmerged value in each sorted half."
+                    : hintStage === 2
+                        ? `Hint 2/3: Work only inside positions ${step.rangeStart + 1}–${step.rangeEnd + 1}; compare the left and right halves.`
+                        : `Hint 3/3: Select ${step.value} from the ${step.source} half.`,
                 "normal"
             );
         } else {
@@ -1881,8 +1785,13 @@ function handleHintClick() {
 
     if (algorithmSelect.value === "quick") {
         if (quickTraceIndex < quickTrace.length) {
+            const step = quickTrace[quickTraceIndex];
             setMessage(
-                `Hint: ${getQuickStepMessage(quickTrace[quickTraceIndex])}`,
+                hintStage === 1
+                    ? "Hint 1/3: Quick Sort partitions one active range around a pivot."
+                    : hintStage === 2
+                        ? `Hint 2/3: Focus on positions ${step.low + 1}–${step.high + 1}; pivot is ${step.pivot}.`
+                        : `Hint 3/3: ${getQuickStepMessage(step)}`,
                 "normal"
             );
         } else {
@@ -1893,8 +1802,13 @@ function handleHintClick() {
 
     if (algorithmSelect.value === "heap") {
         if (heapTraceIndex < heapTrace.length) {
+            const step = heapTrace[heapTraceIndex];
             setMessage(
-                `Hint: ${getHeapStepMessage(heapTrace[heapTraceIndex])}`,
+                hintStage === 1
+                    ? "Hint 1/3: A max heap keeps the largest active value at its root."
+                    : hintStage === 2
+                        ? `Hint 2/3: The active heap contains ${step.heapSize} values; the rest is the sorted tail.`
+                        : `Hint 3/3: Select root value ${step.value} for position ${step.sortedPosition + 1}.`,
                 "normal"
             );
         } else {
@@ -1904,13 +1818,22 @@ function handleHintClick() {
     }
 
     if (algorithmSelect.value === "binary") {
-        setMessage(`Hint: Check the middle value ${tiles[binaryMid]}.`, "normal");
+        setMessage(hintStage === 1
+            ? "Hint 1/3: Binary Search always checks the middle of the remaining sorted range."
+            : hintStage === 2
+                ? `Hint 2/3: The active range is positions ${binaryLow + 1}–${binaryHigh + 1}.`
+                : `Hint 3/3: Check value ${tiles[binaryMid]} at position ${binaryMid + 1}.`, "normal");
         return;
     }
 
     if (algorithmSelect.value === "bfs") {
         if (bfsTraceIndex < bfsOrder.length) {
-            setMessage(`Hint: Visit node ${bfsOrder[bfsTraceIndex]} next.`, "normal");
+            const queue = getBfsQueue();
+            setMessage(hintStage === 1
+                ? "Hint 1/3: BFS visits the oldest discovered node first using a queue."
+                : hintStage === 2
+                    ? `Hint 2/3: Read the queue from left to right; it currently contains ${queue.join(", ")}.`
+                    : `Hint 3/3: Visit node ${bfsOrder[bfsTraceIndex]} next.`, "normal");
         } else {
             setMessage("BFS traversal already completed.", "normal");
         }
@@ -1919,7 +1842,7 @@ function handleHintClick() {
 }
 
 function generateRandomTiles() {
-    const tileCount = getTileCountForLevel(levelSelect.value);
+    const tileCount = resolveTileCount(levelSelect.value);
     const numbers = Array.from({ length: tileCount }, (_, index) => index + 1);
 
     const puzzle = [...numbers].sort(() => Math.random() - 0.5);
@@ -1953,6 +1876,40 @@ loadCustomBtn.addEventListener("click", () => loadCustomPuzzle(customArrayInput.
 generateShareBtn.addEventListener("click", generateShareLink);
 clearLeaderboardBtn.addEventListener("click", clearLeaderboard);
 clearDailyLeaderboardBtn.addEventListener("click", clearDailyLeaderboard);
+leaderboardForm.addEventListener("submit", () => {
+    pendingLeaderboardRecord.playerName = playerNameInput.value.trim() || "Anonymous";
+    savePendingLeaderboardRecord();
+});
+skipLeaderboardBtn.addEventListener("click", () => {
+    pendingLeaderboardRecord = null;
+    leaderboardDialog.close();
+});
+replayBtn.addEventListener("click", resetGame);
+nextLevelBtn.addEventListener("click", () => {
+    exitDailyChallenge(false);
+    isCustomPuzzle = false;
+    const nextLevel = Math.min(5, Number(levelSelect.value) + 1);
+    levelSelect.value = String(nextLevel);
+    originalTiles = generateRandomTiles();
+    resetGame();
+});
+changeAlgorithmBtn.addEventListener("click", () => {
+    resultPanel.classList.add("hidden");
+    algorithmSelect.focus();
+});
+resultDailyBtn.addEventListener("click", startDailyChallenge);
+
+document.addEventListener("keydown", (event) => {
+    const target = event.target;
+    if (target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
+    if (event.key.toLowerCase() === "h") {
+        event.preventDefault();
+        handleHintClick();
+    } else if (event.key.toLowerCase() === "r") {
+        event.preventDefault();
+        resetGame();
+    }
+});
 
 levelText.textContent = levelSelect.value;
 loadPuzzleFromUrl();
@@ -1960,80 +1917,6 @@ if (!isCustomPuzzle) {
     originalTiles = generateRandomTiles();
     resetGame();
 }
-updateInstructionMessage();
-renderTiles();
 renderLeaderboard();
 updateDailyChallengeStatus();
 renderDailyLeaderboard();
-
-function validateCustomPuzzleInput(inputValue) {
-    const raw = inputValue.trim();
-
-    if (raw === "") {
-        return {
-            valid: false,
-            message: "Custom puzzle cannot be empty."
-        };
-    }
-
-    const parts = raw.split(",").map((part) => part.trim());
-
-    if (parts.length < 3) {
-        return {
-            valid: false,
-            message: "Custom puzzle must contain at least 3 numbers."
-        };
-    }
-
-    if (parts.length > 64) {
-        return {
-            valid: false,
-            message: "Custom puzzle can contain at most 64 numbers."
-        };
-    }
-
-    const numbers = [];
-
-    for (const part of parts) {
-        if (!/^[1-9][0-9]*$/.test(part)) {
-            return {
-                valid: false,
-                message: "Custom puzzle must contain only positive integers."
-            };
-        }
-
-        numbers.push(Number(part));
-
-        if (!Number.isSafeInteger(numbers[numbers.length - 1])) {
-            return {
-                valid: false,
-                message: "Custom puzzle numbers are too large."
-            };
-        }
-    }
-
-    const uniqueNumbers = new Set(numbers);
-
-    if (uniqueNumbers.size !== numbers.length) {
-        return {
-            valid: false,
-            message: "Custom puzzle cannot contain duplicate numbers."
-        };
-    }
-
-    const alreadySorted = numbers.every((value, index, array) => {
-        return index === 0 || array[index - 1] < value;
-    });
-
-    if (alreadySorted) {
-        return {
-            valid: false,
-            message: "Custom puzzle cannot already be sorted."
-        };
-    }
-
-    return {
-        valid: true,
-        numbers
-    };
-}
